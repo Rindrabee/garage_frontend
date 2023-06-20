@@ -6,6 +6,10 @@ import registermecanicien from '../views/registermecanicien.vue'
 import registergarage from '../views/registergarage.vue'
 import adminpage from '../views/adminpage.vue'
 import clientpage from '../views/clientpage.vue'
+import mecanicienpageapropos from '../views/mecanicienpageapropos.vue'
+import mecanicienaccueil from '../views/mecanicienaccueil.vue'
+import garagepage from '../views/garagepage.vue'
+
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -44,6 +48,21 @@ const router = createRouter({
       path: '/clientpage',
       name: 'clientpage',
       component: clientpage
+    },
+    {
+      path: '/mecanicienpageapropos',
+      name: 'mecanicienpageapropos',
+      component: mecanicienpageapropos
+    },
+    {
+      path: '/mecanicienaccueil',
+      name: 'mecanicienaccueil',
+      component: mecanicienaccueil
+    },
+    {
+      path: '/garagepage',
+      name: 'garagepage',
+      component: garagepage
     },
   ]
 })

@@ -286,7 +286,7 @@ h2 > span {
     z-index: 2;
     padding-left: 6rem;
 }
-.navbar .settings-menu{
+.navbar .settings-menu {
     position: absolute;
     width: 70%;
     max-width: 290px;
@@ -328,6 +328,8 @@ h2 > span {
 }
 .settings-links a:hover {
     background-color:  #eff5ef;
+    height: 37px;
+    border-radius: 10px;
 }
 .profile {
     display: flex;

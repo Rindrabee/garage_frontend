@@ -30,7 +30,7 @@
       <div id="pejy1" class="page1">
         <div class="user-input-box">
           <label for="nom">Nom</label>
-          <input v-model="Nom" type="text" id="nom" name="nom" placeholder="Entrer votre nom" required>
+          <input v-model="Nom" type="adresse" id="adresse" name="adresse" placeholder="Entrer votre nom">
         </div>
 
         <div class="user-input-box">
@@ -55,7 +55,7 @@
 
         <div class="user-input-box">
           <label for="adresse">Adresse</label>
-          <input v-model="Adresse" type="adresse" id="adresse" name="adresse" placeholder="Entrer votre adresse">
+          <input v-model="Nom" type="text" id="adresse" name="adresse" placeholder="Entrer votre adresse" required>
         </div>
 
         <div class="user-input-box">
@@ -77,7 +77,6 @@
         <!-- ito le tsipika kely -->
       <div id="tsipika1" class="progress-bar">
         <div class="step">
-          
           <div class="bullet">
             <span>1</span>
           </div>
@@ -88,7 +87,7 @@
           <div class="bullet">
             <span>2</span>
           </div>
-        <div><img class="check" id="faharoa" style="display: none; width: 25px;margin-top: -28.9px;margin-left: 0px;position: absolute;" src="../assets/images/yes2.ico" alt=""></div>
+          <div><img class="check" id="faharoa" style="display: none; width: 25px;margin-top: -28.9px;margin-left: 0px;position: absolute;" src="../assets/images/yes2.ico" alt=""></div>
         </div>
       </div>
 
@@ -96,7 +95,6 @@
       <input id="btn1" type="submit" value="Suivant">
       </div>
       </div>
-
 
 
       <!-- page 2  -->
@@ -177,8 +175,11 @@ export default {
          Email: this.Email,
          Password: this.Password
        })
+
        console.log(response.data)
        alert("Enregistrer avec succès")
+
+
        let a = document.getElementById("faharoa");
        let b = document.getElementById("faharoa2");
 
@@ -186,7 +187,7 @@ export default {
         b.style.display = "block";
 
       },
-      slide1(){
+      slide1() {
         let a = document.getElementById("pejy1");
         let b = document.getElementById("pejy2");
         let c = document.getElementById("voalohany");
