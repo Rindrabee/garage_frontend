@@ -87,7 +87,7 @@
         </div>
   
         <div @click="slide1" id="next" class="form-submit-btn">
-        <input id="btn1" type="submit" value="Suivant">
+        <input id="btn1" type="submit" value="Suivant" :disabled="!formIsValid">
         </div>
         </div>
   
@@ -163,26 +163,27 @@
           Telephone: '',
           Email: '',
           Password: '',
-          Photo: ''
+          Photo: '',
+          formIsValid: false
         }
       },
       methods: {
-      async register () {
-           const response = await AuthenticationService.register({
-             Nom: this.Nom,
-             Prenoms: this.Prenoms,
-             Naissance: this.Naissance,
-             Profession: this.Profession,
-             Adresse: this.Adresse,
-             Sexe: this.Sexe,
-             Telephone: this.Telephone,
-             Email: this.Email,
-             Password: this.Password
-           })
-           console.log(response.data)
-           alert("Enregistrer avec succès")
-           let a = document.getElementById("faharoa");
-           let b = document.getElementById("faharoa2");
+        async register () {
+          const response = await AuthenticationService.register({
+            Nom: this.Nom,
+            Prenoms: this.Prenoms,
+            Naissance: this.Naissance,
+            Profession: this.Profession,
+            Adresse: this.Adresse,
+            Sexe: this.Sexe,
+            Telephone: this.Telephone,
+            Email: this.Email,
+            Password: this.Password
+          })
+          console.log(response.data)
+          alert("Enregistrer avec succès")
+          let a = document.getElementById("faharoa");
+          let b = document.getElementById("faharoa2");
     
             a.style.display = "block";
             b.style.display = "block";
@@ -207,9 +208,21 @@
             a.style.display = "flex";
             b.style.display = "none";
           },
-      
+          checkForm() {
+            this.formIsValid = true;
+            if (this.Nom === '') {
+              this.formIsValid = false;
+            }
+          },
+        },
+        
+        watch: {
+          Nom (newValue, oldValue) { 
+            this.checkForm();
+          }
+        }
       }
-      }
+
     </script>
     
     <style scoped>
@@ -483,6 +496,12 @@
         font-family: 'century gothic';
         cursor: pointer;
     }
+
+    input[type="submit"]:disabled {
+      background-color: rgba(231, 161, 30, 0.5);
+      cursor: not-allowed;
+    }
+
     input[type="submit"]:active{
         opacity: 0.10;
     }
