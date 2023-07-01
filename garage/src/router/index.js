@@ -9,6 +9,7 @@ import clientpage from '../views/clientpage.vue'
 import mecanicienpageapropos from '../views/mecanicienpageapropos.vue'
 import mecanicienaccueil from '../views/mecanicienaccueil.vue'
 import garagepage from '../views/garagepage.vue'
+import validationcode from '../views/validationcode.vue'
 
 
 const router = createRouter({
@@ -63,6 +64,11 @@ const router = createRouter({
       path: '/garagepage',
       name: 'garagepage',
       component: garagepage
+    },
+    {
+      path: '/validationcode',
+      name: 'validationcode',
+      component: validationcode
     },
   ]
 })

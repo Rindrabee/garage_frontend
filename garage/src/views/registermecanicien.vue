@@ -91,13 +91,9 @@
           <div><img class="check" id="faharoa" style="display: none; width: 25px;margin-top: -28.9px;margin-left: 0px;position: absolute;" src="../assets/images/yes2.ico" alt=""></div>
           </div>
         </div>
-  
-        <div @click="slide1" id="next" class="form-submit-btn">
-        <input id="btn1" type="submit" value="Suivant">
+        <h2 style="margin-top: 49px;opacity: 0%;">45</h2>
+       
         </div>
-        </div>
-  
-  
   
         <!-- page 2  -->
         <div id="pejy2" class="page2">
@@ -143,7 +139,7 @@
           </div>
         </div>
   
-        <input @click="slide2" style="position: absolute;  display: block;margin-top: 343px;font-size: 15px;padding: 10px;border: none;border-radius: 3px;" type="submit" value="Precedent" class="precedent">
+        <input @click="slide2" style="position: absolute;  display: block;margin-top: 345px;font-size: 15px;padding: 10px;border: none;border-radius: 3px;"  value="Precedent" class="precedent">
   
   
         <div @click="register" id="register" class="form-submit-btn">
@@ -154,6 +150,13 @@
     </div> 
     
       </form>
+
+      <div style="position: absolute;margin-top: 420px;" @click="slide1" id="next" class="form-submit-btn">
+      <input id="btn1" type="submit" value="Suivant">
+      </div>
+
+
+
       </div>
     </div>
         
@@ -202,22 +205,27 @@
           },
           slide1(){
             let a = document.getElementById("pejy1");
-            let b = document.getElementById("pejy2");
-            let c = document.getElementById("voalohany");
-            let d = document.getElementById("voalohany1");
-            
-            a.style.display = "none";
-            b.style.display = "flex";
-            c.style.display = "block";
-            d.style.display = "block";
+        let b = document.getElementById("pejy2");
+        let c = document.getElementById("voalohany");
+        let d = document.getElementById("voalohany1");
+        let e = document.getElementById("next");
+        
+        a.style.display = "none";
+        b.style.display = "flex";
+        c.style.display = "block";
+        d.style.display = "block";
+        e.style.display = "none";
     
           },
           slide2(){
             let a = document.getElementById("pejy1");
-            let b = document.getElementById("pejy2");
-    
-            a.style.display = "flex";
-            b.style.display = "none";
+          let b = document.getElementById("pejy2");
+          let c = document.getElementById("next");
+        
+
+        a.style.display = "flex";
+        b.style.display = "none";
+        c.style.display = "block";
           },
       }
       }
@@ -481,6 +489,24 @@
     width: 0;
 }
 }
+
+
+.precedent {
+  border: none;
+    outline: none;
+    background: #ffa400;
+    padding: 11px 25px;
+    width: 100px;
+    margin-top: 10px;
+    border-radius: 4px;
+    font-weight: 200;
+    font-family: 'century gothic';
+    cursor: pointer;
+}
+.precedent:active {
+  opacity: 0.10;
+}
+
      
     input[type="submit"]{
         border: none;

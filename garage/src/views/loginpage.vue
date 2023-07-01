@@ -1,7 +1,3 @@
-<script>
-import { useRouter } from 'vue-router';
-</script>
-
 <template>
 <!DOCTYPE html>
 <html lang="en">
@@ -27,13 +23,13 @@ import { useRouter } from 'vue-router';
     </div>
 
     <div class="container">
-    <form>
+    <form @submit.prevent ="login">
     <div class="box">
         <div class="form">
         <h2 style="font-family: century gothic;font-size : 20px"><img style="width: 20px;" src="../assets/images/cle.ico" alt=""> Se connecter</h2>
         
         
-        <div class="inputBox">
+        <!-- <div class="inputBox">
             <select name="type" style="position: relative;
             width: 300px;
             margin-top: 35px;background: transparent; font-size: 1em; border: none;
@@ -44,25 +40,28 @@ import { useRouter } from 'vue-router';
                 <option  name="Mecanicien"  value="Mecanicien">Mecanicien</option>
             </select>
             <i></i>
-        </div>
+        </div> -->
+        <br><br><br>
         <div class="inputBox">
-            <input name="email" type="email" required="required">
+            <input v-model="Client.Email" name="email" type="email" required="required">
             <span>Email</span>
             <i></i>
         </div>
         <div class="inputBox">
-            <input name="password" type="password" required="required">
+            <input v-model="Client.Password" name="password" type="password" required="required">
             <span>Mot de passe</span>
             <i></i>
+        </div>
+<br>
+        <div v-if="MessageError">
+            <h2 style="color: red;font-family: century gothic;font-size: 9px;float: left;">{{ MessageError }}</h2>
         </div>
 
         <div class="links">
             <a href="#">Mot de passe oublier</a>
         </div>
         <br>
-     
-            <h5 style="color : red;font-family : century gothic"></h5>
-            
+        <h5 style="color : red;font-family : century gothic"></h5>
         <input name="login" type="submit"  value="Login">
         </div>
     </div>
@@ -73,7 +72,37 @@ import { useRouter } from 'vue-router';
 </body>
 </html> 
 </template>
+<script>
+import { useRouter } from 'vue-router';
+import axios from 'axios';
 
+import AuthenticationService from '../services/AuthenticationService.js'
+export default {
+  data () {
+    return {
+        Client : {
+            Email: '',
+            Password: ''
+        },
+        MessageError:''
+    }
+  },
+  methods: {
+     login(){
+      axios.post('http://localhost:8082/api/clients/login',this.Client)
+      .then(response => {
+        if(response.data.status) {
+            localStorage.setItem('token',response.data.token)
+            this.$router.push({name:'clientpage'})
+        }
+        else {
+            this.MessageError=response.data.message
+        }
+      })
+    }
+  }
+}
+</script>
 
 <style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
