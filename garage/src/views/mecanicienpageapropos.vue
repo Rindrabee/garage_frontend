@@ -82,8 +82,8 @@
         <p class="description">
         Chez notre garage, nous valorisons la satisfaction de nos clients. Nous nous efforçons de maintenir des tarifs compétitifs et transparents, et de fournir un service amical et professionnel à chaque visite. Votre sécurité et votre tranquillité d'esprit sont notre priorité absolue.
         </p>
-    </div>
-    </div>
+        </div>
+        </div>
     </section>
 
     </main>
