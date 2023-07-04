@@ -123,23 +123,25 @@
 </template>
 
 <script>
-import AuthenticationService from '../services/AuthenticationService.js'
+import AuthenticationService from '../services/AuthenticationService.js';
+import { tokenIsExpired } from '../utils/date.js';
+
 export default {
-  data () {
-    return {
-    
-    }
-},
-  methods: {
-    slide1(){
-        let a = document.getElementById("rindra");
-        if (a.style.display === "block") {
-        a.style.display = "none";
-        } else {
-        a.style.display = "block";
+    data () {
+        return {
+        
         }
     },
-  }
+    methods: {
+        slide1(){
+            let a = document.getElementById("rindra");
+            if (a.style.display === "block") {
+            a.style.display = "none";
+            } else {
+            a.style.display = "block";
+            }
+        },
+    }
 }
 </script>
 
