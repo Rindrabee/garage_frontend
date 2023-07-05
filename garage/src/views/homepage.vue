@@ -1,7 +1,3 @@
-<script>
-import { useRouter } from 'vue-router';
-</script>
-
 <template>
 <!DOCTYPE html>
 <html lang="en">
@@ -27,7 +23,7 @@ import { useRouter } from 'vue-router';
         </div>
         </div>
     </ul>
-    <img src="../assets/images/cart.png" alt="">
+    <img style="width: 33px;cursor: pointer;"  src="../assets/images/chef.ico" alt="">
     </nav>
 
     <div class="site-container">
@@ -36,7 +32,7 @@ import { useRouter } from 'vue-router';
        <h4>Découvrez les bonnes adresses dont vous avez besoin pour votre véhicule</h4>
        
        <div class="pam">
-        <a href="#">DECOUVRIR  <span>&#x27f6</span></a>
+        <a class="decouvrir" href="decouvrir">DECOUVRIR  <span>&#x27f6</span></a>
         
        </div>
        
@@ -49,7 +45,7 @@ import { useRouter } from 'vue-router';
 
     <div class="nousapp2">
         <h3>Nous contacter</h3>
-        <a  style="color: #fff;text-decoration: none;" type="email" href="#">rindratahinalisoa@mecanicien.mg</a>
+        <a  style="color: #fff;text-decoration: none;" type="email" href="#">garagetahinalisoa@gmail.com</a>
     </div>
 
    
@@ -90,6 +86,9 @@ import { useRouter } from 'vue-router';
 </html>
 </template>
 
+<script>
+import { useRouter } from 'vue-router';
+</script>
 
 <style scoped>
 *, *::before, *::after {
@@ -108,6 +107,12 @@ background: linear-gradient(rgba(0, 0, 0, .5),rgba(0, 0, 0, .1)),url('../assets/
 background-size: cover;
 background-position: center;
 padding: 0 8%;
+
+}
+
+.decouvrir {
+    border-top-left-radius: 20px;
+    border-bottom-right-radius: 20px;
 }
 
 nav{

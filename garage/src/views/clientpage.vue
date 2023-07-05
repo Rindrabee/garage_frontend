@@ -30,7 +30,7 @@
                 
                 <div class="settings-links">
                     <img src="../assets/images/logout.png" class="settings-icon">
-                    <a style="color: #000;font-family: century gothic;cursor: pointer;">DECONNECTION<img src="../assets/images/arrow.png"
+                    <a @click="logout" style="color: #000;font-family: century gothic;cursor: pointer;">DECONNECTION<img src="../assets/images/arrow.png"
                     width="10px" alt=""></a>
                     
                 </div>
@@ -113,8 +113,6 @@
               
             </div>
 
-          
-
         </div>
     </main>
     </div>
@@ -124,6 +122,7 @@
 
 <script>
 import AuthenticationService from '../services/AuthenticationService.js'
+import axios from 'axios';
 export default {
   data () {
     return {
@@ -139,6 +138,20 @@ export default {
         a.style.display = "block";
         }
     },
+    logout() {
+      axios.post('http://localhost:8082/api/clients/logout') 
+        .then(response => {
+         
+          console.log(response.data.message);
+        
+          this.$router.push('/loginpage');
+        })
+        .catch(error => {
+       
+          console.error(error);
+        
+        });
+    }
   }
 }
 </script>

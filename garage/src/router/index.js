@@ -10,6 +10,8 @@ import mecanicienpageapropos from '../views/mecanicienpageapropos.vue'
 import mecanicienaccueil from '../views/mecanicienaccueil.vue'
 import garagepage from '../views/garagepage.vue'
 import validationcode from '../views/validationcode.vue'
+import decouvrir from '../views/decouvrir.vue'
+import modificationclient from '../views/modificationclient.vue'
 
 
 const router = createRouter({
@@ -69,6 +71,16 @@ const router = createRouter({
       path: '/validationcode',
       name: 'validationcode',
       component: validationcode
+    },
+    {
+      path: '/decouvrir',
+      name: 'decouvrir',
+      component: decouvrir
+    },
+    {
+      path: '/modificationclient',
+      name: 'modificationclient',
+      component: modificationclient
     },
   ]
 })

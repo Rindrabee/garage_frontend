@@ -36,7 +36,7 @@
       <br><br>
       <div class="code">
         <input  v-model="client.Email" type="hidden">
-        <input v-model="client.confirmationcode" type="text">
+        <input id="confirme" v-model="client.confirmationcode" type="text">
       </div>
 
       <div id="terminer" class="form-submit-btn">
@@ -76,12 +76,15 @@ export default {
   },
   methods: {    
   verificationducode() {
+    let conf = document.getElementById("confirme");
     axios.post('http://localhost:8082/api/clients/verificationclt',this.client)
     .then(response => {
       if(response.data.statut) {
         localStorage.setItem('token',response.data.token);
         this.$router.push({ name:'clientpage' });
 
+      }else if(conf.value == ''){
+        alert('Completer avant de confirmer');
       }else {
         alert('Code de validation incorrect');
       }
