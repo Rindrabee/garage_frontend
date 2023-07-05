@@ -19,8 +19,9 @@
         </ul>
     </nav> 
     <br><br><br><br><br>
+    
     <div class="welcome-container">
-        <div class="welcome-text">
+    <div class="welcome-text">
     <h1>Bienvenue sur notre site web !</h1>
     <p>Nous sommes enchantés de vous accueillir sur notre plateforme en ligne dédiée aux passionnés d'automobiles et aux propriétaires de véhicules. Que vous soyez à la recherche d'un garage pour l'entretien régulier de votre voiture, des réparations nécessaires ou des services de personnalisation, vous êtes au bon endroit.</p>
     <p>Ici, vous trouverez une sélection soigneusement composée de garages partenaires hautement qualifiés et expérimentés. Notre objectif est de vous offrir une expérience sans pareille en vous mettant en relation avec les professionnels les plus compétents de l'industrie automobile.</p>
@@ -32,7 +33,8 @@
     <div class="logo-image">
         <img style="width: 420px;margin-left: -440px;margin-top: 130px;border-radius: 5px;position: absolute;" src="../assets/images/ft1.jpg" alt="Logo du site">
     </div>
-</div>
+    </div>
+
     <div class="main">
     <div class="cards">
         <div class="image">

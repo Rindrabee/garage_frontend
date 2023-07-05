@@ -139,21 +139,20 @@ export default {
             a.style.display = "block";
             }
         },
-    },
-    logout() {
-      axios.post('http://localhost:8082/api/clients/logout') 
+        logout() {
+        axios.post('http://localhost:8082/api/clients/logout')
         .then(response => {
-         
-          console.log(response.data.message);
-        
-          this.$router.push('/loginpage');
+        localStorage.removeItem('token');
+        localStorage.removeItem('Email');
+        this.$router.push({ name: 'loginpage' });
         })
         .catch(error => {
-       
-          console.error(error);
-        
+        console.error(error);
+        this.MessageError = "Une erreur s'est produite lors de la déconnexion.";
         });
-    }
+        }
+    },
+ 
 }
 </script>
 

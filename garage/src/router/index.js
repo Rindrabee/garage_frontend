@@ -14,6 +14,9 @@ import registermecanicien from '../views/registermecanicien.vue'
 import validationcode from '../views/validationcode.vue'
 import decouvrir from '../views/decouvrir.vue'
 import modificationclient from '../views/modificationclient.vue'
+import mdpoublier from '../views/mdpoublier.vue'
+import vldoublie from '../views/vldoublie.vue'
+import nouveaucode from '../views/nouveaucode.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -85,6 +88,21 @@ const router = createRouter({
       path: '/modificationclient',
       name: 'modificationclient',
       component: modificationclient
+    },
+    {
+      path: '/mdpoublier',
+      name: 'mdpoublier',
+      component: mdpoublier
+    },
+    {
+      path: '/vldoublie',
+      name: 'vldoublie',
+      component: vldoublie
+    },
+    {
+      path: '/nouveaucode',
+      name: 'nouveaucode',
+      component: nouveaucode
     },
   ]
 })
