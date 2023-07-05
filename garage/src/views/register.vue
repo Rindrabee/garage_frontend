@@ -252,7 +252,7 @@ export default {
     }
   },
   methods: {
-    async register() {
+  async register() {
   if (!this.acceptConditions) {
     alert("Veuillez accepter les conditions pour vous inscrire.");
     return;

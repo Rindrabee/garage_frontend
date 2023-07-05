@@ -12,6 +12,8 @@ import register from '../views/register.vue'
 import registergarage from '../views/registergarage.vue'
 import registermecanicien from '../views/registermecanicien.vue'
 import validationcode from '../views/validationcode.vue'
+import decouvrir from '../views/decouvrir.vue'
+import modificationclient from '../views/modificationclient.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -73,6 +75,16 @@ const router = createRouter({
       path: '/validationcode',
       name: 'validationcode',
       component: validationcode
+    },
+    {
+      path: '/decouvrir',
+      name: 'decouvrir',
+      component: decouvrir
+    },
+    {
+      path: '/modificationclient',
+      name: 'modificationclient',
+      component: modificationclient
     },
   ]
 })
