@@ -309,9 +309,8 @@
     console.log(response.data);
     alert("Enregistré avec succès");
   
-    localStorage.setItem("EmailMecanicien",this.Email)
+    // localStorage.setItem("EmailMecanicien",this.Email)
   
-    
         let a = document.getElementById("voalohany2");
         let b = document.getElementById("faharoa2");
         let c = document.getElementById("fahatelo2");

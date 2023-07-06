@@ -20,6 +20,14 @@ import mdpoublier from '../views/mdpoublier.vue'
 import vldoublie from '../views/vldoublie.vue'
 import nouveaucode from '../views/nouveaucode.vue'
 import loginadm from '../views/loginadm.vue'
+import mdboublieradm from '../views/mdboublieradm.vue'
+import mdpoublier2 from '../views/mdpoublier2.vue'
+import vldoublie2 from '../views/vldoublie2.vue'
+import nouveaucode2 from '../views/nouveaucode2.vue'
+import mdpoublier3 from '../views/mdpoublier3.vue'
+import vldoublie3 from '../views/vldoublie3.vue'
+import nouveaucode3 from '../views/nouveaucode3.vue'
+
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -73,7 +81,10 @@ const router = createRouter({
     {
       path: '/mecanicienaccueil',
       name: 'mecanicienaccueil',
-      component: mecanicienaccueil
+      component: mecanicienaccueil,
+      meta: {
+        middleware: auth
+      }
     },
     {
       path: '/garagepage',
@@ -114,6 +125,41 @@ const router = createRouter({
       path: '/loginadm',
       name: 'loginadm',
       component: loginadm
+    },
+    {
+      path: '/mdboublieradm',
+      name: 'mdboublieradm',
+      component: mdboublieradm
+    },
+    {
+      path: '/mdpoublier2',
+      name: 'mdpoublier2',
+      component: mdpoublier2
+    },
+    {
+      path: '/vldoublie2',
+      name: 'vldoublie2',
+      component: vldoublie2
+    },
+    {
+      path: '/nouveaucode2',
+      name: 'nouveaucode2',
+      component: nouveaucode2
+    },
+    {
+      path: '/mdpoublier3',
+      name: 'mdpoublier3',
+      component: mdpoublier3
+    },
+    {
+      path: '/vldoublie3',
+      name: 'vldoublie3',
+      component: vldoublie3
+    },
+    {
+      path: '/nouveaucode3',
+      name: 'nouveaucode3',
+      component: nouveaucode3
     },
   ]
 })

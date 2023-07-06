@@ -29,19 +29,16 @@
         <h2 style="font-family: century gothic;font-size : 20px"><img style="width: 20px;" src="../assets/images/cle.ico" alt=""> Se connecter</h2>
         
         
-        <!-- <div class="inputBox">
-            <select name="type" style="position: relative;
-            width: 300px;
-            margin-top: 35px;background: transparent; font-size: 1em; border: none;
-            outline: none;
-            color: #8f8f8f;  height: 44px;">
+        <div class="inputBox">
+            <select name="position" id="position" style="position: relative;width: 300px;margin-top: 35px;background: transparent; font-size: 1em; border: none;outline: none;color: #8f8f8f;  height: 44px;">
+                <option  name="Client" value="Client">Client</option>
+                <option  name="Mecanicien" value="Mecanicien">Mecanicien</option>
                 <option  name="Garage" value="Garage">Garage</option>
-                <option  name="Client"  value="Client">Client</option>
-                <option  name="Mecanicien"  value="Mecanicien">Mecanicien</option>
             </select>
             <i></i>
-        </div> -->
-        <br><br><br>
+        </div>
+       
+        
         <div class="inputBox">
             <input v-model="Client.Email" name="email" type="email" required="required">
             <span>Email</span>
@@ -58,7 +55,7 @@
         </div>
 
         <div class="links">
-            <a href="mdpoublier">Mot de passe oublier</a>
+            <a style="cursor:default;" @click="mdpoublie">Mot de passe oublier</a>
         </div>
         <br>
         <h5 style="color : red;font-family : century gothic"></h5>
@@ -89,7 +86,9 @@ export default {
   },
   methods: {
      login(){
-      axios.post('http://localhost:8082/api/clients/login',this.Client)
+      let a = document.getElementById("position")
+      if(a.value == 'Client') {
+        axios.post('http://localhost:8082/api/clients/login',this.Client)
       .then(response => {
         if(response.data.status) {
             localStorage.setItem('token',response.data.token)
@@ -99,6 +98,46 @@ export default {
             this.MessageError=response.data.message
         }
       })
+      }
+      else if(a.value == 'Mecanicien'){
+        axios.post('http://localhost:8082/api/mecaniciens/loginmecanicien',this.Client)
+      .then(response => {
+        if(response.data.status) {
+            localStorage.setItem('token',response.data.token)
+            this.$router.push({name:'mecanicienaccueil'})
+        }
+        else {
+            this.MessageError=response.data.message
+        }
+      })
+      }
+      else if(a.value == 'Garage'){
+        axios.post('http://localhost:8082/api/garages/logingarage',this.Client)
+      .then(response => {
+        if(response.data.status) {
+            localStorage.setItem('token',response.data.token)
+            this.$router.push({name:'garagepage'})
+        }
+        else {
+            this.MessageError=response.data.message
+        }
+      })
+      }
+    
+    },
+    mdpoublie(){
+    let a = document.getElementById("position")
+
+    if(a.value == 'Client') {
+        this.$router.push({name:'mdpoublier'})
+    }
+    else if(a.value == 'Mecanicien') {
+        this.$router.push({name:'mdpoublier2'})
+    }
+    else if(a.value == 'Garage') {
+        this.$router.push({name:'mdpoublier3'})
+    }
+
     }
   }
 }

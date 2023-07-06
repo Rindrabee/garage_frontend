@@ -3,30 +3,29 @@
     <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Document</title>
     </head>
     <body>
-    <div class="cont">
+        <div class="cont">
         <div class="main">
             <nav class="navix">
                 <img src="../assets/images/car.ico" class="logo2" alt="">
                 <div class="nav-links">
                     <p><router-link to="/">Accueil</router-link></p>
                     <div>
-                      
-                       
+                        <a href="#">Conseil</a>
+                        <a class="btn" href="register">S'inscrire</a>
                     </div>
                 </div>
             </nav>
         </div>
     
         <div class="container">
-        <form @submit.prevent ="login">
+        <form>
         <div class="box">
             <div class="form">
-            <h2 style="font-family: century gothic;font-size : 20px"><img style="width: 20px;" src="../assets/images/cle.ico" alt=""> Se connecter</h2>
+            <h2 style="font-family: century gothic;font-size : 15px"><img style="width: 20px;" src="../assets/images/cle.ico" alt=""> Mot de passe oublié</h2>
             
             
             <!-- <div class="inputBox">
@@ -42,67 +41,90 @@
                 <i></i>
             </div> -->
             <br><br><br>
+            
+                <p style="color: white;font-size: 14px;color: rgb(197, 175, 134);">Entrer votre numéro</p>
+          
             <div class="inputBox">
-                <input v-model="Admin.Email" name="email" type="email" required="required">
-                <span>Email</span>
+                <input v-model="destinataire" id="numero" name="numero" type="text" required="required">
+                <span>Numéro</span>
                 <i></i>
-            </div>
-            <div class="inputBox">
-                <input v-model="Admin.Password" name="password" type="password" required="required">
-                <span>Mot de passe</span>
-                <i></i>
-            </div>
-            <br>
-            <div v-if="MessageError">
-                <h2 style="color: red;font-family: century gothic;font-size: 9px;float: left;">{{ MessageError }}</h2>
-            </div>
-    
-            <div class="links">
-                <a href="mdboublieradm">Mot de passe oublier</a>
             </div>
 
+            
+            <br><br>
+            <!-- eto asina erreur ra ohatra ka -->
+            <div>
+                <h2 style="color: red;font-family: century gothic;font-size: 9px;float: left;"></h2>
+            </div>
+            
+            <br>
+            <!-- <div v-if="MessageError">
+                <h2 style="color: red;font-family: century gothic;font-size: 9px;float: left;">{{ MessageError }}</h2>
+            </div> -->
+            
             <br>
             <h5 style="color : red;font-family : century gothic"></h5>
-            <input name="login" type="submit"  value="Login">
+            <div style="margin-left: 50px;">
+            <input @click="verslogin" style="margin-left: 20px;" type="submit"  value="Retour">
+            
+            <input @click="envoyerMessage" style="margin-left: 20px;" class="envoyer" type="button"  value="Envoyer">
+            </div>
+          
             </div>
         </div>
-        </form>
-        </div>
+    </form>
+    </div>
     </div>
         
+      
     </body>
-    </html> 
+    </html>
     </template>
-    <script>
-    import { useRouter } from 'vue-router';
-    import axios from 'axios';
     
-    import AuthenticationService from '../services/AuthenticationService.js'
+    <script>
+    import axios from 'axios';
+    import Loginpage from './loginpage.vue';
+    
+    
     export default {
-      data () {
+      data() {
         return {
-            Admin : {
-                Email: '',
-                Password: ''
-            },
-            MessageError:''
-        }
+        destinataire: '',
+        };
       },
       methods: {
-         login(){
-          axios.post('http://localhost:8082/api/admins/loginadmin',this.Admin)
-          .then(response => {
-            if(response.data.status) {
-                localStorage.setItem('token',response.data.token)
-                this.$router.push({name:'adminpage'})
-            }
-            else {
-                this.MessageError=response.data.message
-            }
-          })
-        }
+        verslogin() {
+        this.$router.push({ name: 'loginadm' });
+      },
+      envoyerMessage() {
+      let a = document.getElementById("numero")
+
+      if(a.value == ''){
+        alert("Entrer le numéro")
+      }
+      else {
+        axios.post('http://localhost:8082/api/clients/SMS', {
+        destinataire: this.destinataire,
+      })
+      .then(response => {
+         if(response.data.statut){
+            alert(response.data.message)
+         }
+         else{
+            alert(response.data.message)
+         }
+      })
+      .catch(error => {
+        alert('Erreur lors de la requête:', error);
+      });
       }
     }
+          
+    }
+        
+        
+      
+    };
     </script>
     
     <style scoped>
@@ -118,7 +140,7 @@
         position: fixed;
         height: 100vh;
         width: 100%;
-        background: rgba(0, 0, 0, 0.5) url(../assets/images/maintso.jpg) center center fixed;
+        background: rgba(0, 0, 0, 0.5) url(../assets/images/aza.jpg) center center fixed;
         background-size: cover;
         background-position: center;
         padding: 0 8%;
@@ -164,6 +186,23 @@
         color: #000;
         padding: 10px 28px;
         border-radius: 5px;
+    }
+    .envoyer {
+      border: none;
+        outline: none;
+        background: #ffa400;
+        padding: 11px 25px;
+        width: 100px;
+        text-align: center;
+        margin-top: 10px;
+        border-radius: 4px;
+        font-weight: 200;
+        font-family: 'century gothic';
+        cursor: pointer;
+    
+    }
+    .envoyer:active {
+      opacity: 0.10;
     }
     
     .box {

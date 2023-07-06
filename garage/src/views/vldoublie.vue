@@ -45,7 +45,7 @@
                 <p style="color: white;font-size: 14px;color: rgb(197, 175, 134);">Entrer le code que vous avez reçu</p>
           
                 <div class="code">
-                  <input type="text" v-model="Code">
+                  <input id="code" type="text" v-model="Code">
                 </div>
             
             <br><br>
@@ -65,7 +65,7 @@
             <div style="margin-left: 50px;">
             <input @click="versmdpoublie" style="margin-left: 20px;" type="submit"  value="Retour">
             
-            <input @click="validationcode" style="margin-left: 20px;" class="envoyer" type="button"  value="Envoyer">
+            <input @click="validationcode"  style="margin-left: 20px;" class="envoyer" type="button"  value="Envoyer">
             </div>
           
             </div>
@@ -97,13 +97,22 @@
         },
     
         validationcode() {
+            let code = document.getElementById("code")
             const codeIsValid = localStorage.getItem('mdpcode') == this.Code;
             console.log('this.code', this.Code);
-            if (!codeIsValid) {
-                return false;
+
+            if(code.value == '') {
+                alert ('Entrer ici le code reçu par email')
             }
 
-            this.$router.push({ name: 'nouveaucode', query: {'Email': this.Email }});
+            else if (!codeIsValid) {
+                alert ('Code incorrect')
+                return false;
+            }
+            else {
+                this.$router.push({ name: 'nouveaucode', query: {'Email': this.Email }});
+            }
+           
         }
     }
     };

@@ -291,7 +291,7 @@
     console.log(response.data);
     alert("Enregistré avec succès");
   
-    localStorage.setItem("EmailGARAGE",this.Email)
+    // localStorage.setItem("EmailGARAGE",this.Email)
   
     
         let a = document.getElementById("voalohany2");

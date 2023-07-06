@@ -100,6 +100,8 @@
             axios.post('http://localhost:8082/api/password/resetPassword', { Email: this.Email, NewPassword: this.Password })
             .then(response => {
                 if(response.data.status) {
+                    alert("Mot de passe changer avec succès")
+                    localStorage.removeItem('mdpcode')
                     this.$router.push({'name': 'loginpage'})
                 }
                 else {
@@ -107,7 +109,6 @@
                 }
             })
         }
-       
       }
     };
     </script>
