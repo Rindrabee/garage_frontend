@@ -88,14 +88,25 @@
     export default {
       data() {
         return {
-          Password: '',
+            Email: this.$route.query.Email,
+            Password: '',
         };
       },
       methods: {
         verslogin() {
             this.$router.push({ name: 'vldoublie' });
         },
-    
+        envoyermdp() {
+            axios.post('http://localhost:8082/api/password/resetPassword', { Email: this.Email, NewPassword: this.Password })
+            .then(response => {
+                if(response.data.status) {
+                    this.$router.push({'name': 'loginpage'})
+                }
+                else {
+                    
+                }
+            })
+        }
        
       }
     };
