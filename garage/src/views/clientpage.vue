@@ -13,10 +13,10 @@
 <body>
     <div class="cont">
         <nav class="navbar">
-        <h4 style="margin-left: 20px;font-family: century gothic;font-size: 20px;"><img class="rotate-image" style="width: 36px;" src="../assets/images/car.ico" alt=""> GARAGE'MLAY</h4>
+        <h4 style="margin-left: 20px;font-family: century gothic;font-size: 17px;"><img class="rotate-image" style="width: 36px;" src="../assets/images/car.ico" alt=""> GARAGEFINDER</h4>
         <div class="profile">
-            <img @click="slide1" class="profile-image" src="../assets/images/profil.ico" alt="">
-            <p class="profile-name">Tahinalisoa</p>
+            <img @click="slide1" style="cursor: pointer;" class="profile-image" src="../assets/images/profil.ico" alt="">
+            <p style="cursor: pointer;" class="profile-name">Tahinalisoa</p>
         </div>
         <div id="rindra" class="settings-menu">
             <div id="dark-btn">
@@ -24,20 +24,19 @@
             </div>
             <div class="settings-menu-inner">
                 <div class="settings-links">
-                    <img src="../assets/images/setting.png" class="settings-icon">
-                    <a style="color: #000;font-family: century gothic;cursor: pointer;" href="#">PROFILE<img style="width: 10px;" src="../assets/images/arrow.png" alt=""></a>
+                    <img style="cursor: pointer;" src="../assets/images/setting.png" class="settings-icon">
+                    <a style="color: #000;font-family: century gothic;cursor: pointer;" href="modificationclient">PROFILE<img style="width: 10px;" src="../assets/images/arrow.png" alt=""></a>
                 </div>
                 
                 <div class="settings-links">
-                    <img src="../assets/images/logout.png" class="settings-icon">
+                    <img style="cursor: pointer;" src="../assets/images/logout.png" class="settings-icon">
                     <a @click="logout" style="color: #000;font-family: century gothic;cursor: pointer;">DECONNECTION<img src="../assets/images/arrow.png"
                     width="10px" alt=""></a>
-                    
                 </div>
+                
             </div>    
         </div>
     </nav>
-
     <main>
         <br><br><br><br>
         <div style="margin-left: -200px;">

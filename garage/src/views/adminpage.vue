@@ -33,7 +33,7 @@
                 
                 <div class="settings-links">
                     <img src="../assets/images/logout.png" class="settings-icon">
-                    <a style="color: #000;font-family: century gothic;cursor: pointer;">DECONNECTION<img src="../assets/images/arrow.png"
+                    <a @click="logout" style="color: #000;font-family: century gothic;cursor: pointer;">DECONNECTION<img src="../assets/images/arrow.png"
                     width="10px" alt=""></a>
                     
                 </div>
@@ -215,7 +215,7 @@
                 </div>
 
                 <div class="customer-wrapper">
-                    <img class="customer-image" src="../assets/images/clouds-4900496_1280.jpg" alt="">
+                    <img class="customer-image" src="../assets/images/xel.jpg" alt="">
                     <div class="customer-name">
                         <h4>Ipsum volupta</h4>
                         <p style="font-size: 12px;">De aona e</p>
@@ -234,6 +234,7 @@
 
 <script>
 import AuthenticationService from '../services/AuthenticationService.js'
+import axios from 'axios';
 export default {
   data () {
     return {
@@ -248,6 +249,18 @@ export default {
         } else {
         a.style.display = "block";
         }
+    },
+    logout() {
+        axios.post('http://localhost:8082/api/admins/logoutadmin')
+        .then(response => {
+        localStorage.removeItem('token');
+        // localStorage.removeItem('Email');
+        this.$router.push({ name: 'loginadm' });
+        })
+        .catch(error => {
+        console.error(error);
+        this.MessageError = "Une erreur s'est produite lors de la déconnexion.";
+        });
     },
   }
 }

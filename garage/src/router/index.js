@@ -2,6 +2,8 @@ import { createRouter, createWebHistory } from 'vue-router'
 
 import adminpage from '../views/adminpage.vue'
 import auth from '../middleware/auth';
+import auth2 from '../middleware/auth2';
+
 import clientpage from '../views/clientpage.vue'
 import garagepage from '../views/garagepage.vue'
 import homepage from '../views/homepage.vue'
@@ -17,6 +19,7 @@ import modificationclient from '../views/modificationclient.vue'
 import mdpoublier from '../views/mdpoublier.vue'
 import vldoublie from '../views/vldoublie.vue'
 import nouveaucode from '../views/nouveaucode.vue'
+import loginadm from '../views/loginadm.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -49,7 +52,10 @@ const router = createRouter({
     {
       path: '/adminpage',
       name: 'adminpage',
-      component: adminpage
+      component: adminpage,
+      meta: {
+        middleware: auth2
+      }
     },
     {
       path: '/clientpage',
@@ -103,6 +109,11 @@ const router = createRouter({
       path: '/nouveaucode',
       name: 'nouveaucode',
       component: nouveaucode
+    },
+    {
+      path: '/loginadm',
+      name: 'loginadm',
+      component: loginadm
     },
   ]
 })

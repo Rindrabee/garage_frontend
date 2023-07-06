@@ -17,17 +17,26 @@
             <div class="col-md-10 mt-5 pt-5">
                 <div style="box-shadow: 1px 1px 4px black;width: 1100px;margin-left: -100px;margin-top: -40px;"  class="row z-depth-3">
                     <div class="col-sm-4 bg-success rounded-left">
+
+                        <router-link to="clientpage"><i style="color: white;cursor: pointer;" class="fas fa-arrow-left"></i></router-link>
+                        
                         <div class="card-block text-center text-white">
                             <i class="fas fa-user-tie fa-7x mt-5"></i>
                             <br><br>
-                            <input id="fileInput" style="display: none;" type="file" onchange="handleFileSelection(event)">
-                            <input id="imagePathInput"  style="height: 17px; width: 110px; border-radius: 10px; border-color: white;" type="text">
-                            <br>
-                            <label for="fileInput">
-                            <i class="far fa-edit fa-2x mb-4" onclick="openFileInput()"></i>
-                            </label>
                             <h2 class="font-weight-bold mt-4">Nickson</h2>
                             <p>Web Designer</p>
+
+                            <!-- ito le upload photo -->
+                            <label for="fileInput">
+                            <i class="far fa-edit fa-2x mb-4"></i>
+                            </label>
+                            <br>
+                            <input id="fileInput" type="file" >
+                            
+                            <br>
+                         
+                            
+                            
                         </div>
                     </div>
                     <div class="col-sm-8 bg-white rounded-right">
@@ -50,21 +59,24 @@
                             <div class="col-sm-6">
                                 <p class="font-weight-bold">Date de naissance : &nbsp; <input class="inuty" type="date"></p>
                             </div>
+
                             <div class="col-sm-6">
                                 <p class="font-weight-bold">Profession : &nbsp; <input class="inuty" type="text"></p>
                             </div>
+
                             <div class="col-sm-6">
                                 <p class="font-weight-bold">Adresse : &nbsp; <input class="inuty" type="text"></p>
                             </div>
+
                             <div class="col-sm-6">
                                 <p class="font-weight-bold">Telephone : &nbsp; <input class="inuty" type="text"></p>
                             </div>
+
                             <div class="col-sm-6">
                                 <p class="font-weight-bold">Mot de passe : &nbsp; <input class="inuty" type="text"></p>
                             </div>
 
                         </div>
-
                         <br>
                         <div style="margin-left: 490px;" class="row">
                         <div class="col-sm-5">
@@ -95,21 +107,8 @@
 </template>
 
 <script>
-function handleFileSelection(event) {
-  var fileInput = event.target;
-  var imagePathInput = document.getElementById("imagePathInput");
+import { useRouter } from 'vue-router';
 
-  var selectedFile = fileInput.files[0];
-  var fileName = selectedFile ? selectedFile.name : '';
-
-  if (imagePathInput) {
-    imagePathInput.value = fileName;
-  }
-}
-
-function openFileInput() {
-  document.getElementById("fileInput").click();
-}
 </script>
 
 <style scoped>

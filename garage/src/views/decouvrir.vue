@@ -19,7 +19,7 @@
         </ul>
     </nav> 
     <br><br><br><br><br>
-    
+
     <div class="welcome-container">
     <div class="welcome-text">
     <h1>Bienvenue sur notre site web !</h1>
@@ -38,7 +38,7 @@
     <div class="main">
     <div class="cards">
         <div class="image">
-            <img src="../assets/images/tenaizy.jpg" alt="">
+            <img src="../assets/images/GRG1.png" alt="">
         </div>
         <div class="title">
            <h1>Title Name</h1>
@@ -53,7 +53,7 @@
 
     <div class="cards">
         <div class="image">
-            <img src="../assets/images/tenaizy.jpg" alt="">
+            <img src="../assets/images/GRG2.png" alt="">
         </div>
         <div class="title">
            <h1>Title Name</h1>
@@ -68,7 +68,7 @@
 
     <div class="cards">
         <div class="image">
-            <img src="../assets/images/tenaizy.jpg" alt="">
+            <img src="../assets/images/GRG2.jpg" alt="">
         </div>
         <div class="title">
            <h1>Title Name</h1>
@@ -81,9 +81,10 @@
         </div>
     </div>
 
+    
     <div class="cards">
         <div class="image">
-            <img src="../assets/images/tenaizy.jpg" alt="">
+            <img src="../assets/images/GRG3.jpg" alt="">
         </div>
         <div class="title">
            <h1>Title Name</h1>
@@ -136,6 +137,7 @@
     border-top-right-radius: 5px;
     border-top-left-radius: 5px;
     width: 100%;
+    height: 200px;
 }
 .title {
     text-align: center;

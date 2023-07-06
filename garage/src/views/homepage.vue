@@ -23,19 +23,17 @@
         </div>
         </div>
     </ul>
-    <img style="width: 33px;cursor: pointer;"  src="../assets/images/chef.ico" alt="">
+    <router-link to="loginadm"><img style="width: 33px;cursor: pointer;"  src="../assets/images/chef.ico" alt=""></router-link>
+    
     </nav>
 
     <div class="site-container">
        <p>Bienvenue à</p>
-       <h1>GARAGE'MLAY</h1>
+       <h1>GARAGEFINDER</h1>
        <h4>Découvrez les bonnes adresses dont vous avez besoin pour votre véhicule</h4>
-       
        <div class="pam">
         <a class="decouvrir" href="decouvrir">DECOUVRIR  <span>&#x27f6</span></a>
-        
        </div>
-       
     </div>
 
     <div class="nousapp">

@@ -52,7 +52,7 @@
             <span>Mot de passe</span>
             <i></i>
         </div>
-<br>
+        <br>
         <div v-if="MessageError">
             <h2 style="color: red;font-family: century gothic;font-size: 9px;float: left;">{{ MessageError }}</h2>
         </div>
