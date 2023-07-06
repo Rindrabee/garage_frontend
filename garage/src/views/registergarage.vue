@@ -119,12 +119,12 @@
         <div id="pejy2" class="page2">
           <div class="user-input-box">
             <label for="service">Services offertes</label>
-            <textarea v-model="service_offerte" name="" id="" cols="38" rows="5" :placeholder="isFieldEmpty && !service_offerte ? 'Entrer les services offertes' : 'Entrer les services offertes'" :class="{'error': isFieldEmpty && !service_offerte}"></textarea>
+            <textarea v-model="service_offerte" name="service" id="service" cols="38" rows="5" :placeholder="isFieldEmpty && !service_offerte ? 'Entrer les services offertes' : 'Entrer les services offertes'" :class="{'error': isFieldEmpty && !service_offerte}"></textarea>
           </div>
   
           <div class="user-input-box">
             <label for="equipement">Equipements</label>
-            <textarea v-model="equipement" name="" id="" cols="38" rows="5" :placeholder="isFieldEmpty && !equipement ? 'Entrer les equipements du garage' : 'Entrer les equipements du garage'" :class="{'error': isFieldEmpty && !equipement}"></textarea>
+            <textarea v-model="equipement" name="equipement" id="equipement" cols="38" rows="5" :placeholder="isFieldEmpty && !equipement ? 'Entrer les equipements du garage' : 'Entrer les equipements du garage'" :class="{'error': isFieldEmpty && !equipement}"></textarea>
           </div>
 
           <div class="user-input-box">
@@ -172,9 +172,10 @@
           <ul><br>
           <li><strong>Excellence du service :</strong> Notre objectif principal est de vous fournir un service d'excellence.</li>
           <li><strong>Transparence des prix :</strong> Nous croyons en une totale transparence en ce qui concerne nos tarifs. Avant d'entreprendre toute réparation ou prestation de service, nous vous informerons clairement des coûts associés.</li>
-          <li><strong>Politique de garantie :</strong> Toutes les réparations effectuées dans notre garage sont couvertes par une garantie. </li>
+          <li><strong>Politique de garantie :</strong> Chez nous, la satisfaction de nos clients est une priorité absolue. Leur confiance en notre travail est la plus grande récompense que nous puissions recevoir. </li>
           <li><strong>Service clientèle :</strong> Votre satisfaction est notre priorité absolue. Notre équipe amicale et professionnelle est à votre disposition pour répondre à toutes vos questions et préoccupations.</li>
           </ul>
+          <br>
           <p>Nous vous invitons à lire attentivement ces conditions avant de continuer à utiliser notre site web.</p>
           <br>
         <div class="checkbox-container">
@@ -281,7 +282,7 @@
       Specialite: this.Specialite,
       Heures_ouverture: this.Heures_ouverture,
       Heures_fermeture: this.Heures_fermeture,
-      service_offerte : this.service_offerte ,
+      service_offerte : this.service_offerte,
       Photo: this.Photo,
       equipement: this.equipement,
       Password: this.Password
