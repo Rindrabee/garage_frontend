@@ -106,13 +106,14 @@ export default {
         axios.post('http://localhost:8082/api/clients/mdpcode',  {'Email': this.Email })
       .then(response => {
         if(response.data.statut) {
-           console.log("Le code a été envoyer")
+           console.log("Le code a été envoyer");
+           localStorage.setItem('mdpcode', response.data.code);
         }
         else {
             console.log(response.data.statut)
         }
       })
-      this.$router.push({ name: 'vldoublie' });
+      this.$router.push({ name: 'vldoublie', query: {'Email': this.Email }});
     }
     
     }

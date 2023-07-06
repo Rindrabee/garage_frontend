@@ -45,7 +45,7 @@
                 <p style="color: white;font-size: 14px;color: rgb(197, 175, 134);">Entrer le code que vous avez reçu</p>
           
                 <div class="code">
-                  <input  type="text">
+                  <input type="text" v-model="Code">
                 </div>
             
             <br><br>
@@ -87,7 +87,8 @@
     export default {
       data() {
         return {
-          Email: '',
+          Email: this.$route.query.Email,
+          Code: ''
         };
       },
       methods: {
@@ -96,7 +97,13 @@
         },
     
         validationcode() {
-            this.$router.push({ name: 'nouveaucode' });
+            const codeIsValid = localStorage.getItem('mdpcode') == this.Code;
+            console.log('this.code', this.Code);
+            if (!codeIsValid) {
+                return false;
+            }
+
+            this.$router.push({ name: 'nouveaucode', query: {'Email': this.Email }});
         }
     }
     };
