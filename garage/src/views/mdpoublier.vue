@@ -99,7 +99,7 @@ export default {
 
     envoyermdp() {
     let email = document.getElementById("email")
-    if(email.value == ''){
+    if(email.value == '') {
         alert("Entrer l'email avant d'envoyer")
     }
     else {

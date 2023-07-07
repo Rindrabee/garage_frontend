@@ -74,7 +74,7 @@
 
         <div class="user-input-box">
           <label for="photo">Photo</label>
-          <input  style="background: white;" type="file" id="photo" name="photo" placeholder="Choisir votre photo">
+          <input @change="handleImage" ref="postImageInput" style="background: white;" type="file" id="photo" name="photo" placeholder="Choisir votre photo">
         </div>
 
         <!-- ito le tsipika kely -->
@@ -245,6 +245,7 @@ export default {
       Email: '',
       Password: '',
       Photo: '',
+      
 
       isFieldEmpty: false,
       isInvalidEmail: false,
@@ -257,7 +258,6 @@ export default {
     alert("Veuillez accepter les conditions pour vous inscrire.");
     return;
   }
-
   const response = await AuthenticationService.register({
     Nom: this.Nom,
     Prenoms: this.Prenoms,
@@ -267,11 +267,13 @@ export default {
     Sexe: this.Sexe,
     Telephone: this.Telephone,
     Email: this.Email,
-    Password: this.Password
+    Password: this.Password,
+    Photo: this.Photo
   });
 
   console.log(response.data);
   alert("Enregistré avec succès");
+
 
   localStorage.setItem("Email",this.Email)
 
@@ -296,6 +298,20 @@ export default {
       h.style.display = "none";
 
       },
+      handleImage(event) {
+    const file = event.target.files[0];
+    this.createBase64Image(file);
+  },
+  createBase64Image(fileObject) {
+    const reader = new FileReader();
+
+    reader.onload = (e) => {
+      this.Photo = e.target.result;
+     
+    };
+
+    reader.readAsDataURL(fileObject);
+  },
       isValidEmail(email) {
       // Expression régulière pour valider le format de l'adresse e-mail
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
