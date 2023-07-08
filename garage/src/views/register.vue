@@ -253,6 +253,21 @@ export default {
     }
   },
   methods: {
+    validateDate() {
+      const today = new Date();
+      const inputDate = new Date(this.Naissance);
+      
+      // Réinitialiser les heures, minutes, secondes et millisecondes pour une comparaison précise
+      today.setHours(0, 0, 0, 0);
+      inputDate.setHours(0, 0, 0, 0);
+      
+      if (inputDate > today) {
+        alert("Il est illogique d'indiquer une date de naissance postérieure à la date d'aujourd'hui.");
+        return false;
+      }
+      
+      return true;
+    },
   async register() {
   if (!this.acceptConditions) {
     alert("Veuillez accepter les conditions pour vous inscrire.");
@@ -297,106 +312,113 @@ export default {
       g.style.display = "block";
       h.style.display = "none";
 
-      },
-      handleImage(event) {
+    },
+    handleImage(event) {
     const file = event.target.files[0];
     this.createBase64Image(file);
-  },
-  createBase64Image(fileObject) {
+    },
+    createBase64Image(fileObject) {
     const reader = new FileReader();
 
     reader.onload = (e) => {
-      this.Photo = e.target.result;
+    this.Photo = e.target.result;
      
     };
 
     reader.readAsDataURL(fileObject);
-  },
-      isValidEmail(email) {
-      // Expression régulière pour valider le format de l'adresse e-mail
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    },
+    isValidEmail(email) {
+    // Expression régulière pour valider le format de l'adresse e-mail
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-      return emailRegex.test(email);
-      },
-      slide1() {
-        if (!this.Nom || !this.Naissance || !this.Prenoms || !this.Profession || !this.Adresse || !this.Sexe) {
-        this.isFieldEmpty = true;
-        return;
-      }
-
-      if (!this.isValidEmail(this.Email)) {
-        this.isFieldEmpty = false;
-        this.isInvalidEmail = true;
-        return;
-      }
-
-      this.isFieldEmpty = false;
-      this.isInvalidEmail = false;
-    
-      let a = document.getElementById("pejy1");
-      let b = document.getElementById("pejy2");
-      let c = document.getElementById("voalohany");
-      let d = document.getElementById("voalohany1");
-      let g = document.getElementById("voalohany2");
-      let e = document.getElementById("next");
-        
-      a.style.display = "none";
-      b.style.display = "flex";
-      c.style.display = "block";
-      d.style.display = "block";
-      e.style.display = "none";
-      g.style.display = "block";
-
-      },
-    
-      slide2(){
-        let a = document.getElementById("pejy1");
-        let b = document.getElementById("pejy2");
-        let c = document.getElementById("next");
-        
-
-        a.style.display = "flex";
-        b.style.display = "none";
-        c.style.display = "block";
-      },
-
-      slide3() {
-      if (!this.Telephone || !this.Password) {
+    return emailRegex.test(email);
+    },
+    slide1() {
+      if (!this.Nom || !this.Naissance || !this.Prenoms || !this.Profession || !this.Adresse || !this.Sexe) {
       this.isFieldEmpty = true;
       return;
-      }
+    }
+    const isValidDate = this.validateDate();
+    
+    if (!isValidDate) {
+      return;
+    }
+  
 
+    if (!this.isValidEmail(this.Email)) {
       this.isFieldEmpty = false;
+      this.isInvalidEmail = true;
+      return;
+    }
 
-        let a = document.getElementById("pejy1");
-        let b = document.getElementById("pejy2");
-        let c = document.getElementById("pejy3");
-        let d = document.getElementById("faharoa");
-        let e = document.getElementById("faharoa1");
-        let g = document.getElementById("faharoa2");
-        let f = document.getElementById("next");
+    this.isFieldEmpty = false;
+    this.isInvalidEmail = false;
+  
+    let a = document.getElementById("pejy1");
+    let b = document.getElementById("pejy2");
+    let c = document.getElementById("voalohany");
+    let d = document.getElementById("voalohany1");
+    let g = document.getElementById("voalohany2");
+    let e = document.getElementById("next");
+      
+    a.style.display = "none";
+    b.style.display = "flex";
+    c.style.display = "block";
+    d.style.display = "block";
+    e.style.display = "none";
+    g.style.display = "block";
 
-        a.style.display = "none";
-        b.style.display = "none";
-        c.style.display = "flex";
-        d.style.display = "block";
-        e.style.display = "block";
-        g.style.display = "block";
-        f.style.display = "none";
-      },
-      slide4(){
-        let a = document.getElementById("pejy1");
-        let b = document.getElementById("pejy2");
-        let c = document.getElementById("pejy3");
-        let d = document.getElementById("next");
+    },
+    
+    slide2(){
+      let a = document.getElementById("pejy1");
+      let b = document.getElementById("pejy2");
+      let c = document.getElementById("next");
       
 
-        c.style.display = "none";
-        a.style.display = "none";
-        d.style.display = "none";
-        b.style.display = "flex";
+      a.style.display = "flex";
+      b.style.display = "none";
+      c.style.display = "block";
+    },
+
+    slide3() {
+    if (!this.Telephone || !this.Password) {
+    this.isFieldEmpty = true;
+    return;
+    }
+
+    this.isFieldEmpty = false;
+
+    let a = document.getElementById("pejy1");
+    let b = document.getElementById("pejy2");
+    let c = document.getElementById("pejy3");
+    let d = document.getElementById("faharoa");
+    let e = document.getElementById("faharoa1");
+    let g = document.getElementById("faharoa2");
+    let f = document.getElementById("next");
+
+    a.style.display = "none";
+    b.style.display = "none";
+    c.style.display = "flex";
+    d.style.display = "block";
+    e.style.display = "block";
+    g.style.display = "block";
+    f.style.display = "none";
+    },
+
+    slide4(){
+    let a = document.getElementById("pejy1");
+    let b = document.getElementById("pejy2");
+    let c = document.getElementById("pejy3");
+    let d = document.getElementById("next");
+      
+
+    c.style.display = "none";
+    a.style.display = "none";
+    d.style.display = "none";
+    b.style.display = "flex";
         
-      }
+    }
 
   
   }

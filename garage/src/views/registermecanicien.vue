@@ -65,7 +65,6 @@
               <option style="font-family: century gothic;" value="Transmission et embrayage">Transmission et embrayage</option>
               <option style="font-family: century gothic;" value="Systèmes de carburant">Systèmes de carburant</option>
             </select>
-
           </div>
           <div style="color: red;margin-left: 9px;margin-top: -30px ;font-size: 15px;font-family: century gothic;" v-if="isFieldEmpty && !Specialite" class="field-message">Entrer le specialité du garage</div>
           </div>
@@ -89,7 +88,7 @@
   
           <div class="user-input-box">
             <label for="photo">Photo</label>
-            <input  style="background: white;" type="file" id="photo" name="photo" placeholder="Choisir votre photo">
+            <input @change="handleImage" ref="postImageInput" style="background: white;" type="file" id="photo" name="photo" placeholder="Choisir votre photo">
           </div>
   
           <!-- ito le tsipika kely -->
@@ -284,6 +283,21 @@
       }
     },
     methods: {
+      validateDate() {
+      const today = new Date();
+      const inputDate = new Date(this.Naissance);
+      
+      // Réinitialiser les heures, minutes, secondes et millisecondes pour une comparaison précise
+      today.setHours(0, 0, 0, 0);
+      inputDate.setHours(0, 0, 0, 0);
+      
+      if (inputDate > today) {
+        alert("Il est illogique d'indiquer une date de naissance postérieure à la date d'aujourd'hui.");
+        return false;
+      }
+      
+      return true;
+    },
     async register() {
     if (!this.acceptConditions) {
       alert("Veuillez accepter les conditions pour vous inscrire.");
@@ -331,6 +345,20 @@
         h.style.display = "none";
   
       },
+      handleImage(event) {
+    const file = event.target.files[0];
+    this.createBase64Image(file);
+  },
+  createBase64Image(fileObject) {
+    const reader = new FileReader();
+
+    reader.onload = (e) => {
+      this.Photo = e.target.result;
+     
+    };
+
+    reader.readAsDataURL(fileObject);
+  },
         isValidEmail(email) {
         // Expression régulière pour valider le format de l'adresse e-mail
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -342,6 +370,11 @@
           this.isFieldEmpty = true;
           return;
         }
+        const isValidDate = this.validateDate();
+      
+      if (!isValidDate) {
+        return;
+      }
   
         if (!this.isValidEmail(this.Email)) {
           this.isFieldEmpty = false;
