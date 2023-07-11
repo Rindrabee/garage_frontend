@@ -59,7 +59,7 @@
             <span class="fas fa-wrench"></span><p style="font-size: 13px;">Mecanicien</p>
         </div>
         <div class="sidebar-menu">
-            <span class="fas fa-car"></span><p style="font-size: 13px;">Garage</p>
+            <span @click="verslistegarage" class="fas fa-car"></span><p @click="verslistegarage" style="font-size: 13px;">Garage</p>
         </div>
         <div class="sidebar-menu">
             <span class="fas fa-file-invoice"></span><p style="font-size: 13px;">Comptabilité</p>
@@ -67,7 +67,7 @@
     </div>
     <!-- main dashboard -->
     <main>
-        <div class="dashboard-container">
+        <div style="opacity: 100%;" id="ambadika" class="dashboard-container">
             <!-- cards top -->
             <div class="card total1">
                 <div class="info">
@@ -198,38 +198,31 @@
                 <h3 style="font-family: Poppins,sans-serif;font-size: 18.5px;">Discussion</h3>
                 <br>
 
-                <div @click="discu" style="cursor: pointer;"  class="customer-wrapper">
+                <div @click="discu(c.id)" v-for="c in Client" :key="c.id" style="cursor: pointer;"  class="customer-wrapper">
                     <img class="customer-image" src="../assets/images/aza.jpg" alt="">
                     <div class="customer-name">
-                        <h4>Mollitia rerum</h4>
-                        <p style="font-size: 12px;">Panina..</p>
+                        <h4 style="margin-top: 9px;">{{ c.Prenoms  }}</h4>
+                        <!-- <p style="font-size: 12px;">Panina..</p> -->
                     </div>
-                    <p class="customer-date">Today</p>
+                    <!-- <p class="customer-date">Today</p> -->
                 </div>
 
-                <div style="cursor: pointer;"  class="customer-wrapper">
-                    <img class="customer-image" src="../assets/images/xel.jpg" alt="">
-                    <div class="customer-name">
-                        <h4>Dolor amet</h4>
-                        <p style="font-size: 12px;">Salut</p>
-                    </div>
-                    <p class="customer-date">Yesterday</p>
-                </div>
+                
 
-                <div style="cursor: pointer;" class="customer-wrapper">
-                    <img class="customer-image" src="../assets/images/xel.jpg" alt="">
-                    <div  class="customer-name">
-                        <h4>Ipsum volupta</h4>
-                        <p style="font-size: 12px;">De aona e</p>
-                    </div>
-                    <p class="customer-date">22/02/21</p>
-                </div>
+           
+
+                
             </div>
+            
+            
+            <!-- un petit design pour le footer -->
+        
+           
         </div>
  
         <!-- mipotra ito refa cliquena le discussion -->
         
-        <div id="conversation"  style="display: none; box-shadow: 2px 2px 10px black;background-color: #0f530f;border-radius : 20px;position: absolute;margin-top: -750px;margin-left: 130px;width: 800px;" class="container conversation">
+        <div id="conversation"  style="display: none; box-shadow: 2px 2px 10px black;background-color: #0f530f;border-radius : 20px;position: fixed;top: 200px;margin-left: 130px;width: 800px;" class="container conversation">
         <br>
         
             <div class="row">
@@ -240,11 +233,11 @@
             <br><br>
             <div class="col-lg-3 left-col">
                 <div class="card friend-list">
-                    <div id="plist" class="people-list">
+                    <div id="plist" v-for="c in Client" :key="c.id" class="people-list">
                         <ul class="list-unstyled chat-list mt-2 mb-0">
                             <li class="clearfix">
                                 <div class="about">
-                                    <div class="name"><img style="width: 20px;" src="../assets/images/profil.ico" alt="">&nbsp; Test</div>
+                                    <div class="name"><img style="width: 20px;" src="../assets/images/profil.ico" alt="">&nbsp; {{ c.Prenoms }}</div>
                                 </div>
                             </li>
                         </ul>
@@ -256,14 +249,14 @@
                 <div class="card chat" ref="chat">
                     <div class="chat-header clearfix">
                         <div class="row">
-                            <div class="col-lg-6">
+                            <div v-for="c in Client" :key="c.id" class="col-lg-6">
                                 <div class="chat-about">
                                     <a href="javascript:void(0);" data-toggle="modal" data-target="#view_info">
                                         <img style="width: 20px;" src="../assets/images/profil.ico" alt="avatar">
                                     </a>
                                 </div>
                                 
-                                <h6 style="font-family: century;margin-top : 2px" class="m-b-0">&nbsp; &nbsp;Rindra</h6>
+                                <h6  style="font-family: century;margin-top : 2px" class="m-b-0">&nbsp; &nbsp;{{ c.Prenoms }}</h6>
                                 
                             </div>
                         </div>
@@ -285,9 +278,9 @@
                     <div class="chat-message clearfix">
                         <div class="input-group mb-0">
                             <div class="input-group-prepend">
-                                <span class="input-group-text" ><img src="../assets/images/sendeo.png" style="width: 30px;height: 30px;" alt=""></span>
+                                <span @click="sendMessage" class="input-group-text" ><img  src="../assets/images/sendeo.png" style="width: 30px;height: 30px;" alt=""></span>
                             </div>
-                            <input type="text" class="form-control" placeholder="Votre message ici...">                                    
+                            <input v-model="Text" type="text" class="form-control" placeholder="Votre message ici...">                                    
                         </div>
                     </div>
 
@@ -303,15 +296,28 @@
 
 <script>
 import AuthenticationService from '../services/AuthenticationService.js'
+import io from 'socket.io-client'
 import axios from 'axios';
+
 export default {
   data () {
     return {
-    
+    Text : '',
+    Client: {},
+    id_received: '',
+    id_sender: 1,
+    socket: io('http://localhost:8082')
+
     }
 },
+    mounted() {
+        this.listeclt();
+        this.socket.on('chat message',(data) => {
+           
+        });
+    },
   methods: {
-    slide1(){
+    slide1() {
         let a = document.getElementById("rindra");
         if (a.style.display === "block") {
         a.style.display = "none";
@@ -319,16 +325,36 @@ export default {
         a.style.display = "block";
         }
     },
-    discu(){
+    listeclt() {
+    axios.get('http://localhost:8082/api/clients/allClients')
+    .then(response => {
+        this.Client = response.data
+    })
+    },
+    discu(idclient){
     let a = document.getElementById("conversation")
+    let b = document.getElementById("ambadika")
+
+    localStorage.setItem("ID_RECEIVED",idclient)
+    this.id_received=localStorage.getItem("ID_RECEIVED");
 
     a.style.display = "block";
+    b.style.opacity = "70%";
 
     },
     fermerdiscu() {
-        let a = document.getElementById("conversation")
+    let a = document.getElementById("conversation")
+    let b = document.getElementById("ambadika")
 
-        a.style.display = "none";
+    localStorage.removeItem("ID_RECEIVED")
+
+
+    a.style.display = "none";
+    b.style.opacity = "100%";
+
+    },
+    verslistegarage() {
+        this.$router.push({ name: 'adminGARAGE' });
     },
 
     logout() {
@@ -343,7 +369,22 @@ export default {
         this.MessageError = "Une erreur s'est produite lors de la déconnexion.";
         });
     },
-  }
+    sendMessage() {
+        // Envoi du message au serveur
+        const data = { Text: this.Text, id_sender: this.id_sender,id_received:this.id_received };
+
+        // Envoi de l'événement 'chat message' au serveur
+        this.socket.emit('chat message', data);
+
+        // Réinitialisation de l'input du message
+        this.Text = '';
+    },
+
+    prendrelesession() {
+
+    },
+    },
+  
 }
 </script>
 
@@ -358,7 +399,8 @@ export default {
 .cont {
     background : url(../assets/images/ft3.jpg);
     background-position: center;
-  background-size: cover;
+    background-size: cover;
+    min-height: 100vh;
 }
 h2 {
     font: 18px;
@@ -789,7 +831,7 @@ main {
 }
 
 .people-list .chat-list li .name {
-    font-size: 15px
+    font-size: 11px
 }
 
 .people-list .chat-list img {

@@ -27,6 +27,7 @@ import nouveaucode2 from '../views/nouveaucode2.vue'
 import mdpoublier3 from '../views/mdpoublier3.vue'
 import vldoublie3 from '../views/vldoublie3.vue'
 import nouveaucode3 from '../views/nouveaucode3.vue'
+import adminGARAGE from '../views/adminGARAGE.vue'
 
 
 const router = createRouter({
@@ -161,6 +162,12 @@ const router = createRouter({
       name: 'nouveaucode3',
       component: nouveaucode3
     },
+    {
+      path: '/adminGARAGE',
+      name: 'adminGARAGE',
+      component: adminGARAGE
+    },
+    
   ]
 })
 
