@@ -29,7 +29,7 @@
             <div class="settings-menu-inner">
                 <div class="settings-links">
                     <img style="cursor: pointer;" src="../assets/images/setting.png" class="settings-icon">
-                    <a style="color: #000;font-family: century gothic;cursor: pointer;" href="#">PROFILE<img style="width: 10px;" src="../assets/images/arrow.png" alt=""></a>
+                    <a style="color: #000;font-family: century gothic;cursor: pointer;" href="modificationadmin">PROFILE<img style="width: 10px;" src="../assets/images/arrow.png" alt=""></a>
                 </div>
                 
                 <div class="settings-links">

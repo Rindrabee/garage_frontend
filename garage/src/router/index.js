@@ -28,6 +28,7 @@ import mdpoublier3 from '../views/mdpoublier3.vue'
 import vldoublie3 from '../views/vldoublie3.vue'
 import nouveaucode3 from '../views/nouveaucode3.vue'
 import adminGARAGE from '../views/adminGARAGE.vue'
+import modificationadmin from '../views/modificationadmin.vue'
 
 
 const router = createRouter({
@@ -166,6 +167,11 @@ const router = createRouter({
       path: '/adminGARAGE',
       name: 'adminGARAGE',
       component: adminGARAGE
+    },
+    {
+      path: '/modificationadmin',
+      name: 'modificationadmin',
+      component: modificationadmin
     },
     
   ]

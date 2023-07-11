@@ -87,12 +87,12 @@
                         
                         <tr v-for="g in Garage" :key="g.id">
 
-                        <td><img style="width: 50px;border-radius: 50%;height: 50px;" src="http://localhost:8082/sary/filename" alt=""></td>
+                        <td><img style="width: 50px;border-radius: 50%;height: 50px;" src="" alt=""></td>
                         <td>{{ g.Nom }}</td>
                         <td>{{ g.Email }}</td>
                         <td>{{ g.Adresse }}</td>
-                        <td>{{ g.Specialite  }}</td>
-                        <td>{{ g.Telephone  }}</td>
+                        <td>{{ g.Specialite }}</td>
+                        <td>{{ g.Telephone }}</td>
                         <td><button class="btn btn-outline-success">Accepter</button></td>
                         </tr>
     
