@@ -76,9 +76,9 @@
                     <br>
                     <table>
                         <tr>
-                            <th>Numéro</th>
+                            <th>Photo</th>
                             <th>Nom</th>
-                            <th>Email</th>
+                            <th>Service</th>
                             <th>Adresse</th>
                             <th>Spécialité</th>
                             <th>Telephone</th>
@@ -87,11 +87,15 @@
                         
                         <tr v-for="g in Garage" :key="g.id">
 
-                        <td><img style="width: 50px;border-radius: 50%;height: 50px;" src="" alt=""></td>
+                       
+                        <td>
+                        <img style="width: 80px; border-radius: 2%; height: 80px;" :src="'http://localhost:8082/' + g.Photo + '.jpeg'" alt="">
+                        </td>
+                        
                         <td>{{ g.Nom }}</td>
-                        <td>{{ g.Email }}</td>
+                        <td>{{ g.service_offerte  }}</td>
                         <td>{{ g.Adresse }}</td>
-                        <td>{{ g.Specialite }}</td>
+                        <td style="color: rgb(25, 72, 224);">{{ g.Specialite }}</td>
                         <td>{{ g.Telephone }}</td>
                         <td><button class="btn btn-outline-success">Accepter</button></td>
                         </tr>

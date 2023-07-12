@@ -198,7 +198,7 @@
                 <h3 style="font-family: Poppins,sans-serif;font-size: 18.5px;">Discussion</h3>
                 <br>
 
-                <div @click="discu(c.id)" v-for="c in Client" :key="c.id" style="cursor: pointer;"  class="customer-wrapper">
+                <div @click="discu(c.id,c.Prenoms)" v-for="c in Client" :key="c.id" style="cursor: pointer;"  class="customer-wrapper">
                     <img class="customer-image" src="../assets/images/aza.jpg" alt="">
                     <div class="customer-name">
                         <h4 style="margin-top: 9px;">{{ c.Prenoms  }}</h4>
@@ -206,12 +206,7 @@
                     </div>
                     <!-- <p class="customer-date">Today</p> -->
                 </div>
-
-                
-
-           
-
-                
+     
             </div>
             
             
@@ -222,7 +217,7 @@
  
         <!-- mipotra ito refa cliquena le discussion -->
         
-        <div id="conversation"  style="display: none; box-shadow: 2px 2px 10px black;background-color: #0f530f;border-radius : 20px;position: fixed;top: 200px;margin-left: 130px;width: 800px;" class="container conversation">
+        <div id="conversation"  style="display: none; box-shadow: 2px 2px 10px black;background-color: #0f530f;border-radius : 20px;position: fixed;top: 170px;margin-left: 130px;width: 800px;" class="container conversation">
         <br>
         
             <div class="row">
@@ -233,7 +228,7 @@
             <br><br>
             <div class="col-lg-3 left-col">
                 <div class="card friend-list">
-                    <div id="plist" v-for="c in Client" :key="c.id" class="people-list">
+                    <div @click="discu(c.id,c.Prenoms)" v-for="c in Client" :key="c.id" class="people-list">
                         <ul class="list-unstyled chat-list mt-2 mb-0">
                             <li class="clearfix">
                                 <div class="about">
@@ -245,37 +240,42 @@
                 </div>
             </div>
 
-            <div class="col-lg-9 right-col">
+            <!-- ito le soratra anarana eny ambony -->
+            <div style="height: 420px" class="col-lg-9 right-col">
                 <div class="card chat" ref="chat">
-                    <div class="chat-header clearfix">
+                    <div style="position: fixed;margin-top: 182px;width: 40%;" class="chat-header clearfix">
                         <div class="row">
-                            <div v-for="c in Client" :key="c.id" class="col-lg-6">
+                            <div class="col-lg-6">
                                 <div class="chat-about">
                                     <a href="javascript:void(0);" data-toggle="modal" data-target="#view_info">
                                         <img style="width: 20px;" src="../assets/images/profil.ico" alt="avatar">
                                     </a>
                                 </div>
                                 
-                                <h6  style="font-family: century;margin-top : 2px" class="m-b-0">&nbsp; &nbsp;{{ c.Prenoms }}</h6>
+                                <h6  style="font-family: century;margin-top : 2px" class="m-b-0">&nbsp; &nbsp; {{ PrenomClt }}</h6>
                                 
                             </div>
                         </div>
                     </div>
+                    <br>
 
                     <div class="chat-history">
                         <ul class="m-b-0">
                             <li class="clearfix">
                                 <div class="message-data text-right">
-
                                 </div>
-                                <div  class="message other-message float-right">Test</div>
-                                <br>
-                                <div style="background-color: #C6F568;" class="message my-message">Test</div>
+                                <div  class="message my-message">Test</div>
+                            </li>
+
+                            <li v-for="m in Message" :key="m.id" class="clearfix">
+                                <div class="message-data text-right">
+                                </div>
+                                <div v-if="m.id_received == id_received && m.id_sender == id_sender" style="background-color: #C6F568;" class="message other-message float-right">{{ m.Text }}</div>
                             </li>
                         </ul>
                     </div>
 
-                    <div class="chat-message clearfix">
+                    <div  class="chat-message clearfix">
                         <div class="input-group mb-0">
                             <div class="input-group-prepend">
                                 <span @click="sendMessage" class="input-group-text" ><img  src="../assets/images/sendeo.png" style="width: 30px;height: 30px;" alt=""></span>
@@ -283,7 +283,6 @@
                             <input v-model="Text" type="text" class="form-control" placeholder="Votre message ici...">                                    
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>
@@ -304,44 +303,76 @@ export default {
     return {
     Text : '',
     Client: {},
+    Admin: {},
+    Message: {},
+    PrenomClt : '',
     id_received: '',
-    id_sender: 1,
+    id_sender: '',
+    token: localStorage.getItem('token'),
     socket: io('http://localhost:8082')
 
     }
-},
+    },
     mounted() {
-        this.listeclt();
-        this.socket.on('chat message',(data) => {
-           
-        });
+    this.listeclt();
+    this.selectpers();
+    this.adminconnecter();
+    this.socket.on('chat message',(data) => {
+        this.selectpers();
+    });
     },
-  methods: {
+    methods: {
     slide1() {
-        let a = document.getElementById("rindra");
-        if (a.style.display === "block") {
-        a.style.display = "none";
-        } else {
-        a.style.display = "block";
-        }
+    let a = document.getElementById("rindra");
+    if (a.style.display === "block") {
+    a.style.display = "none";
+    } else {
+    a.style.display = "block";
+    }
     },
+    //Lister les clients sur le message
     listeclt() {
     axios.get('http://localhost:8082/api/clients/allClients')
     .then(response => {
         this.Client = response.data
     })
     },
-    discu(idclient){
+    //Prendre le session de l'admin connecté
+    adminconnecter() {
+       axios.get('http://localhost:8082/api/admins/session',{
+        headers: {
+            Authorization: `Bearer ${localStorage.getItem('token')}`
+        },
+       })
+       .then(response => {
+        this.Admin = response.data.adm;
+        this.id_sender = this.Admin.id;
+       }).catch(error => {
+        console.log(error);
+       })
+
+    },
+    // Prendre le message du personne cliqué
+    selectpers(){
+    axios.get('http://localhost:8082/api/messages/listermessage')
+    .then(response => {
+        this.Message = response.data
+    })
+    },
+    // mapiseo anle div message
+    discu(idclient,Prenoms){
     let a = document.getElementById("conversation")
     let b = document.getElementById("ambadika")
 
     localStorage.setItem("ID_RECEIVED",idclient)
     this.id_received=localStorage.getItem("ID_RECEIVED");
 
+    this.PrenomClt = Prenoms
     a.style.display = "block";
     b.style.opacity = "70%";
 
     },
+    // fermer le discussion
     fermerdiscu() {
     let a = document.getElementById("conversation")
     let b = document.getElementById("ambadika")
@@ -380,9 +411,7 @@ export default {
         this.Text = '';
     },
 
-    prendrelesession() {
 
-    },
     },
   
 }
