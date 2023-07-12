@@ -99,28 +99,22 @@
                 <div class="info">
                     <div class="info-detail">
                     <h3 style="font-size: 20px;">DISCUSSION</h3>
-                    <p style="font-family: century gothic;font-size: 13px;">Discuter en priver</p>
+                    <p  style="font-family: century gothic;font-size: 13px;">Discuter en priver</p>
                     <h2><span>OPTION</span></h2>
-                    <button @click="discu" class="btn btn-outline-success">Continuer</button>
+                    <button  v-for="a in Admin" :key="a.id" @click="discu(a.id)"   class="btn btn-outline-success">Continuer</button>
                     </div>
                     <div class="info-image">
                     <i class="fas fa-comments"></i>
-
                     </div>
-                    
                 </div>
-              
             </div>
-
-    
-
-
         </div>
 
 
         <!-- mipotra ito refa cliquena le discussion -->
         
-        <div id="conversation"  style="display: none; box-shadow: 2px 2px 10px black;background-color: #0f530f;border-radius : 20px;position: fixed;top: 200px;margin-left: -40px;width: 800px;" class="container conversation">
+      
+        <div id="conversation"  style="display: none; box-shadow: 2px 2px 10px black;background-color: #0f530f;border-radius : 20px;position: fixed;top: 170px;margin-left: -40px;width: 800px;" class="container conversation">
         <br>
         
             <div class="row">
@@ -131,11 +125,11 @@
             <br><br>
             <div class="col-lg-3 left-col">
                 <div class="card friend-list">
-                    <div id="plist" class="people-list">
+                    <div  class="people-list">
                         <ul class="list-unstyled chat-list mt-2 mb-0">
                             <li class="clearfix">
                                 <div class="about">
-                                    <div class="name"><img style="width: 20px;" src="../assets/images/profil.ico" alt="">&nbsp; Test</div>
+                                    <div class="name">&nbsp; GARAGEFINDER</div>
                                 </div>
                             </li>
                         </ul>
@@ -143,45 +137,45 @@
                 </div>
             </div>
 
-            <div class="col-lg-9 right-col">
+            <!-- ito le soratra anarana eny ambony -->
+            <div style="height: 420px" class="col-lg-9 right-col">
                 <div class="card chat" ref="chat">
-                    <div class="chat-header clearfix">
+                    <div style="position: fixed;margin-top: 182px;width: 37%;" class="chat-header clearfix">
                         <div class="row">
                             <div class="col-lg-6">
                                 <div class="chat-about">
                                     <a href="javascript:void(0);" data-toggle="modal" data-target="#view_info">
-                                        <img style="width: 20px;" src="../assets/images/profil.ico" alt="avatar">
+                                        <img style="width: 40px;height: 40px;"  src="../assets/images/car.ico" alt="">
                                     </a>
                                 </div>
-                                
-                                <h6 style="font-family: century;margin-top : 2px" class="m-b-0">&nbsp; &nbsp;Rindra</h6>
+
+                                <h6  style="font-family: century gothic;margin-top : 13px" class="m-b-0">&nbsp; &nbsp; MESSAGE</h6>
                                 
                             </div>
                         </div>
                     </div>
-
+                    <br>
                     <div class="chat-history">
                         <ul class="m-b-0">
-                            <li class="clearfix">
+                            <li class="clearfix" v-for="m in Message" :key="m.id" >
                                 <div class="message-data text-right">
 
                                 </div>
-                                <div  class="message other-message float-right">Test</div>
-                                <br>
-                                <div style="background-color: #C6F568;" class="message my-message">Test</div>
+                                <div v-if="m.id_received == id_received && m.id_sender == id_sender" style="background-color: #C6F568;"  class="message other-message float-right">{{ m.Text }}</div>
+                                <div v-if="m.id_sender == id_received && m.id_received == id_sender"  class="message my-message">{{ m.Text }}</div>
                             </li>
                         </ul>
                     </div>
-
-                    <div class="chat-message clearfix">
-                        <div class="input-group mb-0">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text" ><img src="../assets/images/sendeo.png" style="width: 30px;height: 30px;" alt=""></span>
-                            </div>
-                            <input type="text" class="form-control" placeholder="Votre message ici...">                                    
+                   <br>
+                   <!-- div le ery ambany le anoratana -->
+                </div>
+                <div  class="noo" style="position: fixed;width: 500px;margin-top: -75px;margin-left: 30px;">
+                    <div class="input-group mb-0">
+                        <div class="input-group-prepend">
+                            <span @click="sendMessage" class="input-group-text" ><img  src="../assets/images/sendeo.png" style="width: 30px;height: 30px;" alt=""></span>
                         </div>
+                        <input v-model="Text" type="text" class="form-control" placeholder="Votre message ici...">                                    
                     </div>
-
                 </div>
             </div>
         </div>
@@ -193,41 +187,100 @@
 </template>
 
 <script>
-import AuthenticationService from '../services/AuthenticationService.js';
-import { tokenIsExpired } from '../utils/date.js';
+import AuthenticationService from '../services/AuthenticationService.js'
+import io from 'socket.io-client'
 import axios from 'axios';
+
 export default {
-    data () {
-        return {
-        
-        }
+  data () {
+    return {
+    Text : '',
+    Client: {},
+    Admin: {},
+    Message: {},
+    PrenomClt : '',
+    PhotoClt : '',
+    id_received: '',
+    id_sender: '',
+    token: localStorage.getItem('token'),
+    socket: io('http://localhost:8082')
+    }
+    },
+    mounted() {
+    this.listeadmin();
+    this.listermessage();
+    this.clientconnecter();
+    this.socket.on('chat message',(data) => {
+        this.listermessage();
+    });
     },
     methods: {
-        slide1(){
-            let a = document.getElementById("rindra");
-            if (a.style.display === "block") {
-            a.style.display = "none";
-            } else {
-            a.style.display = "block";
-            }
-        },
-        discu(){
+    slide1() {
+    let a = document.getElementById("rindra");
+    if (a.style.display === "block") {
+    a.style.display = "none";
+    } else {
+    a.style.display = "block";
+    }
+    },
+
+    // Prendre le message du personne cliqué
+    listermessage(){
+    axios.get('http://localhost:8082/api/messages/listermessage')
+    .then(response => {
+        this.Message = response.data
+    })
+    },
+     //Lister les admins sur le message
+    listeadmin() {
+    axios.get('http://localhost:8082/api/admins/getAllAdmin')
+    .then(response => {
+        this.Admin = response.data
+    })
+    },
+
+
+    //Prendre le session du client connecté
+    clientconnecter() {
+    axios.get('http://localhost:8082/api/clients/session', {
+    headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`
+    },
+    })
+    .then(response => {
+    this.Client = response.data.clt;
+    this.id_sender = this.Client.id;
+    }).catch(error => {
+    console.log(error);
+    })
+    },
+
+    // mapiseo anle div message
+    discu(idadmin) {
     let a = document.getElementById("conversation")
     let b = document.getElementById("ambadika")
 
+    localStorage.setItem("idandefasana",idadmin)
+
+    this.id_received = localStorage.getItem("idandefasana");
+   
+    
     a.style.display = "block";
     b.style.opacity = "70%";
 
     },
+    // fermer le discussion
     fermerdiscu() {
-        let a = document.getElementById("conversation")
-        let b = document.getElementById("ambadika")
+    let a = document.getElementById("conversation")
+    let b = document.getElementById("ambadika")
 
-        a.style.display = "none";
-        b.style.opacity = "100%";
+    localStorage.removeItem("idandefasana")
+
+    a.style.display = "none";
+    b.style.opacity = "100%";
 
     },
-        logout() {
+    logout() {
         axios.post('http://localhost:8082/api/clients/logout')
         .then(response => {
         localStorage.removeItem('token');
@@ -238,9 +291,18 @@ export default {
         console.error(error);
         this.MessageError = "Une erreur s'est produite lors de la déconnexion.";
         });
-        }
     },
- 
+    sendMessage() {
+        const data = { Text: this.Text, id_sender: this.id_sender,id_received:this.id_received };
+       
+        this.socket.emit('chat message', data);
+
+        this.Text = '';
+    },
+
+
+    },
+  
 }
 </script>
 
@@ -469,6 +531,7 @@ main {
 
 
 /* Discussion  */
+
 .conversation {
     height: auto;
     margin-top: -60px;
@@ -489,7 +552,10 @@ main {
 .chat {
     height: 80%;
     overflow-y: scroll;
+    display: flex;
+    flex-direction: column-reverse;
 }
+
 
 #plist {
     overflow-y: scroll;
@@ -498,6 +564,7 @@ main {
 .clearfix {
     text-align: left;
 }
+
 
 .card {
     background: #fff;
@@ -546,7 +613,8 @@ main {
 }
 
 .people-list .chat-list li .name {
-    font-size: 15px
+   
+    font-size: 11px
 }
 
 .people-list .chat-list img {
@@ -673,13 +741,13 @@ main {
     left: 93%
 }
 
-.chat .chat-message {
+/* .chat .chat-message {
     padding: 20px;
     position: sticky;
     bottom: 0px;
     z-index: 2;
     background-color: #fff;
-}
+} */
 
 .online,
 .offline,

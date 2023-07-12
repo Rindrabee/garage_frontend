@@ -19,7 +19,7 @@
             <input style="margin-left: -300px;width: 300px;color: gray;font-family: century gothic;" class="form-control" type="text" placeholder="Barre de recherche">
             <span style="cursor: pointer;" class="fas fa-search"></span>
             <img @click="slide1" style="cursor: pointer;" class="profile-image" src="../assets/images/profil.ico" alt="">
-            <p class="profile-name" style="cursor: pointer;">  Tahinalisoa</p>
+            <p class="profile-name" style="cursor: pointer;">  {{ Admin.Prenoms }}</p>
         </div>
         <div id="rindra" class="settings-menu">
             <div id="dark-btn">
@@ -198,8 +198,8 @@
                 <h3 style="font-family: Poppins,sans-serif;font-size: 18.5px;">Discussion</h3>
                 <br>
 
-                <div @click="discu(c.id,c.Prenoms)" v-for="c in Client" :key="c.id" style="cursor: pointer;"  class="customer-wrapper">
-                    <img class="customer-image" src="../assets/images/aza.jpg" alt="">
+                <div @click="discu(c.id,c.Prenoms,c.Photo)" v-for="c in Client" :key="c.id" style="cursor: pointer;"  class="customer-wrapper">
+                    <img class="customer-image" :src="'http://localhost:8082/' + c.Photo + '.jpeg'" alt="">
                     <div class="customer-name">
                         <h4 style="margin-top: 9px;">{{ c.Prenoms  }}</h4>
                         <!-- <p style="font-size: 12px;">Panina..</p> -->
@@ -228,11 +228,11 @@
             <br><br>
             <div class="col-lg-3 left-col">
                 <div class="card friend-list">
-                    <div @click="discu(c.id,c.Prenoms)" v-for="c in Client" :key="c.id" class="people-list">
+                    <div @click="discu(c.id,c.Prenoms,c.Photo)" v-for="c in Client" :key="c.id" class="people-list">
                         <ul class="list-unstyled chat-list mt-2 mb-0">
                             <li class="clearfix">
                                 <div class="about">
-                                    <div class="name"><img style="width: 20px;" src="../assets/images/profil.ico" alt="">&nbsp; {{ c.Prenoms }}</div>
+                                    <div class="name"><img style="width: 30px;height: 30px;margin-left: -30px;"  :src="'http://localhost:8082/' + c.Photo + '.jpeg'" alt="">&nbsp; {{ c.Prenoms }}</div>
                                 </div>
                             </li>
                         </ul>
@@ -248,7 +248,7 @@
                             <div class="col-lg-6">
                                 <div class="chat-about">
                                     <a href="javascript:void(0);" data-toggle="modal" data-target="#view_info">
-                                        <img style="width: 20px;" src="../assets/images/profil.ico" alt="avatar">
+                                        <img style="width: 40px;height: 40px;"  :src="'http://localhost:8082/' + PhotoClt + '.jpeg'" alt="">
                                     </a>
                                 </div>
                                 
@@ -261,27 +261,24 @@
 
                     <div class="chat-history">
                         <ul class="m-b-0">
-                            <li class="clearfix">
+                            <li class="clearfix" v-for="m in Message" :key="m.id" >
                                 <div class="message-data text-right">
-                                </div>
-                                <div  class="message my-message">Test</div>
-                            </li>
 
-                            <li v-for="m in Message" :key="m.id" class="clearfix">
-                                <div class="message-data text-right">
                                 </div>
-                                <div v-if="m.id_received == id_received && m.id_sender == id_sender" style="background-color: #C6F568;" class="message other-message float-right">{{ m.Text }}</div>
+                                <div v-if="m.id_received == id_received && m.id_sender == id_sender" style="background-color: #C6F568;"  class="message other-message float-right">{{ m.Text }}</div>
+                                <div v-if="m.id_sender == id_received && m.id_received == id_sender"  class="message my-message">{{ m.Text }}</div>
                             </li>
                         </ul>
                     </div>
-
-                    <div  class="chat-message clearfix">
-                        <div class="input-group mb-0">
-                            <div class="input-group-prepend">
-                                <span @click="sendMessage" class="input-group-text" ><img  src="../assets/images/sendeo.png" style="width: 30px;height: 30px;" alt=""></span>
-                            </div>
-                            <input v-model="Text" type="text" class="form-control" placeholder="Votre message ici...">                                    
+                   <br>
+                   <!-- div le ery ambany le anoratana -->
+                </div>
+                <div  class="noo" style="position: fixed;width: 500px;margin-top: -75px;margin-left: 30px;">
+                    <div class="input-group mb-0">
+                        <div class="input-group-prepend">
+                            <span @click="sendMessage" class="input-group-text" ><img  src="../assets/images/sendeo.png" style="width: 30px;height: 30px;" alt=""></span>
                         </div>
+                        <input v-model="Text" type="text" class="form-control" placeholder="Votre message ici...">                                    
                     </div>
                 </div>
             </div>
@@ -306,11 +303,11 @@ export default {
     Admin: {},
     Message: {},
     PrenomClt : '',
+    PhotoClt : '',
     id_received: '',
     id_sender: '',
     token: localStorage.getItem('token'),
     socket: io('http://localhost:8082')
-
     }
     },
     mounted() {
@@ -339,7 +336,7 @@ export default {
     },
     //Prendre le session de l'admin connecté
     adminconnecter() {
-       axios.get('http://localhost:8082/api/admins/session',{
+       axios.get('http://localhost:8082/api/admins/session', {
         headers: {
             Authorization: `Bearer ${localStorage.getItem('token')}`
         },
@@ -359,8 +356,9 @@ export default {
         this.Message = response.data
     })
     },
+
     // mapiseo anle div message
-    discu(idclient,Prenoms){
+    discu(idclient,Prenoms,Photo){
     let a = document.getElementById("conversation")
     let b = document.getElementById("ambadika")
 
@@ -368,6 +366,7 @@ export default {
     this.id_received=localStorage.getItem("ID_RECEIVED");
 
     this.PrenomClt = Prenoms
+    this.PhotoClt = Photo
     a.style.display = "block";
     b.style.opacity = "70%";
 
@@ -700,6 +699,11 @@ main {
     align-items: flex-start;
     gap: 5px;
 }
+.customer-wrapper:hover {
+    background: #efefef;
+    cursor: pointer;
+    height: 42px;
+}
 .customer-image {
     width: 40px;
     height: 40px;
@@ -783,6 +787,7 @@ main {
 
 
 /* Discussion  */
+
 .conversation {
     height: auto;
     margin-top: -60px;
@@ -803,7 +808,10 @@ main {
 .chat {
     height: 80%;
     overflow-y: scroll;
+    display: flex;
+    flex-direction: column-reverse;
 }
+
 
 #plist {
     overflow-y: scroll;
@@ -812,6 +820,7 @@ main {
 .clearfix {
     text-align: left;
 }
+
 
 .card {
     background: #fff;
@@ -860,6 +869,7 @@ main {
 }
 
 .people-list .chat-list li .name {
+   
     font-size: 11px
 }
 
@@ -987,13 +997,13 @@ main {
     left: 93%
 }
 
-.chat .chat-message {
+/* .chat .chat-message {
     padding: 20px;
     position: sticky;
     bottom: 0px;
     z-index: 2;
     background-color: #fff;
-}
+} */
 
 .online,
 .offline,
