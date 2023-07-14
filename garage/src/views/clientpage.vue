@@ -14,14 +14,15 @@
     <div class="cont">
         <nav class="navbar">
         <h4 style="margin-left: 20px;font-family: century gothic;font-size: 17px;"><img class="rotate-image" style="width: 36px;" src="../assets/images/car.ico" alt=""> GARAGEFINDER</h4>
-        <div class="profile">
+        <div   class="profile">
             <img @click="slide1" style="cursor: pointer;" class="profile-image" src="../assets/images/profil.ico" alt="">
-            <p style="cursor: pointer;" class="profile-name">Tahinalisoa</p>
+            <p style="cursor: pointer;" class="profile-name"> Tahinalisoa</p>
         </div>
         <div id="rindra" class="settings-menu">
             <div id="dark-btn">
                 <span></span>
             </div>
+            
             <div class="settings-menu-inner">
                 <div class="settings-links">
                     <img style="cursor: pointer;" src="../assets/images/setting.png" class="settings-icon">
