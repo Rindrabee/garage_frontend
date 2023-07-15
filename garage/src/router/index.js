@@ -29,6 +29,7 @@ import vldoublie3 from '../views/vldoublie3.vue'
 import nouveaucode3 from '../views/nouveaucode3.vue'
 import adminGARAGE from '../views/adminGARAGE.vue'
 import modificationadmin from '../views/modificationadmin.vue'
+import adminmecanicien from '../views/adminmecanicien.vue'
 
 
 const router = createRouter({
@@ -172,6 +173,11 @@ const router = createRouter({
       path: '/modificationadmin',
       name: 'modificationadmin',
       component: modificationadmin
+    },
+    {
+      path: '/adminmecanicien',
+      name: 'adminmecanicien',
+      component: adminmecanicien
     },
     
   ]

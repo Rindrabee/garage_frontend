@@ -107,13 +107,52 @@ background-position: center;
 padding: 0 8%;
 
 }
+/* CURSOR */
+.emm li {
+  position: relative;
+}
+
+.emm li:hover:before {
+  content: attr(data-type-title);
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #091b46;
+  color: #fff;
+  padding: 5px 10px;
+  border-radius: 4px;
+  font-size: 14px;
+  white-space: nowrap;
+  visibility: visible;
+  opacity: 1;
+}
+
+.emm li:before {
+  content: attr(data-type-title);
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #333;
+  color: #fff;
+  padding: 5px 10px;
+  margin-left: -120px;
+  margin-top: -30px;
+  border-radius: 4px;
+  font-size: 14px;
+  white-space: nowrap;
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0s, opacity 0.3s ease;
+}
 
 .decouvrir {
     border-top-left-radius: 20px;
     border-bottom-right-radius: 20px;
 }
 
-nav{
+nav {
 display: flex;
 justify-content: space-between;
 align-items: center;

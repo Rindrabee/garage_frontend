@@ -15,14 +15,14 @@
         <nav class="navbar">
         <h4 style="margin-left: 20px;font-family: century gothic;font-size: 17px;"><img class="rotate-image" style="width: 36px;" src="../assets/images/car.ico" alt=""> GARAGEFINDER</h4>
         <div   class="profile">
-            <img @click="slide1" style="cursor: pointer;" class="profile-image" src="../assets/images/profil.ico" alt="">
-            <p style="cursor: pointer;" class="profile-name"> Tahinalisoa</p>
+            <img @click="slide1" style="cursor: pointer;" class="profile-image" :src="'http://localhost:8082/' +  Client.Photo  + '.jpeg'" alt="">
+            <p style="cursor: pointer;" class="profile-name"> {{ Client.Nom }}</p>
         </div>
         <div id="rindra" class="settings-menu">
             <div id="dark-btn">
                 <span></span>
             </div>
-            
+
             <div class="settings-menu-inner">
                 <div class="settings-links">
                     <img style="cursor: pointer;" src="../assets/images/setting.png" class="settings-icon">
@@ -41,7 +41,7 @@
     <main>
         <br><br><br><br>
         <div style="margin-left: -200px;">
-        <h1 style="color: white;font-size: 47px;" id="clignotant">Bienvenue Mr,</h1>
+        <h1 style="color: white;font-size: 47px;" id="clignotant">Chère clientèle, bienvenue !</h1>
         <p style="color: white;font-family: century gothic;font-size: 15px;">Choisir si-dessous le service que vous voulez prendre</p>
         </div>
        
@@ -473,7 +473,7 @@ main {
 @keyframes clignoter {
   0% { opacity: 1; }
   50% { opacity: 0.7; }
-  100% { opacity: 1; }
+  100% { opacity: 2; }
 }
 
 #clignotant {

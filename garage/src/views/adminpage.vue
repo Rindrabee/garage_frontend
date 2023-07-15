@@ -56,13 +56,13 @@
             <span class="fas fa-calendar-alt"></span><p style="font-size: 13px;">Rendez-vous</p>
         </div>
         <div class="sidebar-menu">
-            <span class="fas fa-wrench"></span><p style="font-size: 13px;">Mecanicien</p>
+            <span @click="verslistemecanicien" class="fas fa-wrench"></span><p @click="verslistemecanicien" style="font-size: 13px;">Mecanicien</p>
         </div>
         <div class="sidebar-menu">
             <span @click="verslistegarage" class="fas fa-car"></span><p @click="verslistegarage" style="font-size: 13px;">Garage</p>
         </div>
         <div class="sidebar-menu">
-            <span class="fas fa-file-invoice"></span><p style="font-size: 13px;">Comptabilité</p>
+            <span  class="fas fa-file-invoice"></span><p  style="font-size: 13px;">Comptabilité</p>
         </div>
     </div>
     <!-- main dashboard -->
@@ -385,6 +385,9 @@ export default {
     },
     verslistegarage() {
         this.$router.push({ name: 'adminGARAGE' });
+    },
+    verslistemecanicien() {
+        this.$router.push({ name: 'adminmecanicien' });
     },
 
     logout() {

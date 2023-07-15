@@ -81,17 +81,16 @@ export default {
     .then(response => {
       if(response.data.statut) {
         localStorage.setItem('token',response.data.token);
-        this.$router.push({ name:'clientpage' });
+        this.$router.push({ name:'loginpage' });
 
-      }else if(conf.value == ''){
+      } else if(conf.value == ''){
         alert('Completer avant de confirmer');
-      }else {
+      } else {
         alert('Code de validation incorrect');
       }
     }).catch(error => {
       alert(error);
     })
-
   }
 }
 }

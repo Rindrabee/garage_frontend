@@ -22,7 +22,9 @@
 
     <div class="welcome-container">
     <div class="welcome-text">
-    <h1>Bienvenue sur notre site web !</h1>
+    <br>
+    <h1 style="color: rgb(226, 236, 226); font-family: century;">Bienvenue sur notre site web !</h1>
+    <br>
     <p>Nous sommes enchantés de vous accueillir sur notre plateforme en ligne dédiée aux passionnés d'automobiles et aux propriétaires de véhicules. Que vous soyez à la recherche d'un garage pour l'entretien régulier de votre voiture, des réparations nécessaires ou des services de personnalisation, vous êtes au bon endroit.</p>
     <p>Ici, vous trouverez une sélection soigneusement composée de garages partenaires hautement qualifiés et expérimentés. Notre objectif est de vous offrir une expérience sans pareille en vous mettant en relation avec les professionnels les plus compétents de l'industrie automobile.</p>
     <p>Nos garages partenaires sont minutieusement évalués pour s'assurer qu'ils répondent aux normes les plus strictes en termes de qualité, de service à la clientèle et d'expertise technique. Ils sont prêts à prendre en charge tous vos besoins automobiles, que ce soit pour un simple entretien planifié ou pour des réparations complexes.</p>
@@ -35,6 +37,8 @@
     </div>
     </div>
 
+    <h2 style="text-align: center;color: rgb(226, 236, 226); font-family: century;">Voici quelques garages inscrits que vous pouvez consulter.</h2>
+    <br><br>
     <div class="main">
     <div class="cards">
         <div class="image">
@@ -118,16 +122,23 @@
     margin: 0px;
     padding: 0px;
     font-family: Arial;
+
 }
 .cont {
-    background-color: rgba(0, 100, 0, 0.05);
-  
+  background: url('../assets/images/off.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center bottom;
+  background-attachment: fixed;
+
 }
+
 .cards {
     width: 20%;
     display: inline-block;
     border-radius: 5px;
     margin: 33px;
+    background:  #ebf8f2;
     box-shadow: 2px 2px 10px black;
 }
 .cards:hover {
@@ -154,13 +165,14 @@ button {
     margin-top: 30px;
     margin-bottom: 30px;
     background-color: white;
-    border: 1px solid black;
+    border: 1px solid #28a745;
     padding: 5px;
+    color: #28a745;
     border-radius: 5px;
     cursor: pointer;
 }
 button:hover {
-    background-color: black;
+    background-color: #28a745; 
     color: white;
     transition: .5s;
     cursor: pointer;
@@ -232,15 +244,30 @@ button:hover {
     align-items: center;
 }
 .register-button {
-    background-color: #0f0f0f;
-    color: #fff;
-    border: none;
-    font-size: 16px;
-    align-items: center;
-    cursor: pointer;
+  background-color: transparent;
+  color: #28a745;
+  border: 1px solid #28a745;
+  font-size: 16px;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+  cursor: pointer;
+}
+
+.register-button:hover {
+  background-color: #28a745;
+  color: #fff;
+  border-color: #28a745;
+}
+
+.register-button:focus {
+  outline: none;
+  box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25);
 }
 .register-button:hover {
-    background-color: #ffa400;
+    background-color: #28a745;
 }
 
 /* welcome texte */
@@ -250,11 +277,12 @@ button:hover {
 }
 
 .welcome-text {
-    font-family: "Century Gothic", Arial, sans-serif;
+    font-family: "Century Gothic";
     text-align: left;
-    line-height: 1.5;
+    color: white;
+   
     margin-bottom: 40px;
-    margin-left: 10px;
+    margin-left: 50px;
     max-width: 800px; /* Limite la largeur du texte */
 }
 

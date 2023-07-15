@@ -56,10 +56,10 @@
                  <span class="fas fa-calendar-alt"></span><p style="font-size: 13px;">Rendez-vous</p>
                </div>
                <div class="sidebar-menu">
-                <span @click="verslistemecanicien" class="fas fa-wrench"></span><p @click="verslistemecanicien" style="font-size: 13px;">Mecanicien</p>
+                <span @click="listemecanicien" class="fas fa-wrench"></span><p @click="listemecanicien" style="font-size: 13px;">Mecanicien</p>
                </div>
                <div class="sidebar-menu">
-                 <span @click="verslistegarage" class="fas fa-car"></span><p @click="verslistegarage" style="font-size: 13px;">Garage</p>
+                 <span @click="listegarage" class="fas fa-car"></span><p @click="listegarage" style="font-size: 13px;">Garage</p>
                </div>
            <div class="sidebar-menu">
              <span class="fas fa-file-invoice"></span><p style="font-size: 13px;">Comptabilité</p>
@@ -85,17 +85,16 @@
                             <th>Action</th>
                         </tr>
                         
-                        <tr v-for="g in Garage" :key="g.id">
+                        <tr v-for="mec in Mecanicien" :key="mec.id">
 
-                       
                         <td>
                         <img style="width: 80px; border-radius: 2%; height: 80px;" :src="'http://localhost:8082/' + g.Photo + '.jpeg'" alt="">
                         </td>
                         
-                        <td>{{ g.Nom }}</td>
-                        <td>{{ g.service_offerte }}</td>
-                        <td>{{ g.Adresse }}</td>
-                        <td style="color: rgb(25, 72, 224);">{{ g.Specialite }}</td>
+                        <td>{{ mec.Nom }}</td>
+                        <td>{{ mec.Prenoms }}</td>
+                        <td>{{ mec.Naissance }}</td>
+                        <td style="color: rgb(25, 72, 224);">{{ mec.Sexe }}</td>
                         <td>{{ g.Telephone }}</td>
                         <td><button class="btn btn-outline-success">À propos</button></td>
                         </tr>
@@ -121,36 +120,37 @@
     export default {
         data () {
         return {
-         Garage : {},
-         
+         Mecanicien  : {},
+         Garage: {}
         }
         },
         mounted() {
-        this.listegarage()
+        this.listemecanicien()
         },
         methods: {
         slide1(){
-            let a = document.getElementById("rindra");
-            if (a.style.display === "block") {
-            a.style.display = "none";
-            } else {
-            a.style.display = "block";
-            }
+        let a = document.getElementById("rindra");
+           if (a.style.display === "block") {
+           a.style.display = "none";
+           } else {
+           a.style.display = "block";
+        }
         },
-        listegarage() {
-       axios.get('http://localhost:8082/api/garages/listergarage')
+
+        listemecanicien() {
+       axios.get('http://localhost:8082/api/mecaniciens/listermecanicien')
        .then(response => {
-           this.Garage = response.data
+           this.Mecanicien = response.data
        })
        },
-       verslistemecanicien() {
-        this.$router.push({ name: 'adminmecanicien' });
-    },
+       listegarage() {
+        this.$router.push({ name: 'adminGARAGE' });
+       },
         principale() {
         this.$router.push({ name: 'adminpage' });
         },
         logout() {
-        axios.post('http://localhost:8082/api/garages/logout')
+        axios.post('http://localhost:8082/api/mecaniciens/logout')
         .then(response => {
         localStorage.removeItem('token');
         localStorage.removeItem('Email');
