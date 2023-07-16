@@ -30,6 +30,9 @@ import nouveaucode3 from '../views/nouveaucode3.vue'
 import adminGARAGE from '../views/adminGARAGE.vue'
 import modificationadmin from '../views/modificationadmin.vue'
 import adminmecanicien from '../views/adminmecanicien.vue'
+import adminCLIENT from '../views/adminCLIENT.vue'
+import GARAGEshow from '../views/GARAGEshow.vue'
+import Ajoutervoiture from '../views/Ajoutervoiture.vue'
 
 
 const router = createRouter({
@@ -178,6 +181,21 @@ const router = createRouter({
       path: '/adminmecanicien',
       name: 'adminmecanicien',
       component: adminmecanicien
+    },
+    {
+      path: '/adminCLIENT',
+      name: 'adminCLIENT',
+      component: adminCLIENT
+    },
+    {
+      path: '/GARAGEshow',
+      name: 'GARAGEshow',
+      component: GARAGEshow
+    },
+    {
+      path: '/Ajoutervoiture',
+      name: 'Ajoutervoiture',
+      component: Ajoutervoiture
     },
     
   ]

@@ -56,6 +56,9 @@
                  <span class="fas fa-calendar-alt"></span><p style="font-size: 13px;">Rendez-vous</p>
                </div>
                <div class="sidebar-menu">
+               <span @click="verslisteclient" class="fas fa-user"></span><p @click="verslisteclient" style="font-size: 13px;">Client</p>
+               </div>
+               <div class="sidebar-menu">
                 <span @click="listemecanicien" class="fas fa-wrench"></span><p @click="listemecanicien" style="font-size: 13px;">Mecanicien</p>
                </div>
                <div class="sidebar-menu">
@@ -71,7 +74,7 @@
                 <br>
                 <div class="card detail">
                     <div class="detail-header">
-                        <p style="font-family: century gothic;font-size: 18px; ">Voici tous les garages inscrites :</p>
+                        <p style="font-family: century gothic;font-size: 18px; ">Liste des mecaniciens :</p>
                     </div>
                     <br>
                     <table>
@@ -143,6 +146,9 @@
            this.Mecanicien = response.data
        })
        },
+       verslisteclient() {
+        this.$router.push({ name: 'adminCLIENT' });
+       },
        listegarage() {
         this.$router.push({ name: 'adminGARAGE' });
        },
@@ -154,7 +160,7 @@
         .then(response => {
         localStorage.removeItem('token');
         localStorage.removeItem('Email');
-        this.$router.push({ name: 'loginpage' });
+        this.$router.push({ name: 'loginadm' });
         })
         .catch(error => {
         console.error(error);

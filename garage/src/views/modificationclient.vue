@@ -11,20 +11,19 @@
 </head>
 <body>
 <div class="cont">
-   
     <div class="container">
         <div class="row d-flex justify-content-center">
             <div class="col-md-10 mt-5 pt-5">
                 <div style="box-shadow: 1px 1px 4px black;width: 1100px;margin-left: -100px;margin-top: -40px;"  class="row z-depth-3">
                     <div class="col-sm-4 bg-success rounded-left">
 
-                        <router-link to="clientpage"><i style="color: white;cursor: pointer;" class="fas fa-arrow-left"></i></router-link>
+                        <i @click="clientpage" style="color: white;cursor: pointer;" class="fas fa-arrow-left"></i>
                         
                         <div class="card-block text-center text-white">
-                            <i class="fas fa-user-tie fa-7x mt-5"></i>
+                            <img style="width: 200px;height: 200px;border-radius: 50%;" :src="'http://localhost:8082/' + Client.Photo + '.jpeg'" alt="">
                             <br><br>
-                            <h2 class="font-weight-bold mt-4">Nickson</h2>
-                            <p>Web Designer</p>
+                            <h2 class="font-weight-bold mt-4">{{ Client.Nom }}</h2>
+                            <p>{{ Client.Profession }}</p>
 
                             <!-- ito le upload photo -->
                             <label for="fileInput">
@@ -34,9 +33,6 @@
                             <input id="fileInput" type="file" >
                             
                             <br>
-                         
-                            
-                            
                         </div>
                     </div>
                     <div class="col-sm-8 bg-white rounded-right">
@@ -44,47 +40,47 @@
                         <hr class="bg-primary">
                         <div class="row">
                             <div class="col-sm-6">
-                                <p class="font-weight-bold">Nom : &nbsp; <input class="inuty" type="text"></p>
+                                <p  class="font-weight-bold">Nom : &nbsp; <input class="inuty" type="text" :value="Client.Nom"></p>
                                
                                 <!-- <h6 class="text-muted">rindratahinalisoa@gmail.com</h6> -->
                             </div>
                             <div class="col-sm-6">
-                                <p class="font-weight-bold">Prénoms : &nbsp; <input class="inuty" type="text"></p>
+                                <p class="font-weight-bold">Prénoms : &nbsp; <input class="inuty" type="text" :value="Client.Prenoms"></p>
                             </div>
 
                             <div class="col-sm-6">
-                                <p class="font-weight-bold">Email : &nbsp; <input class="inuty" type="email"></p>
+                                <p class="font-weight-bold">Email : &nbsp; <input class="inuty" type="email" :value="Client.Email"></p>
                             </div>
 
                             <div class="col-sm-6">
-                                <p class="font-weight-bold">Date de naissance : &nbsp; <input class="inuty" type="date"></p>
+                                <p class="font-weight-bold">Date de naissance : &nbsp; <input class="inuty" type="date" :value="Client.Naissance"></p>
                             </div>
 
                             <div class="col-sm-6">
-                                <p class="font-weight-bold">Profession : &nbsp; <input class="inuty" type="text"></p>
+                                <p class="font-weight-bold">Profession : &nbsp; <input class="inuty" type="text" :value="Client.Profession"></p>
                             </div>
 
                             <div class="col-sm-6">
-                                <p class="font-weight-bold">Adresse : &nbsp; <input class="inuty" type="text"></p>
+                                <p class="font-weight-bold">Adresse : &nbsp; <input class="inuty" type="text" :value="Client.Adresse"></p>
                             </div>
 
                             <div class="col-sm-6">
-                                <p class="font-weight-bold">Telephone : &nbsp; <input class="inuty" type="text"></p>
+                                <p class="font-weight-bold">Telephone : &nbsp; <input class="inuty" type="text" :value="Client.Telephone"></p>
                             </div>
 
                             <div class="col-sm-6">
-                                <p class="font-weight-bold">Mot de passe : &nbsp; <input class="inuty" type="text"></p>
+                                <p class="font-weight-bold">Mot de passe : &nbsp; <input class="inuty" type="Password" :value="Client.Password"></p>
                             </div>
 
                         </div>
                         <br>
                         <div style="margin-left: 490px;" class="row">
                         <div class="col-sm-5">
-                            <input  class="btn btn-outline-success" type="button" value="Annuler">
+                            <input class="btn btn-outline-success" type="button" value="Annuler">
                             </div>
 
                             <div class="col-sm-5">
-                            <input class="btn btn-outline-success" type="button" value="Enregistrer">
+                            <input @click="update" class="btn btn-outline-success" type="button" value="Enregistrer">
                             </div>
                         </div>
                        
@@ -107,8 +103,62 @@
 </template>
 
 <script>
-import { useRouter } from 'vue-router';
+import AuthenticationService from '../services/AuthenticationService.js'
+import io from 'socket.io-client'
+import axios from 'axios';
 
+export default {
+  data () {
+    return {
+        result : {},
+        Client: {},
+    }
+    },
+    created() {
+    this.getInformation();
+    },
+    mounted(){
+    console.log("mounted");
+    },
+    methods: {
+  
+ 
+    //Rediriger vers le clientpage
+    clientpage() {
+        this.$router.push({ name: 'clientpage' });
+    },
+
+
+    update() {
+  axios.put('http://localhost:8082/api/clients/updateClient/', this.Client.id)
+    .then(response => {
+      this.$router.push({ name: 'clientpage' });
+    })
+    .catch(error => {
+      // Traitement de l'erreur en cas d'échec
+      console.error(error);
+    });
+},
+
+  
+    getInformation() {
+    axios.get('http://localhost:8082/api/clients/session', {
+    headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`
+    },
+    })
+    .then(response => {
+    this.Client = response.data.clt;
+    this.id_sender = this.Client.id;
+    }).catch(error => {
+    console.log(error);
+    })
+    },
+  
+   
+    },
+  
+}
 </script>
 
 <style scoped>

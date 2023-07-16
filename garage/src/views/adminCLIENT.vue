@@ -38,7 +38,9 @@
                             width="10px" alt=""></a>
                             
                         </div>
-                    </div>    
+
+                    </div> 
+                       
                 </div>
             </nav>
             <!-- sidebar -->
@@ -56,7 +58,7 @@
                  <span class="fas fa-calendar-alt"></span><p style="font-size: 13px;">Rendez-vous</p>
                </div>
                <div class="sidebar-menu">
-               <span @click="verslisteclient" class="fas fa-user"></span><p @click="verslisteclient" style="font-size: 13px;">Client</p>
+                 <span @click="verslisteclient" class="fas fa-user"></span><p @click="verslisteclient" style="font-size: 13px;">Client</p>
                </div>
                <div class="sidebar-menu">
                 <span @click="verslistemecanicien" class="fas fa-wrench"></span><p @click="verslistemecanicien" style="font-size: 13px;">Mecanicien</p>
@@ -67,42 +69,39 @@
            <div class="sidebar-menu">
              <span class="fas fa-file-invoice"></span><p style="font-size: 13px;">Comptabilité</p>
            </div>
-    </div>
+          </div>
             <!-- main dashboard -->
             <main>
               
                 <br>
                 <div class="card detail">
                     <div class="detail-header">
-                        <p style="font-family: century gothic;font-size: 18px; ">Liste des garages automobiles :</p>
+                        <p style="font-family: century gothic;font-size: 18px; ">Liste des clients :</p>
                     </div>
                     <br>
                     <table>
                         <tr>
                             <th>Photo</th>
                             <th>Nom</th>
-                            <th>Service</th>
+                            <th>Prenoms</th>
                             <th>Adresse</th>
-                            <th>Spécialité</th>
+                            <th>Sexe</th>
                             <th>Telephone</th>
-                            <th>Discussion</th>
                             <th>Action</th>
                         </tr>
                         
-                        <tr v-for="g in Garage" :key="g.id">
+                        <tr v-for="clt in Client" :key="clt.id">
 
-                       
                         <td>
-                        <img style="width: 80px; border-radius: 2%; height: 80px;" :src="'http://localhost:8082/' + g.Photo + '.jpeg'" alt="">
+                        <img style="width: 80px; border-radius: 50%; height: 80px;" :src="'http://localhost:8082/' + clt.Photo + '.jpeg'" alt="">
                         </td>
                         
-                        <td>{{ g.Nom }}</td>
-                        <td>{{ g.service_offerte }}</td>
-                        <td>{{ g.Adresse }}</td>
-                        <td style="color: rgb(25, 72, 224);">{{ g.Specialite }}</td>
-                        <td>{{ g.Telephone }}</td>
-                        <td><i style="margin-left: 30px;cursor: pointer;" class="fas fa-message"></i></td>
-                        <td><button class="btn btn-outline-danger">Bloquer</button></td>
+                        <td>{{ clt.Nom }}</td>
+                        <td>{{ clt.Prenoms }}</td>
+                        <td>{{ clt.Adresse }}</td>
+                        <td style="color: rgb(25, 72, 224);">{{ clt.Sexe }}</td>
+                        <td>{{ clt.Telephone }}</td>
+                        <td><button class="btn btn-outline-success">Profile</button></td>
                         </tr>
     
                    
@@ -126,39 +125,40 @@
     export default {
         data () {
         return {
-         Garage : {},
-         
+         Client  : {},
+         Garage: {}
         }
         },
         mounted() {
-        this.listegarage()
+        this.verslisteclient()
         },
         methods: {
         slide1(){
-            let a = document.getElementById("rindra");
-            if (a.style.display === "block") {
-            a.style.display = "none";
-            } else {
-            a.style.display = "block";
-            }
+        let a = document.getElementById("rindra");
+           if (a.style.display === "block") {
+           a.style.display = "none";
+           } else {
+           a.style.display = "block";
+        }
         },
-        listegarage() {
-       axios.get('http://localhost:8082/api/garages/listergarage')
+
+        verslisteclient() {
+       axios.get('http://localhost:8082/api/clients/allClients')
        .then(response => {
-           this.Garage = response.data
+           this.Client = response.data
        })
        },
-        verslisteclient() {
-        this.$router.push({ name: 'adminCLIENT' });
-        },
        verslistemecanicien() {
         this.$router.push({ name: 'adminmecanicien' });
+       },
+       listegarage() {
+        this.$router.push({ name: 'adminGARAGE' });
        },
         principale() {
         this.$router.push({ name: 'adminpage' });
         },
         logout() {
-        axios.post('http://localhost:8082/api/garages/logout')
+        axios.post('http://localhost:8082/api/mecaniciens/logout')
         .then(response => {
         localStorage.removeItem('token');
         localStorage.removeItem('Email');

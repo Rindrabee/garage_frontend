@@ -25,12 +25,12 @@
 
             <div class="settings-menu-inner">
                 <div class="settings-links">
-                    <img style="cursor: pointer;" src="../assets/images/setting.png" class="settings-icon">
-                    <a style="color: #000;font-family: century gothic;cursor: pointer;" href="modificationclient">PROFILE<img style="width: 10px;" src="../assets/images/arrow.png" alt=""></a>
+                    <img style="cursor: pointer;" src="../assets/images/setting.png" @click="modification" class="settings-icon">
+                    <a style="color: #000;font-family: century gothic;cursor: pointer;" @click="modification">PROFILE<img style="width: 10px;" src="../assets/images/arrow.png" alt=""></a>
                 </div>
                 
                 <div class="settings-links">
-                    <img style="cursor: pointer;" src="../assets/images/logout.png" class="settings-icon">
+                    <img style="cursor: pointer;" src="../assets/images/logout.png" @click="logout" class="settings-icon">
                     <a @click="logout" style="color: #000;font-family: century gothic;cursor: pointer;">DECONNECTION<img src="../assets/images/arrow.png"
                     width="10px" alt=""></a>
                 </div>
@@ -160,7 +160,6 @@
                         <ul class="m-b-0">
                             <li class="clearfix" v-for="m in Message" :key="m.id" >
                                 <div class="message-data text-right">
-
                                 </div>
                                 <div v-if="m.id_received == id_received && m.id_sender == id_sender" style="background-color: #C6F568;"  class="message other-message float-right">{{ m.Text }}</div>
                                 <div v-if="m.id_sender == id_received && m.id_received == id_sender"  class="message my-message">{{ m.Text }}</div>
@@ -223,6 +222,16 @@ export default {
     } else {
     a.style.display = "block";
     }
+    },
+    //Diriger vers la page modification
+    modification() {
+        localStorage.setItem('id',this.id_sender)
+        this.$router.push({ name: 'modificationclient' });
+    },
+    //Rediriger vers le clientpage
+    clientpage() {
+        localStorage.removeItem('id');
+        this.$router.push({ name: 'clientpage' });
     },
 
     // Prendre le message du personne cliqué
