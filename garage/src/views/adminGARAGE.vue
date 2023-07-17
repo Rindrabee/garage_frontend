@@ -19,7 +19,7 @@
                     <input style="margin-left: -300px;width: 300px;color: gray;font-family: century gothic;" class="form-control" type="text" placeholder="Barre de recherche">
                     <span class="fas fa-search"></span>
                     <img @click="slide1" style="cursor: pointer;" class="profile-image" src="../assets/images/profil.ico" alt="">
-                    <p style="cursor: pointer;" class="profile-name">  Tahinalisoa</p>
+                    <p style="cursor: pointer;" class="profile-name">  {{ Admin.Prenoms }}</p>
                 </div>
                 <div id="rindra" class="settings-menu">
                     <div id="dark-btn">
@@ -52,9 +52,7 @@
                <div class="sidebar-menu">
                  <span class="fas fa-exclamation-triangle"></span><p style="font-size: 13px;">Urgence</p>
                </div>
-               <div class="sidebar-menu">
-                 <span class="fas fa-calendar-alt"></span><p style="font-size: 13px;">Rendez-vous</p>
-               </div>
+              
                <div class="sidebar-menu">
                <span @click="verslisteclient" class="fas fa-user"></span><p @click="verslisteclient" style="font-size: 13px;">Client</p>
                </div>
@@ -127,11 +125,14 @@
         data () {
         return {
          Garage : {},
+         id_sender: '',
+         Admin: {}
          
         }
         },
         mounted() {
-        this.listegarage()
+        this.listegarage();
+        this.adminconnecter()
         },
         methods: {
         slide1(){
@@ -148,11 +149,25 @@
            this.Garage = response.data
        })
        },
+           //Prendre le session de l'admin connecté
+        adminconnecter() {
+        axios.get('http://localhost:8082/api/admins/session', {
+        headers: {
+            Authorization: `Bearer ${localStorage.getItem('token')}`
+        },
+        })
+        .then(response => {
+        this.Admin = response.data.adm;
+        this.id_sender = this.Admin.id;
+        }).catch(error => {
+        console.log(error);
+        })
+        },
         verslisteclient() {
         this.$router.push({ name: 'adminCLIENT' });
         },
        verslistemecanicien() {
-        this.$router.push({ name: 'adminmecanicien' });
+        this.$router.push({ name: 'adminMECANICIEN' });
        },
         principale() {
         this.$router.push({ name: 'adminpage' });

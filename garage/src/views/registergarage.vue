@@ -223,7 +223,7 @@
         </div>
   
         <div style="display: none;" id="terminer" class="form-submit-btn">
-        <router-link style="text-decoration: none;" to="/">
+        <router-link style="text-decoration: none;" to="/loginpage">
         <input type="button" class="registrer" value="Terminer">
         </router-link>
         </div>

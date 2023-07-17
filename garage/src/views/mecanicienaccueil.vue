@@ -57,9 +57,11 @@
             <div class="sidebar-menu">
                 <span class="fas fa-image"></span><p style="font-size: 13px;">Galerie</p>
             </div>
+
             <div class="sidebar-menu">
-                <span class="fas fa-cog"></span><p style="font-size: 13px;">À propos</p>
+                <span @click="mecanicienapropos"  class="fas fa-cog"></span><p @click="mecanicienapropos" style="font-size: 13px;">À propos</p>
             </div>
+
             <div class="sidebar-menu">
                 <span class="fas fa-phone"></span><p style="font-size: 13px;">Contact </p>
             </div>
@@ -68,12 +70,12 @@
         <!-- main dashboard -->
         <main>
             <h1 style="color: white;font-size: 47px;" id="clignotant">Bienvenue Mr,</h1>
-            <p style="color: white;font-family: century gothic;font-size: 15px;">Vous pouvez voir ci dessous les listes des voitures dans notre garage</p>
+            <p style="color: white;font-family: century gothic;font-size: 15px;">Vous pouvez voir ci dessous la liste de votre travail</p>
 
             <br><br>
             <div class="card detail">
                 <div class="detail-header">
-                    <p style="font-family: century gothic;font-size: 18px; ">Liste des voitures dans le garage :</p>
+                    <p style="font-family: century gothic;font-size: 18px; ">Voici les clients en panne que vous devez sauvez :</p>
                 </div>
                 <br>
                 <table>
@@ -81,28 +83,29 @@
                         <th>Numéro</th>
                         <th>Nom</th>
                         <th>Date d'arriver</th>
-                        <th>Etat</th>
+                        <th>Contact direct</th>
                     </tr>
                     <tr>
                         <td>#PW-0001</td>
                         <td>Potential Corp</td>
                         <td>Apr 11, 2021</td>
                         <td><span class="status
-                            onprogress"><i class="fas fa-circle"></i> En cour</span></td>
+                            confirmed"><i class="fas fa-message"></i></span></td>
                     </tr>
+                    
                     <tr>
                         <td>#PW-0002</td>
                         <td>Webcode inc</td>
                         <td>Mar 29, 2021</td>
                         <td><span class="status
-                            confirmed"><i class="fas fa-circle"></i> Terminer</span></td>
+                            confirmed"><i class="fas fa-message"></i></span></td>
                     </tr>
                     <tr>
                         <td>#PW-0003</td>
                         <td>Coding time</td>
                         <td>Feb 10, 2020</td>
                         <td><span class="status
-                            fulfilled"><i class="fas fa-circle"></i> FULFILLED</span></td>
+                            confirmed"><i class="fas fa-message"></i></span></td>
                     </tr>
 
                     <!-- apina -->
@@ -112,27 +115,24 @@
                         <td>Potential Corp</td>
                         <td>Apr 11, 2021</td>
                         <td><span class="status
-                            onprogress"><i class="fas fa-circle"></i> En cour</span></td>
+                            confirmed"><i class="fas fa-message"></i></span></td>
                     </tr>
                     <tr>
                         <td>#PW-0002</td>
                         <td>Webcode inc</td>
                         <td>Mar 29, 2021</td>
                         <td><span class="status
-                            confirmed"><i class="fas fa-circle"></i> Terminer</span></td>
+                            confirmed"><i class="fas fa-message"></i></span></td>
                     </tr>
                     <tr>
                         <td>#PW-0003</td>
                         <td>Coding time</td>
                         <td>Feb 10, 2020</td>
                         <td><span class="status
-                            fulfilled"><i class="fas fa-circle"></i> FULFILLED</span></td>
+                            confirmed"><i class="fas fa-message"></i></span></td>
                     </tr>
                 </table>
             </div>
-
-               
-               
     </main>
 </div>
 </body>
@@ -171,7 +171,10 @@ export default {
     console.error(error);
     this.MessageError = "Une erreur s'est produite lors de la déconnexion.";
     });
-    }
+    },
+    mecanicienapropos() {
+        this.$router.push({ name: 'mecanicienpageapropos' });
+    },
     }
 }
 </script>

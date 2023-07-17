@@ -46,8 +46,9 @@
     
         <div class="sidebar">
             <div class="sidebar-menu">
-                <span class="fas fa-home"></span><p style="font-size: 13px;">Accueil</p>
+                <span @click="mecanicienaccueuil" class="fas fa-home"></span><p @click="mecanicienaccueuil" style="font-size: 13px;">Accueil</p>
             </div>
+            
             <div class="sidebar-menu">
                 <span class="fas fa-tools"></span><p style="font-size: 13px;">Services</p>
             </div>
@@ -109,6 +110,9 @@
             a.style.display = "block";
             }
         },
+        mecanicienaccueuil() {
+        this.$router.push({ name: 'mecanicienaccueil' });
+        },
       }
     }
     </script>
@@ -129,7 +133,8 @@
     background-size: cover;
     background-position: center;
     padding: 0 8%;
-}
+    }
+    
     h2 {
         font: 18px;
         padding: 15px 0;

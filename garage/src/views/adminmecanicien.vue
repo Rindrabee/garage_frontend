@@ -19,7 +19,7 @@
                     <input style="margin-left: -300px;width: 300px;color: gray;font-family: century gothic;" class="form-control" type="text" placeholder="Barre de recherche">
                     <span class="fas fa-search"></span>
                     <img @click="slide1" style="cursor: pointer;" class="profile-image" src="../assets/images/profil.ico" alt="">
-                    <p style="cursor: pointer;" class="profile-name">  Tahinalisoa</p>
+                    <p style="cursor: pointer;" class="profile-name">  {{ Admin.Prenoms }}</p>
                 </div>
                 <div id="rindra" class="settings-menu">
                     <div id="dark-btn">
@@ -52,9 +52,7 @@
                <div class="sidebar-menu">
                  <span class="fas fa-exclamation-triangle"></span><p style="font-size: 13px;">Urgence</p>
                </div>
-               <div class="sidebar-menu">
-                 <span class="fas fa-calendar-alt"></span><p style="font-size: 13px;">Rendez-vous</p>
-               </div>
+              
                <div class="sidebar-menu">
                <span @click="verslisteclient" class="fas fa-user"></span><p @click="verslisteclient" style="font-size: 13px;">Client</p>
                </div>
@@ -62,7 +60,7 @@
                 <span @click="listemecanicien" class="fas fa-wrench"></span><p @click="listemecanicien" style="font-size: 13px;">Mecanicien</p>
                </div>
                <div class="sidebar-menu">
-                 <span @click="listegarage" class="fas fa-car"></span><p @click="listegarage" style="font-size: 13px;">Garage</p>
+                 <span @click="verslistegarage" class="fas fa-car"></span><p @click="verslistegarage" style="font-size: 13px;">Garage</p>
                </div>
            <div class="sidebar-menu">
              <span class="fas fa-file-invoice"></span><p style="font-size: 13px;">Comptabilité</p>
@@ -74,32 +72,35 @@
                 <br>
                 <div class="card detail">
                     <div class="detail-header">
-                        <p style="font-family: century gothic;font-size: 18px; ">Liste des mecaniciens :</p>
+                        <p style="font-family: century gothic;font-size: 18px; ">Liste des garages automobiles :</p>
                     </div>
                     <br>
                     <table>
                         <tr>
                             <th>Photo</th>
                             <th>Nom</th>
-                            <th>Service</th>
-                            <th>Adresse</th>
-                            <th>Spécialité</th>
-                            <th>Telephone</th>
+                            <th>Naissance </th>
+                            <th>Adresse </th>
+                            <th>Specialite </th>
+                            <th>Télephone </th>
+                            <th>Discussion</th>
                             <th>Action</th>
                         </tr>
                         
-                        <tr v-for="mec in Mecanicien" :key="mec.id">
+                        <tr v-for="g in Mecanicien" :key="g.id">
 
+                       
                         <td>
-                        <img style="width: 80px; border-radius: 2%; height: 80px;" :src="'http://localhost:8082/' + g.Photo + '.jpeg'" alt="">
+                        <img style="width: 80px; border-radius: 50%; height: 80px;" :src="'http://localhost:8082/' + g.Photo + '.jpeg'" alt="">
                         </td>
                         
-                        <td>{{ mec.Nom }}</td>
-                        <td>{{ mec.Prenoms }}</td>
-                        <td>{{ mec.Naissance }}</td>
-                        <td style="color: rgb(25, 72, 224);">{{ mec.Sexe }}</td>
+                        <td>{{ g.Nom }}</td>
+                        <td>{{ g.Naissance }}</td>
+                        <td>{{ g.Adresse }}</td>
+                        <td style="color: rgb(25, 72, 224);">{{ g.Specialite }}</td>
                         <td>{{ g.Telephone }}</td>
-                        <td><button class="btn btn-outline-success">À propos</button></td>
+                        <td><i style="margin-left: 30px;cursor: pointer;" class="fas fa-message"></i></td>
+                        <td><button class="btn btn-outline-danger">Bloquer</button></td>
                         </tr>
     
                    
@@ -123,40 +124,57 @@
     export default {
         data () {
         return {
-         Mecanicien  : {},
-         Garage: {}
+         Mecanicien : {},
+         id_sender: '',
+         Admin: {}
+         
         }
         },
         mounted() {
-        this.listemecanicien()
+        this.listemecanicien();
+        this.adminconnecter()
         },
         methods: {
         slide1(){
-        let a = document.getElementById("rindra");
-           if (a.style.display === "block") {
-           a.style.display = "none";
-           } else {
-           a.style.display = "block";
-        }
+            let a = document.getElementById("rindra");
+            if (a.style.display === "block") {
+            a.style.display = "none";
+            } else {
+            a.style.display = "block";
+            }
         },
-
         listemecanicien() {
-       axios.get('http://localhost:8082/api/mecaniciens/listermecanicien')
-       .then(response => {
+        axios.get('http://localhost:8082/api/mecaniciens/listermecanicien')
+        .then(response => {
            this.Mecanicien = response.data
+        })
+        },
+        //Prendre le session de l'admin connecté
+        adminconnecter() {
+        axios.get('http://localhost:8082/api/admins/session', {
+        headers: {
+            Authorization: `Bearer ${localStorage.getItem('token')}`
+        },
+        })
+       .then(response => {
+        this.Admin = response.data.adm;
+        this.id_sender = this.Admin.id;
+       }).catch(error => {
+        console.log(error);
        })
-       },
-       verslisteclient() {
+
+    },
+        verslisteclient() {
         this.$router.push({ name: 'adminCLIENT' });
-       },
-       listegarage() {
+        },
+       verslistegarage() {
         this.$router.push({ name: 'adminGARAGE' });
        },
         principale() {
         this.$router.push({ name: 'adminpage' });
         },
         logout() {
-        axios.post('http://localhost:8082/api/mecaniciens/logout')
+        axios.post('http://localhost:8082/api/garages/logout')
         .then(response => {
         localStorage.removeItem('token');
         localStorage.removeItem('Email');

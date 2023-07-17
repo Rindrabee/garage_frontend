@@ -18,8 +18,8 @@
             <div class="profile">
                 <input style="margin-left: -300px;width: 300px;color: gray;font-family: century gothic;" class="form-control" type="text" placeholder="Barre de recherche">
                 <span class="fas fa-search"></span>
-                <img @click="slide1" style="cursor: pointer;" class="profile-image" src="../assets/images/profil.ico" alt="">
-                <p style="cursor: pointer;" class="profile-name">  Tahinalisoa</p>
+                <img @click="slide1" style="cursor: pointer;" class="profile-image" :src="'http://localhost:8082/' +  Garage.Photo  + '.jpeg'" alt="">
+                <p style="cursor: pointer;" class="profile-name">  {{ Garage.Nom }}</p>
             </div>
             <div id="rindra" class="settings-menu">
                 <div id="dark-btn">
@@ -65,7 +65,7 @@
         </div>
         <!-- main dashboard -->
         <main>
-            <div class="dashboard-container">
+            <div id="ambany" class="dashboard-container">
                 <!-- cards top -->
                 <div class="card total1">
                     <div class="info">
@@ -121,76 +121,45 @@
                 <div class="card detail">
                     <div class="detail-header">
                         <p style="font-family: century gothic;font-size: 18px; ">Liste des voitures dans le garage :</p>
-                        <button> Ajouter</button>
+                        <button @click="ajoutervoiture"> Ajouter</button>
                     </div>
                     <br>
+                    <!-- Liste des voitures dans votre garages  -->
+
                     <table>
                         <tr>
+                            <th>Photo</th>
                             <th>Numéro</th>
                             <th>Nom</th>
                             <th>Date d'arriver</th>
                             <th>Etat</th>
                             <th>Action1</th>
                             <th>Action2</th>
+                     
                         </tr>
-                        <tr>
-                            <td>#PW-0001</td>
-                            <td>Potential Corp</td>
-                            <td>Apr 11, 2021</td>
-                            <td><span class="status
-                                onprogress"><i class="fas fa-circle"></i> En cour</span></td>
-                            <td><button class="btn btn-outline-success">Terminer</button></td>
-                            <td><button class="btn btn-outline-danger">Supprimer</button></td>
-                        </tr>
-                        <tr>
-                            <td>#PW-0002</td>
-                            <td>Webcode inc</td>
-                            <td>Mar 29, 2021</td>
-                            <td><span class="status
-                                confirmed"><i class="fas fa-circle"></i> Terminer</span></td>
-                            <td><button class="btn btn-outline-success">Améliorer</button></td>
-                            <td><button class="btn btn-outline-danger">Supprimer</button></td>
-                        </tr>
-                        <tr>
-                            <td>#PW-0003</td>
-                            <td>Coding time</td>
-                            <td>Feb 10, 2020</td>
-                            <td><span class="status
-                                fulfilled"><i class="fas fa-circle"></i> FULFILLED</span></td>
-                            <td><button class="btn btn-outline-success">Terminer</button></td>
-                            <td><button class="btn btn-outline-danger">Supprimer</button></td>
+                        
+                        <tr v-for="v in Voiture" :key="v.id">
+
+                        <td v-if="v.Idgarage == id_garage">
+                        <img style="width: 90px; border-radius: 10%; height: 80px;" :src="'http://localhost:8082/' + v.Photo + '.jpeg'" alt="">
+                        </td>
+                        
+                        
+                        <td v-if="v.Idgarage == id_garage">{{ v.Numero }}</td>
+                        <td v-if="v.Idgarage == id_garage">{{ v.Nom }}</td>
+                        <td v-if="v.Idgarage == id_garage">{{ v.Date1 }}</td>
+                        <td  v-if="v.Idgarage == id_garage"><span class="status onprogress"><i class="fas fa-circle"></i> En cour</span></td>
+                       
+                       
+                        <td  v-if="v.Idgarage == id_garage"><button class="btn btn-outline-success">Terminer</button></td>
+                        <td  v-if="v.Idgarage == id_garage"><button class="btn btn-outline-danger">Supprimer</button></td>
                         </tr>
     
-                        <!-- apina -->
-    
-                        <tr>
-                            <td>#PW-0001</td>
-                            <td>Potential Corp</td>
-                            <td>Apr 11, 2021</td>
-                            <td><span class="status
-                                onprogress"><i class="fas fa-circle"></i> En cour</span></td>
-                            <td><button class="btn btn-outline-success">Terminer</button></td>
-                            <td><button class="btn btn-outline-danger">Supprimer</button></td>
-                        </tr>
-                        <tr>
-                            <td>#PW-0002</td>
-                            <td>Webcode inc</td>
-                            <td>Mar 29, 2021</td>
-                            <td><span class="status
-                                confirmed"><i class="fas fa-circle"></i> Terminer</span></td>
-                            <td><button class="btn btn-outline-success">Améliorer</button></td>
-                            <td><button class="btn btn-outline-danger">Supprimer</button></td>
-                        </tr>
-                        <tr>
-                            <td>#PW-0003</td>
-                            <td>Coding time</td>
-                            <td>Feb 10, 2020</td>
-                            <td><span class="status
-                                fulfilled"><i class="fas fa-circle"></i> FULFILLED</span></td>
-                            <td><button class="btn btn-outline-success">Terminer</button></td>
-                            <td><button class="btn btn-outline-danger">Supprimer</button></td>
-                        </tr>
+                   
                     </table>
+
+
+
                 </div>
                 <div class="card customer">
                     <h3 style="font-family: Poppins,sans-serif;font-size: 18.5px;">Discussion</h3>
@@ -226,23 +195,90 @@
                 
     
             </div>
-    </main>
+                               
+            
+       <!-- ajouter voiture -->
+       <div id="ajoutervoiture" style="display: none; box-shadow: 2px 2px 10px black;background-color: #0f530f;border-radius : 20px;position: fixed;top: 130px;margin-left: 140px;width: 728px;" class="container">
+
+    <form>
+    <div  class="box">
+    <h1 class="form-title">Ajouter un voiture<img @click="fermerajoutervoiture" style="width: 30px;margin-left: 327.5px;cursor: pointer;" src="../assets/images/close.png" alt=""></h1>
+
+    <div id="pejy1" class="page1">
+    <div class="user-input-box">
+      <label for="numero">Numero de la voiture</label>
+      <input v-model="Numero" type="text" id="numero" name="numero" :placeholder="isFieldEmpty && !Numero ? 'Le numero du voiture' : 'Le numero du voiture'" :class="{'error': isFieldEmpty && !Numero}">
+    </div>
+
+    <div class="user-input-box">
+      <label for="nom">Nom de la voiture</label>
+      <input v-model="Nom" type="text" id="nom" name="nom" :placeholder="isFieldEmpty && !Nom ? 'Le nom du voiture' : 'Le nom du voiture'" :class="{'error': isFieldEmpty && !Nom}">
+    </div>
+
+
+    <div class="user-input-box">
+      <label for="date">Date d'enter au garage</label>
+      <input v-model="Date1" style="color: grey;" type="date" id="date" name="date" placeholder="Date d'entrer au garage">
+      <div style="color: red;margin-right: 100px;font-size: 12px;" v-if="isFieldEmpty && !Date1" class="field-message">Veuillez compléter ce champ</div>
+    </div>
+
+    <div class="user-input-box">
+      <label for="probleme">Problème de la voiture</label>
+      <input v-model="Probleme" type="text" id="probleme" name="probleme" :placeholder="isFieldEmpty && !Probleme ? 'Le problème du voiture' : 'Le problème du voiture'" :class="{'error': isFieldEmpty && !Probleme}">
+    </div>
+
+
+    <div class="user-input-box">
+      <label for="photo">Photo de la voiture</label>
+      <input @change="handleImage" ref="postImageInput" style="background: white;" type="file" id="photo" name="photo" placeholder="Choisir votre photo">
+      <div style="color: red;margin-right: 100px;font-size: 12px;" v-if="isFieldEmpty && !Photo" class="field-message">Veuillez compléter ce champ</div>
+    </div>
+
+
+    <h2 style="margin-top: 49px;opacity: 0%;">45</h2>
+  
+  </div>
+  </div> 
+  </form>
+
+  <div style="position: absolute;margin-top: 320px;" @click="addcar" id="next" class="form-submit-btn">
+    <input  type="button" class="btn btn-success"  value="Enregistrer">
+  </div>
+
+</div>
+</main>
 </div>
 </body>
 </html>
 </template>
     
 <script>
-import AuthenticationService from '../services/AuthenticationService.js'
+import AuthenticationService4 from '../services/AuthentificationService4.js'
 import { tokenIsExpired } from '../utils/date.js';
 import axios from 'axios';
 
 export default {
     data () {
     return {
-    
+      Numero: '',
+      Nom: '',
+      Date1: '',
+      Probleme: '',
+      Photo: '',
+      Voiture: {},
+      Garage: {},
+      id_garage : '',
+      
+
+      isFieldEmpty: false,
+      isInvalidEmail: false,
+      acceptConditions: false,
     }
 },
+    mounted() {
+    this.listevoiture();
+    this.garageconnecter();
+    },
 methods: {
 slide1() {
     let a = document.getElementById("rindra");
@@ -252,6 +288,55 @@ slide1() {
     a.style.display = "block";
     }
 },
+// Ouvrir ajouter voiture
+ ajoutervoiture() {
+    let a = document.getElementById("ajoutervoiture")
+    let b = document.getElementById("ambany")
+
+    a.style.display = "flex";
+    b.style.opacity = "80%";
+
+ },
+ //Lister les voitres
+ listevoiture() {
+    axios.get('http://localhost:8082/api/garages/listervoiture')
+    .then(response => {
+        this.Voiture = response.data
+    })
+},
+  //Prendre le session du garage connecté
+    garageconnecter() {
+    axios.get('http://localhost:8082/api/garages/session', {
+    headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`
+    },
+    })
+    .then(response => {
+    this.Garage = response.data.grg;
+    this.id_garage = this.Garage.id;
+
+    }).catch(error => {
+    console.log(error);
+    })
+    },
+
+
+
+ //Fermer ajouter voiture
+ fermerajoutervoiture() {
+    let a = document.getElementById("ajoutervoiture")
+    let b = document.getElementById("ambany")
+
+
+    a.style.display = "none";
+    b.style.opacity = "100%";
+
+    // Rafraîchir la page garageaccueil
+    window.location.reload();
+ },
+
+
+
 logout() {
     axios.post('http://localhost:8082/api/garages/logout')
     .then(response => {
@@ -263,7 +348,48 @@ logout() {
     console.error(error);
     this.MessageError = "Une erreur s'est produite lors de la déconnexion.";
     });
+    },
+
+    //Ajouter voiture 
+    async addcar() {
+    if (!this.Numero || !this.Nom || !this.Date1 || !this.Probleme || !this.Photo) {
+    this.isFieldEmpty = true;
+    return;
     }
+    else {
+    this.isFieldEmpty = false;
+
+    const response = await AuthenticationService4.register({
+    Numero: this.Numero,
+    Nom: this.Nom,
+    Date1: this.Date1,
+    Probleme: this.Probleme,
+    Idgarage: this.id_garage,
+    Photo: this.Photo
+  });
+
+  this.$router.push({ name: 'garagepage' });
+  console.log(response.data);
+  alert("Enregistré avec succès");
+  
+}
+},
+
+
+    handleImage(event) {
+    const file = event.target.files[0];
+    this.createBase64Image(file);
+    },
+    createBase64Image(fileObject) {
+    const reader = new FileReader();
+
+    reader.onload = (e) => {
+    this.Photo = e.target.result;
+     
+    };
+
+    reader.readAsDataURL(fileObject);
+    },
 }
 }
 
@@ -277,10 +403,11 @@ box-sizing: border-box;
 outline: none;
 font-family: "Poppins",sans-serif;
 }
-.cont {  
-background : url(../assets/images/ft3.jpg);
-background-position: center;
-background-size: cover;
+.cont {
+    background : url(../assets/images/ft3.jpg);
+    background-position: center;
+    background-size: cover;
+    min-height: 100vh;
 }
 h2 {
 font: 18px;
@@ -630,6 +757,160 @@ cursor: pointer;
         font-size: 0.9rem;
     }
 }
+
+/* Ajouter garage */
+.error::placeholder {
+  color: red;
+  font-size: 15px;
+  font-family: century gothic;
+}
+/* .main {
+    padding: 0 8%;
+} */
+.box {
+    width: 100%;
+    max-width: 650px;
+    background: rgba(0, 0, 0, 0.5);
+    padding: 28px;
+    margin: 0 28px;
+    border-radius: 10px;
+    box-shadow: inset -2px 2px 2px green;
+}
+  .form-title {
+    font-size: 26px;
+    font-weight: 600;
+    text-align: center;
+    padding-bottom: 6px;
+    color: white;
+    text-shadow: 2px 2px 2px black;
+    border-bottom: solid 1px white;
+  }
+  .page1 {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 20px 0;
+  }
+ 
+  .user-input-box:nth-child(2n){
+    justify-content: end;
+  }
+  .user-input-box {
+    display: flex;
+    flex-wrap: wrap;
+    width: 50%;
+    padding-bottom: 15px;
+  }
+  .user-input-box label {
+    width: 95%;
+    color: white;
+    font-size: 14px;
+    font-family: century gothic;
+    font-weight: 400;
+    margin: 5px 0;
+  }
+  .user-input-box input {
+    height: 40px;
+    width: 95%;
+    border-radius: 7px;
+    outline: none;
+    font-size: 15px;
+    font-family: century gothic;
+    border: 1px solid grey;
+    padding: 0 10px;
+  }
+  .user-input-box .gender-category .selecting {
+    height: 40px;
+    width: 280px;
+    border-radius: 7px;
+    outline: none;
+    font-size: 15px;
+    color: grey;
+    font-family: century gothic;
+    border: 1px solid grey;
+    padding: 0 10px;
+  }
+ 
+ 
+  .user-input-box .gender-category .selecting,
+  .form-submit-btn input{
+    cursor: pointer;
+  }
+  .form-submit-btn {
+    margin-top: 20px;
+    margin-left: 500px;
+  }
+  .form-submit-btn input {
+    display: block;
+    width: 100%;
+    margin-top: 10px;
+    font-size: 15px;
+    padding: 10px;
+    border: none;
+    border-radius: 3px;
+  }
+  .form-submit-btn input:hover {
+    background-color: rgba(154, 235, 100, 0.5);
+  }
+
+
+ 
+
+ 
+
+ 
+  /* .check {
+    position: absolute;
+    left: 49.9%;
+    top: 43.1%;
+    font-size: 15px;
+    transform: translate(-50%, -50%);
+    display: none;
+  } */
+
+
+  @media(max-width: 600px){
+    .container2{
+      min-width: 280px;
+    }
+    .user-input-box {
+      margin-bottom: 12px;
+      width: 100%;
+    }
+    .user-input-box:nth-child(2n){
+      justify-content: space-between;
+    }
+    .gender-category {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+    }
+    .main-user-info{
+      max-height: 380px;
+      overflow: auto;
+    }
+    .main-user-info::-webkit-scrollbar{
+      width: 0;
+    }
+  }
+
+input[type="submit"]{
+    border: none;
+    outline: none;
+    background: #ffa400;
+    padding: 11px 25px;
+    width: 100px;
+    margin-top: 10px;
+    border-radius: 4px;
+    font-weight: 200;
+    font-family: 'century gothic';
+    cursor: pointer;
+}
+input[type="submit"]:active{
+    opacity: 0.10;
+}
+
+
 
 
 </style>

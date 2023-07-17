@@ -29,10 +29,11 @@ import vldoublie3 from '../views/vldoublie3.vue'
 import nouveaucode3 from '../views/nouveaucode3.vue'
 import adminGARAGE from '../views/adminGARAGE.vue'
 import modificationadmin from '../views/modificationadmin.vue'
-import adminmecanicien from '../views/adminmecanicien.vue'
 import adminCLIENT from '../views/adminCLIENT.vue'
 import GARAGEshow from '../views/GARAGEshow.vue'
 import Ajoutervoiture from '../views/Ajoutervoiture.vue'
+import adminMECANICIEN from '../views/adminMECANICIEN.vue'
+import urgencepage from '../views/urgencepage.vue'
 
 
 const router = createRouter({
@@ -178,9 +179,9 @@ const router = createRouter({
       component: modificationadmin
     },
     {
-      path: '/adminmecanicien',
-      name: 'adminmecanicien',
-      component: adminmecanicien
+      path: '/adminMECANICIEN',
+      name: 'adminMECANICIEN',
+      component: adminMECANICIEN
     },
     {
       path: '/adminCLIENT',
@@ -196,6 +197,11 @@ const router = createRouter({
       path: '/Ajoutervoiture',
       name: 'Ajoutervoiture',
       component: Ajoutervoiture
+    },
+    {
+      path: '/urgencepage',
+      name: 'urgencepage',
+      component: urgencepage
     },
     
   ]
