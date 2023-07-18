@@ -15,7 +15,7 @@
     <div class="registration-container">
         <nav class="navbar">
         <ul class="left">
-            <li><a href="/"><i class="fas fa-home"></i>&nbsp; Accueil</a></li>
+            <li @click="versaccueil"><a href="/"><i class="fas fa-home"></i>&nbsp; Accueil</a></li>
         </ul>
         <ul class="right">
             <li><a href="loginpage"><i class="fas fa-sign-in-alt"></i>&nbsp; Se connecter</a></li>
@@ -23,8 +23,34 @@
         </ul>
     </nav> 
   
-      <div class="container mt-4">
-        <div class="registration-form">
+    
+    <div style="margin-top: 90px;" class="container">
+    <h1  style="color: rgb(2, 2, 2);font-size: 40px;font-family:avant garde;">Bienvenue dans la demande de dépannage</h1>
+    <p style="font-family: century gothic;">D'abord, restez calme. Nous sommes là pour vous aider, ne vous inquiétez pas.</p>
+    <p style="font-family: century gothic;">Mais avant cela, veuillez remplir ce formulaire correctement afin que nous puissions vous aider et envoyer des</p>
+    <p style="font-family: century gothic;">mécaniciens où que vous soyez. N'oubliez pas de mentionner clairement votre localisation et de finaliser le </p>
+    <p style="font-family: century gothic;">paiement pour le déplacement des mécaniciens jusqu'à vous.</p>
+    </div>
+
+    <div class="dialogue">
+            <span>Ne t'inquiète pas, je suis là</span>
+    </div>
+    <div>
+      <img class="mechanic-img" style="float: right;margin-top: -200px;margin-right: 80px;" src="../assets/images/mec.ico" alt="">
+    </div>
+
+    <!-- message de patienter -->
+
+    <div id="patiente" style="background-color: #f2f2f2; border-radius: 30px; display: none; padding: 20px;margin-top: 90px;">
+     <h1 style="font-size: 30px; font-family: Century Gothic; color: red; text-align: center; margin: 0;">
+     Veuillez rester sur cette page, votre demande est en cours de traitement.
+     Nous nous occupons de votre cas et nous vous prions de bien vouloir patienter.
+     </h1>
+   </div>
+
+    <!-- formulaire à remplir -->
+      <div id="renseignemet" class="container mt-4">
+        <div style="margin-bottom: 120px;" class="registration-form">
           <div v-if="step === 1">
             <h2 style="font-size: 20px;font-family: century gothic;">Étape 1: Informations personnelles</h2>
             <br><br>
@@ -61,7 +87,7 @@
           </div>
   
           <div v-if="step === 3">
-            <h2 style="font-size: 20px;font-family: century gothic;">Étape 2: Informations de localisation</h2>
+            <h2 style="font-size: 20px;font-family: century gothic;">Étape 3: Informations de localisation</h2>
             <br><br>
             <div class="form-group">
               <label for="probleme">Probleme rencontré:</label>
@@ -71,25 +97,22 @@
             <br>
             <div class="form-group">
               <label for="localisation">Localisation :  <a style="color: green;cursor: pointer;" @click="redirigerVersGoogleMaps">Google Map</a> </label>
-<br><br>
+              <br><br>
               <label for="longitude">Longitude: </label>
               <input type="text" class="form-control" id="longitude" v-model="longitude" :class="{ 'is-invalid': longitudeError }">
               <div class="invalid-feedback" v-if="longitudeError">{{ longitudeError }}</div>
 
-
               <label for="latitude">Latitude: </label>
               <input type="text" class="form-control" id="latitude" v-model="latitude" :class="{ 'is-invalid': latitudeError }">
               <div class="invalid-feedback" v-if="latitudeError">{{ latitudeError }}</div>
-
 
             </div>
             <button class="btn btn-success" @click="prevStep">Précédent</button>
             <button class="btn btn-success" @click="nextStep">Suivant</button>
           </div>
 
-
           <div v-if="step === 4">
-            <h2 style="font-size: 20px;font-family: century gothic;">Récapitulatif</h2>
+            <h2 style="font-size: 20px;font-family: century gothic;">Etape finale  : Récapitulatif</h2>
             <br><br>
             <p><strong>Nom:</strong> {{ name }}</p>
             <p><strong>Email:</strong> {{ email }}</p>
@@ -100,7 +123,7 @@
             <p><strong>latitude:</strong> {{ latitude }}</p>
 
             <button class="btn btn-success" @click="prevStep">Précédent</button>
-            <button class="btn btn-success" @click="submitForm">Envoyer</button>
+            <button class="btn btn-success" @click="register">Envoyer</button>
           </div>
         </div>
       </div>
@@ -114,10 +137,13 @@
   </template>
   
   <script>
+import AuthenticationService5 from '../services/AuthentificationService5.js'
+import axios from 'axios';
+
+
   export default {
     data() {
       return {
-
       step: 1,
       name: '',
       email: '',
@@ -138,7 +164,38 @@
       
       };
     },
+
+
     methods: {
+    //Ajouter une urgence 
+    async register() {
+    
+    const response = await AuthenticationService5.register({
+    name: this.name,
+    email: this.email,
+    phone: this.phone,
+    address: this.address,
+    Probleme: this.Probleme,
+    longitude: this.longitude,
+    latitude: this.latitude,
+    });
+
+    console.log(response.data);
+    alert("Demmande envoyer avec succès");
+
+    let a = document.getElementById("patiente");
+    let b = document.getElementById("renseignemet");
+
+
+    a.style.display = "inline-block";
+    b.style.display = "none";
+
+    },
+
+
+
+    
+  //Autre détails
       nextStep() {
         if (this.validateCurrentStep()) {
           this.step++;
@@ -149,14 +206,15 @@
       prevStep() {
         this.step--;
       },
+      //rediriger vers google map
       redirigerVersGoogleMaps() {
-  window.open('https://maps.google.com', '_blank');
-},
+      window.open('https://maps.google.com', '_blank');
+      },
       validateEmail(email) {
     // Expression régulière pour vérifier le format de l'email
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
-  },
+     },
       changeStep(step) {
         this.step = step;
       },
@@ -218,6 +276,12 @@
         }
   
         return true; // Si la validation de l'étape n'est pas nécessaire, retourne true
+      },
+
+
+      //autre fonctionlité 
+      versaccueil(){
+            this.$router.push({name:'/'})
       }
     }
   };
@@ -236,6 +300,46 @@
     background-color: #f9f9f9;
   }
   
+  .mechanic-img {
+  float: right;
+  margin-top: -200px;
+  margin-right: 80px;
+  animation: tilt 3s linear infinite;
+  transform-origin: bottom right;
+}
+        
+@keyframes tilt {
+    0% {
+        transform: rotate(-5deg);
+    }
+    50% {
+        transform: rotate(5deg);
+    }
+    100% {
+        transform: rotate(-5deg);
+    }
+}
+
+.dialogue {
+    position: absolute;
+    width: 150px;
+    margin-top: -170px;
+    margin-left: 998px;
+    padding: 10px;
+    background-color: #f2f2f2;
+ 
+}
+        
+.dialogue::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    right: -8px;
+    border-top: 8px solid transparent;
+    border-bottom: 8px solid transparent;
+    border-left: 8px solid #f2f2f2;
+}
+
   .btn-success {
     margin-right: 10px;
     margin-top: 40px;

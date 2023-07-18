@@ -18,8 +18,8 @@
             <div class="profile">
                 <input style="margin-left: -300px;width: 300px;color: gray;font-family: century gothic;" class="form-control" type="text" placeholder="Barre de recherche">
                 <span class="fas fa-search"></span>
-                <img @click="slide1" style="cursor: pointer;" class="profile-image" src="../assets/images/profil.ico" alt="">
-                <p style="cursor: pointer;" class="profile-name">  Tahinalisoa</p>
+                <img @click="slide1" style="cursor: pointer;" class="profile-image" :src="'http://localhost:8082/' +  Mecanicien.Photo  + '.jpeg'" alt="">
+                <p style="cursor: pointer;" class="profile-name">  {{ Mecanicien.Nom }}</p>
             </div>
             <div id="rindra" class="settings-menu">
                 <div id="dark-btn">
@@ -35,8 +35,8 @@
                         <img style="cursor: pointer;" src="../assets/images/logout.png" class="settings-icon">
                         <a @click="logout" style="color: #000;font-family: century gothic;cursor: pointer;">DECONNECTION<img src="../assets/images/arrow.png"
                         width="10px" alt=""></a>
-                        
                     </div>
+
                 </div>    
             </div>
         </nav>
@@ -148,9 +148,12 @@ import { tokenIsExpired } from '../utils/date.js';
 export default {
     data () {
     return {
-    
+    Mecanicien : {},
     }
-},
+    },
+    mounted(){
+    this.mecanicienconnecter();
+    },
     methods: {
     slide1(){
         let a = document.getElementById("rindra");
@@ -160,6 +163,25 @@ export default {
         a.style.display = "block";
         }
     },
+    //Prendre la session du mecanicien connecter
+      //Prendre le session du garage connecté
+    mecanicienconnecter() {
+    axios.get('http://localhost:8082/api/mecaniciens/session', {
+    headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`
+    },
+    })
+    .then(response => {
+    this.Mecanicien = response.data.mc;
+    // this.id_garage = this.Garage.id;
+
+    }).catch(error => {
+    console.log(error);
+    })
+    },
+
+
+
     logout() {
     axios.post('http://localhost:8082/api/mecaniciens/logout')
     .then(response => {

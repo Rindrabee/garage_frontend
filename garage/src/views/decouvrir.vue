@@ -20,24 +20,42 @@
     </nav> 
     <br><br><br><br><br>
 
+   
+    <div class="site-container">
+    <h1>Bienvenue sur notre site web !</h1>
+    </div>
+   <br><br><br>
     <div class="welcome-container">
     <div class="welcome-text">
     <br>
-    <h1 style="color: rgb(226, 236, 226); font-family: century;">Bienvenue sur notre site web !</h1>
     <br>
-    <p>Nous sommes enchantés de vous accueillir sur notre plateforme en ligne dédiée aux passionnés d'automobiles et aux propriétaires de véhicules. Que vous soyez à la recherche d'un garage pour l'entretien régulier de votre voiture, des réparations nécessaires ou des services de personnalisation, vous êtes au bon endroit.</p>
-    <p>Ici, vous trouverez une sélection soigneusement composée de garages partenaires hautement qualifiés et expérimentés. Notre objectif est de vous offrir une expérience sans pareille en vous mettant en relation avec les professionnels les plus compétents de l'industrie automobile.</p>
-    <p>Nos garages partenaires sont minutieusement évalués pour s'assurer qu'ils répondent aux normes les plus strictes en termes de qualité, de service à la clientèle et d'expertise technique. Ils sont prêts à prendre en charge tous vos besoins automobiles, que ce soit pour un simple entretien planifié ou pour des réparations complexes.</p>
-    <p>Explorez notre liste complète de garages inscrits ci-dessous. Chaque garage dispose d'un profil détaillé où vous pourrez trouver des informations sur leurs services offerts, leurs spécialités, les marques de véhicules qu'ils traitent et bien plus encore. Vous pouvez également consulter les avis et les évaluations des clients précédents pour vous aider à faire le meilleur choix.</p>
-    <p>Nous vous encourageons à parcourir notre site, à comparer les garages et à prendre contact directement avec ceux qui suscitent votre intérêt. N'hésitez pas à poser des questions, à demander des devis ou à prendre rendez-vous pour obtenir les services dont vous avez besoin. Nous sommes là pour vous accompagner tout au long du processus et pour vous garantir une satisfaction totale.</p>
-    <p>Merci de votre confiance et bonne visite sur notre site web. Nous espérons que vous trouverez le garage idéal qui satisfera toutes vos attentes et vous offrira des services de qualité exceptionnelle pour votre véhicule bien-aimé.</p>
+    <br>
+    <p>Nous sommes enchantés de vous accueillir sur  notre plateforme en ligne dédiée aux passionnés d' automobiles et</p>
+    <p>aux propriétaires de véhicule.Que vous soyez à la recherche d'un garage pour l'entretien régulier de votre voiture, </p>
+    <p>des réparations nécessaires ou des services de personnalisation, vous êtes au bon endroit.Ici, vous trouverez une</p>
+    <p>sélection soigneusement composée de garages partenaires hautement qualifiés et expérimentés. Notre objectif est </p>
+    <p>de vous offrir une expérience sans pareille en vous mettant en relation avec les professionnels les plus compétents</p>
+    <p>de l'industrie automobile.Nos garages partenaires sont minutieusement évalués pour s'assurer qu'ils répondent aux </p>
+    <p>normes  les plus strictes en termes de qualité,   de service à la clientèle et d'expertise technique.Ils sont prêts à pren-</p>
+    <p>-dre en charge tous vos besoins automobiles, que ce soit pour un simple entretien planifié ou pour  des réparations</p>
+    <p> complexes.Explorez notre liste complète de garages inscrits ci-dessous. Chaque garage dispose d'un profil détaillé</p>
+    <p>où vous pourrez trouver des informations sur leurs services offerts, leurs spécialités, les marques de véhicules qu' </p>
+    <p>ils traitent et bien plus encore. Vous pouvez également consulter les avis et les évaluations des clients précédents </p>
+    <p>pour vous aider à faire le meilleur choix.Nous vous encourageons à parcourir notre site, à comparer les garages et</p>
+    <p>à prendre contact directement avec ceux qui suscitent votre intérêt. N'hésitez pas à poser des questions, à deman-</p>
+    <p>-der des devis ou à prendre rendez-vous pour obtenir les services dont vous avez besoin.Nous sommes là pour vo-</p>
+    <p>-us accompagner tout au long du processus et pour vous garantir une satisfaction totale. Merci de votre confiance </p>
+    <p>et bonne visite sur notre site web. Nous espérons que vous trouverez le garage idéal qui satisfera toutes vos </p>
+    <p>attentes et vous offrira des services de qualité exceptionnelle pour votre véhicule bien-aimé.</p>
     </div>
     <div class="logo-image">
         <img style="width: 420px;margin-left: -440px;margin-top: 130px;border-radius: 5px;position: absolute;" src="../assets/images/ft1.jpg" alt="Logo du site">
     </div>
     </div>
 
-    <h2 style="text-align: center;color: rgb(226, 236, 226); font-family: century;">Voici quelques garages inscrits que vous pouvez consulter.</h2>
+    <h2 style="text-align: center;margin-left: 45px;margin-right: 45px; color: white; font-family: Arial, Helvetica, sans-serif; border: 2px solid white; padding: 5px;">
+  Voici quelques garages inscrits que vous pouvez consulter.
+</h2>
     <br><br>
     <div class="main">
     <div class="cards">
@@ -113,7 +131,26 @@
 </template>
 
 <script>
+import { useRouter } from 'vue-router';
+import axios from 'axios';
+ 
+    export default {
+      data () {
+        return {
+          
+           
+        }
+      },
+      mounted(){
+   
+      },
 
+      methods: {
+        versinscrire(){
+            this.$router.push({name:'register'})
+        }
+      }
+    }
 </script>
 
 
@@ -125,13 +162,42 @@
 
 }
 .cont {
-  background: url('../assets/images/off.jpg');
+  background: url('../assets/images/86.jpg');
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center bottom;
   background-attachment: fixed;
 
 }
+
+      
+
+
+/* ho anle titre */
+.site-container {
+position: absolute;
+margin-left: 313px;
+margin-top: -20px;
+color: #fff;
+}
+
+.site-container h1 {
+    font-size: 50px;
+    line-height: 120px; 
+    position: relative;
+    color: transparent;
+    -webkit-text-stroke : 1px #fff;
+    background: url('../assets/images/pattern.png');
+    -webkit-background-clip : text;
+    background-position: 0 0;
+    animation: animate 20s linear 2s infinite alternate;
+}   
+@keyframes animate {
+100%{
+    background-position: -500px 0;
+}
+}
+
 
 .cards {
     width: 20%;
@@ -280,7 +346,7 @@ button:hover {
     font-family: "Century Gothic";
     text-align: left;
     color: white;
-   
+  
     margin-bottom: 40px;
     margin-left: 50px;
     max-width: 800px; /* Limite la largeur du texte */
@@ -294,7 +360,8 @@ button:hover {
 
 .welcome-text p {
     font-size: 15px;
-    margin-bottom: 15px;
+    font-weight: normal;
+    margin-bottom: 10px !important;
 }
 
 .logo-image {

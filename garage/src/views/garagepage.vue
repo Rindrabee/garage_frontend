@@ -34,8 +34,7 @@
                     <div class="settings-links">
                         <img style="cursor: pointer;" src="../assets/images/logout.png" class="settings-icon">
                         <a  @click="logout" style="color: #000;font-family: century gothic;cursor: pointer;">DECONNECTION<img src="../assets/images/arrow.png"
-                        width="10px" alt=""></a>
-                        
+                        width="10px" alt=""></a>   
                     </div>
 
                 </div>    
@@ -242,7 +241,7 @@
   </form>
 
   <div style="position: absolute;margin-top: 320px;" @click="addcar" id="next" class="form-submit-btn">
-    <input  type="button" class="btn btn-success"  value="Enregistrer">
+    <input style="margin-left: 20px;" type="button" class="btn btn-success"  value="Enregistrer">
   </div>
 
 </div>
@@ -380,17 +379,16 @@ logout() {
     const file = event.target.files[0];
     this.createBase64Image(file);
     },
+
     createBase64Image(fileObject) {
     const reader = new FileReader();
 
     reader.onload = (e) => {
     this.Photo = e.target.result;
-     
     };
-
     reader.readAsDataURL(fileObject);
     },
-}
+  }
 }
 
 </script>
