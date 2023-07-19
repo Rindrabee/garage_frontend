@@ -34,6 +34,8 @@ import GARAGEshow from '../views/GARAGEshow.vue'
 import Ajoutervoiture from '../views/Ajoutervoiture.vue'
 import adminMECANICIEN from '../views/adminMECANICIEN.vue'
 import urgencepage from '../views/urgencepage.vue'
+import modificationmecanicien from '../views/modificationmecanicien.vue'
+
 
 
 const router = createRouter({
@@ -203,6 +205,12 @@ const router = createRouter({
       name: 'urgencepage',
       component: urgencepage
     },
+    {
+      path: '/modificationmecanicien',
+      name: 'modificationmecanicien',
+      component: modificationmecanicien
+    },
+    
     
   ]
 })

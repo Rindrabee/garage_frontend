@@ -225,7 +225,6 @@ export default {
     },
     //Diriger vers la page modification
     modification() {
-        localStorage.setItem('id',this.id_sender)
         this.$router.push({ name: 'modificationclient' });
     },
     //Rediriger vers le clientpage

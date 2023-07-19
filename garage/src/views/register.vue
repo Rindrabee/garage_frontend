@@ -267,12 +267,13 @@ export default {
       }
       
       return true;
-    },
+  },
   async register() {
   if (!this.acceptConditions) {
     alert("Veuillez accepter les conditions pour vous inscrire.");
     return;
   }
+  
   const response = await AuthenticationService.register({
     Nom: this.Nom,
     Prenoms: this.Prenoms,
@@ -313,10 +314,12 @@ export default {
       h.style.display = "none";
 
     },
+    
     handleImage(event) {
     const file = event.target.files[0];
     this.createBase64Image(file);
     },
+
     createBase64Image(fileObject) {
     const reader = new FileReader();
 
@@ -370,7 +373,7 @@ export default {
 
     },
     
-    slide2(){
+    slide2() {
       let a = document.getElementById("pejy1");
       let b = document.getElementById("pejy2");
       let c = document.getElementById("next");
@@ -418,9 +421,9 @@ export default {
     d.style.display = "none";
     b.style.display = "flex";
         
-    }
+  }
 
-  
+
   }
   }
 </script>

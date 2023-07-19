@@ -18,27 +18,31 @@
             <div class="profile">
                 <input style="margin-left: -300px;width: 300px;color: gray;font-family: century gothic;" class="form-control" type="text" placeholder="Barre de recherche">
                 <span class="fas fa-search"></span>
-                <img @click="slide1" class="profile-image" src="../assets/images/profil.ico" alt="">
-                <p class="profile-name">  Tahinalisoa</p>
+                <img @click="slide1" style="cursor: pointer;" class="profile-image" :src="'http://localhost:8082/' +  Mecanicien.Photo  + '.jpeg'" alt="">
+                <p style="cursor: pointer;" class="profile-name">  {{ Mecanicien.Nom }} </p>
             </div>
+
             <div id="rindra" class="settings-menu">
                 <div id="dark-btn">
                     <span></span>
                 </div>
+
                 <div class="settings-menu-inner">
                     <div class="settings-links">
-                        <img src="../assets/images/setting.png" class="settings-icon">
-                        <a style="color: #000;font-family: century gothic;cursor: pointer;" href="#">PROFILE<img style="width: 10px;" src="../assets/images/arrow.png" alt=""></a>
+                        <img @click="modification" src="../assets/images/setting.png" class="settings-icon">
+                        <a @click="modification" style="color: #000;font-family: century gothic;cursor: pointer;" href="#">PROFILE<img style="width: 10px;" src="../assets/images/arrow.png" alt=""></a>
                     </div>
                     
                     <div class="settings-links">
-                        <img src="../assets/images/logout.png" class="settings-icon">
-                        <a style="color: #000;font-family: century gothic;cursor: pointer;">DECONNECTION<img src="../assets/images/arrow.png"
+                        <img @click="logout" src="../assets/images/logout.png" class="settings-icon">
+                        <a @click="logout"  style="color: #000;font-family: century gothic;cursor: pointer;">DECONNECTION<img src="../assets/images/arrow.png"
                         width="10px" alt=""></a>
                         
                     </div>
                 </div>    
+
             </div>
+
         </nav>
         <!-- sidebar -->
         <input type="checkbox" id="toggle">
@@ -94,27 +98,72 @@
     </template>
     
     <script>
-    import AuthenticationService from '../services/AuthenticationService.js'
-    export default {
-      data () {
-        return {
-        
+import AuthenticationService from '../services/AuthenticationService.js'
+import axios from 'axios';
+import { tokenIsExpired } from '../utils/date.js';
+
+
+export default {
+    data () {
+    return {
+    Mecanicien : {},
+    }
+    },
+    mounted(){
+    this.mecanicienconnecter();
+    },
+    methods: {
+    slide1(){
+        let a = document.getElementById("rindra");
+        if (a.style.display === "block") {
+        a.style.display = "none";
+        } else {
+        a.style.display = "block";
         }
     },
-      methods: {
-        slide1(){
-            let a = document.getElementById("rindra");
-            if (a.style.display === "block") {
-            a.style.display = "none";
-            } else {
-            a.style.display = "block";
-            }
-        },
-        mecanicienaccueuil() {
+
+    //Diriger vers la page modification
+    modification() {
+    this.$router.push({ name: 'modificationmecanicien' });
+    },
+    
+    //Prendre la session du mecanicien connecter
+    mecanicienconnecter() {
+    axios.get('http://localhost:8082/api/mecaniciens/session', {
+    headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`
+    },
+    })
+    .then(response => {
+    this.Mecanicien = response.data.mc;
+    // this.id_garage = this.Garage.id;
+
+    }).catch(error => {
+    console.log(error);
+    })
+    },
+
+
+
+    logout() {
+    axios.post('http://localhost:8082/api/mecaniciens/logout')
+    .then(response => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('Email');
+    this.$router.push({ name: 'loginpage' });
+    })
+    .catch(error => {
+    console.error(error);
+    this.MessageError = "Une erreur s'est produite lors de la déconnexion.";
+    });
+    },
+
+
+    mecanicienaccueuil() {
         this.$router.push({ name: 'mecanicienaccueil' });
-        },
-      }
+    },
     }
+}
     </script>
     
     <style scoped>

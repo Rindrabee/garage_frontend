@@ -27,12 +27,12 @@
                 </div>
                 <div class="settings-menu-inner">
                     <div class="settings-links">
-                        <img style="cursor: pointer;" src="../assets/images/setting.png" class="settings-icon">
-                        <a style="color: #000;font-family: century gothic;cursor: pointer;" href="#">PROFILE<img style="width: 10px;" src="../assets/images/arrow.png" alt=""></a>
+                        <img @click="modification" style="cursor: pointer;" src="../assets/images/setting.png" class="settings-icon">
+                        <a @click="modification" style="color: #000;font-family: century gothic;cursor: pointer;" href="#">PROFILE<img style="width: 10px;" src="../assets/images/arrow.png" alt=""></a>
                     </div>
                     
                     <div class="settings-links">
-                        <img style="cursor: pointer;" src="../assets/images/logout.png" class="settings-icon">
+                        <img @click="logout"  style="cursor: pointer;" src="../assets/images/logout.png" class="settings-icon">
                         <a @click="logout" style="color: #000;font-family: century gothic;cursor: pointer;">DECONNECTION<img src="../assets/images/arrow.png"
                         width="10px" alt=""></a>
                     </div>
@@ -92,7 +92,6 @@
                         <td><span class="status
                             confirmed"><i class="fas fa-message"></i></span></td>
                     </tr>
-                    
                     <tr>
                         <td>#PW-0002</td>
                         <td>Webcode inc</td>
@@ -109,7 +108,6 @@
                     </tr>
 
                     <!-- apina -->
-
                     <tr>
                         <td>#PW-0001</td>
                         <td>Potential Corp</td>
@@ -155,7 +153,7 @@ export default {
     this.mecanicienconnecter();
     },
     methods: {
-    slide1(){
+    slide1() {
         let a = document.getElementById("rindra");
         if (a.style.display === "block") {
         a.style.display = "none";
@@ -163,8 +161,13 @@ export default {
         a.style.display = "block";
         }
     },
+    
+    //Diriger vers la page modification
+    modification() {
+    this.$router.push({ name: 'modificationmecanicien' });
+    },
+
     //Prendre la session du mecanicien connecter
-      //Prendre le session du garage connecté
     mecanicienconnecter() {
     axios.get('http://localhost:8082/api/mecaniciens/session', {
     headers: {
@@ -194,6 +197,8 @@ export default {
     this.MessageError = "Une erreur s'est produite lors de la déconnexion.";
     });
     },
+
+
     mecanicienapropos() {
         this.$router.push({ name: 'mecanicienpageapropos' });
     },
