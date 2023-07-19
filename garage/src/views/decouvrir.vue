@@ -170,9 +170,6 @@ import axios from 'axios';
 
 }
 
-      
-
-
 /* ho anle titre */
 .site-container {
 position: absolute;
@@ -197,7 +194,6 @@ color: #fff;
     background-position: -500px 0;
 }
 }
-
 
 .cards {
     width: 20%;

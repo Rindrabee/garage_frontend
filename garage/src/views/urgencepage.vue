@@ -98,13 +98,15 @@
             <div class="form-group">
               <label for="localisation">Localisation :  <a style="color: green;cursor: pointer;" @click="redirigerVersGoogleMaps">Google Map</a> </label>
               <br><br>
-              <label for="longitude">Longitude: </label>
-              <input type="text" class="form-control" id="longitude" v-model="longitude" :class="{ 'is-invalid': longitudeError }">
-              <div class="invalid-feedback" v-if="longitudeError">{{ longitudeError }}</div>
 
               <label for="latitude">Latitude: </label>
               <input type="text" class="form-control" id="latitude" v-model="latitude" :class="{ 'is-invalid': latitudeError }">
               <div class="invalid-feedback" v-if="latitudeError">{{ latitudeError }}</div>
+
+
+              <label for="longitude">Longitude: </label>
+              <input type="text" class="form-control" id="longitude" v-model="longitude" :class="{ 'is-invalid': longitudeError }">
+              <div class="invalid-feedback" v-if="longitudeError">{{ longitudeError }}</div>
 
             </div>
             <button class="btn btn-success" @click="prevStep">Précédent</button>
@@ -131,6 +133,9 @@
       
     </div>
     </div>
+    <footer>
+    <p>&copy; 2023 GarageFinder. Tous droits réservés.</p>
+  </footer>
 </body>
 </html> 
   
@@ -288,8 +293,14 @@ import axios from 'axios';
   </script>
   
   
-  <style scoped>
+<style scoped>
 
+.cont {
+  background-color: rgba(198, 209, 197, 0.9);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
   .registration-form {
     width: 700px;
     padding: 90px;
@@ -298,6 +309,7 @@ import axios from 'axios';
     border: 1px solid #ccc;
     border-radius: 5px;
     background-color: #f9f9f9;
+    box-shadow: 0 10px 20px black;
   }
   
   .mechanic-img {
@@ -321,87 +333,96 @@ import axios from 'axios';
 }
 
 .dialogue {
-    position: absolute;
-    width: 150px;
-    margin-top: -170px;
-    margin-left: 998px;
-    padding: 10px;
-    background-color: #f2f2f2;
- 
+  position: absolute;
+  width: 150px;
+  margin-top: -170px;
+  margin-left: 998px;
+  padding: 10px;
+  background-color: #f2f2f2;
+  box-shadow: 0 5px 20px black;
+  border-radius: 20px;
 }
         
 .dialogue::before {
-    content: "";
-    position: absolute;
-    top: 50%;
-    right: -8px;
-    border-top: 8px solid transparent;
-    border-bottom: 8px solid transparent;
-    border-left: 8px solid #f2f2f2;
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: -8px;
+  border-top: 8px solid transparent;
+  border-bottom: 8px solid transparent;
+  border-left: 8px solid #f2f2f2;
 }
 
-  .btn-success {
-    margin-right: 10px;
-    margin-top: 40px;
-  }
+.btn-success {
+  margin-right: 10px;
+  margin-top: 40px;
+}
 
   /* Styles pour le navbar */
 .navbar {
-    padding: 15px;
-    display: flex;
-    justify-content: space-between;
-    background-color: #03331d;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 999;
-    height: 70px; 
+  padding: 15px;
+  display: flex;
+  justify-content: space-between;
+  background-color: #03331d;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 999;
+  height: 70px; 
 }
 
 .navbar ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-  
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
 }
 
 .navbar ul.left {
-    margin-right: auto;
-    margin-top: 10px;
+  margin-right: auto;
+  margin-top: 10px;
 }
 .navbar ul.right {
-    margin-top: 10px;
+  margin-top: 10px;
 }
 
 .navbar ul li {
-    display: inline-block;
-    margin-right: 10px;
+  display: inline-block;
+  margin-right: 10px;
 }
 
 .navbar ul li a {
-    text-decoration: none;
-    color: #fff; 
-    padding: 5px 10px;
-    font-family: 'Tw Cen MT' , sans-serif;
-    position: relative;
-    font-size: 16px;
+  text-decoration: none;
+  color: #fff; 
+  padding: 5px 10px;
+  font-family: 'Tw Cen MT' , sans-serif;
+  position: relative;
+  font-size: 16px;
 }
 
 .navbar ul li a::after {
-    content: '';
-    background: #ffa400;
-    position: absolute; 
-    bottom: 0;
-    right: 0;
-    width: 0;
-    height: 3px;
-    transform: translate(-50%, 0.1px); 
-    transition: 0.3s;
+  content: '';
+  background: #ffa400;
+  position: absolute; 
+  bottom: 0;
+  right: 0;
+  width: 0;
+  height: 3px;
+  transform: translate(-50%, 0.1px); 
+  transition: 0.3s;
 }
 
 .navbar ul li a:hover:after {
-    width: 38%;
+  width: 38%;
 }
-  </style>
+
+/* Styles pour le footer */
+footer {
+  background-color: #03331d;
+  color: #fff;
+  text-align: center;
+  padding: 20px 0;
+}
+
+</style>
   

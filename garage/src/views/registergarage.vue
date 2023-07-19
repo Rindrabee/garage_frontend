@@ -34,8 +34,18 @@
           </div>
   
           <div class="user-input-box">
-            <label for="prenom">Adresse</label>
+            <label for="adresse">Adresse</label>
             <input v-model="Adresse" type="text" id="adresse" name="adresse" :placeholder="isFieldEmpty && !Adresse ? 'Entrer l`adresse du garage' : 'Entrer l`adresse du garage'" :class="{'error': isFieldEmpty && !Adresse}">
+          </div>
+           
+          <div class="user-input-box">
+            <label for="latitude">Latitude :  <a style="color: green;cursor: pointer;" @click="redirigerVersGoogleMaps">Google Map</a> </label>
+            <input v-model="Latitude" type="text" id="latitude" name="latitude" :placeholder="isFieldEmpty && !Latitude ? 'Entrer la latitude de votre adresse' : 'Entrer la latitude de votre adresse'" :class="{'error': isFieldEmpty && !Latitude}">
+          </div>
+
+          <div class="user-input-box">
+            <label for="longitude">Longitude</label>
+            <input v-model="Longitude" type="text" id="longitude" name="longitude" :placeholder="isFieldEmpty && !Longitude ? 'Entrer la longitude de votre adresse' : 'Entrer la longitude de votre adresse'" :class="{'error': isFieldEmpty && !Longitude}">
           </div>
   
           <div class="user-input-box">
@@ -68,18 +78,7 @@
           <div style="color: red;margin-left: 9px;margin-top: -33px ;font-size: 15px;font-family: century gothic;" v-if="isFieldEmpty && !Specialite" class="field-message">Entrer le specialité du garage</div>
           </div>
   
-          <div class="user-input-box">
-            <label for="heuredouverture">Heure d'ouverture</label>
-            <input v-model="Heures_ouverture" type="time" id="H_ouverture" name="H_ouverture" :placeholder="isFieldEmpty && !Heures_ouverture ? 'Entrer l`heure d`ouverture' : 'Entrer l`heure d`ouverture'" :class="{'error': isFieldEmpty && !Heures_ouverture}">
-            <div style="color: red;font-size: 10px;font-family: century gothic;margin-right: 108px;" v-if="isFieldEmpty && !Heures_ouverture" class="field-message">N'oublie pas de mentionner l'heure</div>
-          </div>
-         
-  
-          <div class="user-input-box">
-            <label for="heuredefermeture">Heure de fermeture</label>
-            <input v-model="Heures_fermeture" type="time" id="H_fermeture" name="H_fermeture" :placeholder="isFieldEmpty && !Heures_fermeture ? 'Entrer l`heure de fermeture' : 'Entrer l`heure de fermeture'" :class="{'error': isFieldEmpty && !Heures_fermeture}">
-            <div style="color: red;font-size: 10px;font-family: century gothic;margin-left: 5px;" v-if="isFieldEmpty && !Heures_fermeture" class="field-message">N'oublie pas de mentionner l'heure</div>
-          </div>
+          
   
           <div class="user-input-box">
             <label for="photo">Photo</label>
@@ -128,6 +127,19 @@
           </div>
 
           <div class="user-input-box">
+            <label for="heuredouverture">Heure d'ouverture</label>
+            <input v-model="Heures_ouverture" type="time" id="H_ouverture" name="H_ouverture" :placeholder="isFieldEmpty && !Heures_ouverture ? 'Entrer l`heure d`ouverture' : 'Entrer l`heure d`ouverture'" :class="{'error': isFieldEmpty && !Heures_ouverture}">
+            <div style="color: red;font-size: 10px;font-family: century gothic;margin-right: 108px;" v-if="isFieldEmpty && !Heures_ouverture" class="field-message">N'oublie pas de mentionner l'heure</div>
+          </div>
+         
+  
+          <div class="user-input-box">
+            <label for="heuredefermeture">Heure de fermeture</label>
+            <input v-model="Heures_fermeture" type="time" id="H_fermeture" name="H_fermeture" :placeholder="isFieldEmpty && !Heures_fermeture ? 'Entrer l`heure de fermeture' : 'Entrer l`heure de fermeture'" :class="{'error': isFieldEmpty && !Heures_fermeture}">
+            <div style="color: red;font-size: 10px;font-family: century gothic;margin-right: 108px;" v-if="isFieldEmpty && !Heures_fermeture" class="field-message">N'oublie pas de mentionner l'heure</div>
+          </div>
+
+          <div class="user-input-box">
             <label for="password">Mot de passe</label>
             <input v-model="Password" type="password" id="password" name="password" :placeholder="isFieldEmpty && !Password ? 'Entrer le mot de passe' : 'Entrer le mot de passe'" :class="{'error': isFieldEmpty && !Password}">
           </div>
@@ -158,9 +170,9 @@
           </div>
         <h2 style="margin-top: 49px;opacity: 0%;">45</h2>
   
-        <input @click="slide2" type="button" style="position: absolute;  display: block;margin-top: 260px ;font-size: 15px;padding: 10px;border: none;border-radius: 3px;"  value="Precedent" class="precedent">
+        <input @click="slide2" type="button" style="position: absolute;  display: block;margin-top: 346px ;font-size: 15px;padding: 10px;border: none;border-radius: 3px;"  value="Precedent" class="precedent">
   
-        <input @click="slide3" type="button" style="position: absolute; margin-left: 495px; display: block;margin-top: 260px ;font-size: 15px;padding: 10px;border: none;border-radius: 3px;"  value="Suivant" class="precedent">
+        <input @click="slide3" type="button" style="position: absolute; margin-left: 495px; display: block;margin-top: 346px ;font-size: 15px;padding: 10px;border: none;border-radius: 3px;"  value="Suivant" class="precedent">
       </div>
   
       <!-- pejy 3 -->
@@ -216,7 +228,7 @@
         </div>
      
   
-        <input @click="slide4" type="button" id="slide4" style="position: absolute;  display: block;margin-top: 360px ;font-size: 15px;padding: 10px;border: none;border-radius: 3px;"  value="Precedent" class="precedent">
+        <input @click="slide4" type="button" id="slide4" style="position: absolute;  display: block;margin-top: 370px ;font-size: 15px;padding: 10px;border: none;border-radius: 3px;"  value="Precedent" class="precedent">
   
         <div @click="register" style="display: block;" id="register" class="form-submit-btn">
         <input type="button" class="registrer" value="Register">
@@ -252,6 +264,8 @@
       return {
         Nom: '',
         Adresse: '',
+        Latitude: '',
+        Longitude: '',
         Telephone: '',
         Email: '',
         Specialite: '',
@@ -262,6 +276,7 @@
         Password: '',
         equipement: '',
   
+        
         isFieldEmpty: false,
         isInvalidEmail: false,
         acceptConditions: false
@@ -277,6 +292,8 @@
     const response = await AuthenticationService2.register({
       Nom: this.Nom,
       Adresse: this.Adresse,
+      Latitude: this.Latitude,
+      Longitude: this.Longitude,
       Telephone: this.Telephone,
       Email: this.Email,
       Specialite: this.Specialite,
@@ -335,7 +352,7 @@
         return emailRegex.test(email);
         },
         slide1() {
-          if (!this.Nom || !this.Adresse || !this.Telephone || !this.Email || !this.Adresse || !this.Specialite || !this.Heures_ouverture || !this.Heures_fermeture) {
+          if (!this.Nom || !this.Adresse || !this.Telephone || !this.Email || !this.Adresse || !this.Specialite || !this.Latitude || !this.Longitude) {
           this.isFieldEmpty = true;
           return;
         }
@@ -377,7 +394,7 @@
         },
   
         slide3() {
-        if (!this.service_offerte || !this.Password || !this.equipement) {
+        if (!this.service_offerte || !this.Password || !this.equipement || !this.Heures_ouverture || !this.Heures_fermeture) {
         this.isFieldEmpty = true;
         return;
         }
@@ -412,7 +429,11 @@
           d.style.display = "none";
           b.style.display = "flex";
           
-        }
+        },
+        //rediriger vers google map
+        redirigerVersGoogleMaps() {
+        window.open('https://maps.google.com', '_blank');
+        },
   
     
     }

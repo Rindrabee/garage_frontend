@@ -231,7 +231,7 @@
                 <div  class="noo" style="position: fixed;width: 500px;margin-top: -75px;margin-left: 30px;">
                     <div class="input-group mb-0">
                         <div class="input-group-prepend">
-                            <span @click="sendMessage" class="input-group-text" ><img  src="../assets/images/sendeo.png" style="width: 30px;height: 30px;" alt=""></span>
+                            <span @click="sendMessage" class="input-group-text" ><img  src="../assets/images/sendeo.png" style="width: 30px;height: 30px;cursor: pointer;" alt=""></span>
                         </div>
                         <input v-model="Text" type="text" class="form-control" placeholder="Votre message ici...">                                    
                     </div>
@@ -442,7 +442,7 @@ h2 > span {
     margin-right: 10px;
     border-radius: 50%;
 }
-.settings-links a{
+.settings-links a {
     display: flex;
     flex: 1;
     align-items: center;
