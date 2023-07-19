@@ -25,19 +25,20 @@
                 <div id="dark-btn">
                     <span></span>
                 </div>
+
                 <div class="settings-menu-inner">
                     <div class="settings-links">
-                        <img style="cursor: pointer;" src="../assets/images/setting.png" class="settings-icon">
-                        <a style="color: #000;font-family: century gothic;cursor: pointer;" href="#">PROFILE<img style="width: 10px;" src="../assets/images/arrow.png" alt=""></a>
+                        <img @click="modificationgarage" style="cursor: pointer;" src="../assets/images/setting.png" class="settings-icon">
+                        <a @click="modificationgarage" style="color: #000;font-family: century gothic;cursor: pointer;" href="#">PROFILE<img style="width: 10px;" src="../assets/images/arrow.png" alt=""></a>
                     </div>
                     
                     <div class="settings-links">
-                        <img style="cursor: pointer;" src="../assets/images/logout.png" class="settings-icon">
+                        <img @click="logout" style="cursor: pointer;" src="../assets/images/logout.png" class="settings-icon">
                         <a  @click="logout" style="color: #000;font-family: century gothic;cursor: pointer;">DECONNECTION<img src="../assets/images/arrow.png"
                         width="10px" alt=""></a>   
                     </div>
+                </div>   
 
-                </div>    
             </div>
         </nav>
         <!-- sidebar -->
@@ -319,7 +320,10 @@ slide1() {
     })
     },
 
-
+    //Modification garage
+    modificationgarage() {
+        this.$router.push({ name: 'modificationgarage' });
+    },
 
  //Fermer ajouter voiture
  fermerajoutervoiture() {

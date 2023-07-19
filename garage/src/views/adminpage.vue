@@ -28,12 +28,12 @@
 
             <div class="settings-menu-inner">
                 <div class="settings-links">
-                    <img style="cursor: pointer;" src="../assets/images/setting.png" class="settings-icon">
+                    <img @click="modificationadmin" style="cursor: pointer;" src="../assets/images/setting.png" class="settings-icon">
                     <a style="color: #000;font-family: century gothic;cursor: pointer;" href="modificationadmin">PROFILE<img style="width: 10px;" src="../assets/images/arrow.png" alt=""></a>
                 </div>
                 
                 <div class="settings-links">
-                    <img style="cursor: pointer;" src="../assets/images/logout.png" class="settings-icon">
+                    <img @click="logout" style="cursor: pointer;" src="../assets/images/logout.png" class="settings-icon">
                     <a @click="logout" style="color: #000;font-family: century gothic;cursor: pointer;">DECONNECTION<img src="../assets/images/arrow.png"
                     width="10px" alt=""></a>
                 </div>
@@ -126,31 +126,30 @@
             <div class="card detail">
                 <div class="detail-header">
                     <p style="font-family: century gothic;font-size: 18px; ">Urgence 🔥 :</p>
-                    <button> Ajouter</button>
+                  
                 </div>
                 <br>
                 <table>
                     <tr>
-                        <th>Numéro</th>
+                        <th>Numero</th>
                         <th>Nom</th>
-                        <th>Date d'arriver</th>
-                        <th>Etat</th>
+                        <th>Telephone</th>
+                        <th>Probleme</th>
                         <th>Action1</th>
                         <th>Action2</th>
                     </tr>
-                    <tr>
-                        <td>#PW-0001</td>
-                        <td>Potential Corp</td>
-                        <td>Apr 11, 2021</td>
-                        <td><span class="status
-                            onprogress"><i class="fas fa-circle"></i> En cour</span></td>
+
+                    <tr v-for="u in Urgence" :key="u.id">
+                        <td>{{ u.id }}</td>
+                        <td>{{ u.Nom }}</td>
+                        <td>{{ u.Telephone }}</td>
+                        <td>{{ u.Probleme }}</td>
+                      
+                       
+                        <td><button class="btn btn-outline-danger">Voir</button></td>
                         <td><button class="btn btn-outline-success">Rediriger</button></td>
-                        <td><button class="btn btn-outline-danger">Supprimer</button></td>
                     </tr>
-               
                     <!-- apina -->
-                    
-                
                 </table>
             </div>
             <div class="card customer">
@@ -256,6 +255,7 @@ export default {
     Text : '',
     Client: {},
     Admin: {},
+    Urgence: {},
     Message: {},
     PrenomClt : '',
     PhotoClt : '',
@@ -269,6 +269,7 @@ export default {
     this.listeclt();
     this.selectpers();
     this.adminconnecter();
+    this.listeurgence();
     this.socket.on('chat message',(data) => {
         this.selectpers();
     });
@@ -289,6 +290,17 @@ export default {
         this.Client = response.data
     })
     },
+
+    
+    // Lister la liste des urgences
+    listeurgence() {
+    axios.get('http://localhost:8082/api/admins/getAllurgence')
+    .then(response => {
+        this.Urgence = response.data
+    })
+    },
+
+
     //Prendre le session de l'admin connecté
     adminconnecter() {
        axios.get('http://localhost:8082/api/admins/session', {
@@ -337,6 +349,10 @@ export default {
     a.style.display = "none";
     b.style.opacity = "100%";
 
+    },
+    //Modification Admin 
+    modificationadmin() {
+        this.$router.push({ name: 'modificationadmin' });
     },
     verslistegarage() {
         this.$router.push({ name: 'adminGARAGE' });

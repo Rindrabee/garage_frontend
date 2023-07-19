@@ -35,7 +35,7 @@ import Ajoutervoiture from '../views/Ajoutervoiture.vue'
 import adminMECANICIEN from '../views/adminMECANICIEN.vue'
 import urgencepage from '../views/urgencepage.vue'
 import modificationmecanicien from '../views/modificationmecanicien.vue'
-
+import modificationgarage from '../views/modificationgarage.vue'
 
 
 const router = createRouter({
@@ -209,6 +209,11 @@ const router = createRouter({
       path: '/modificationmecanicien',
       name: 'modificationmecanicien',
       component: modificationmecanicien
+    },
+    {
+      path: '/modificationgarage',
+      name: 'modificationgarage',
+      component: modificationgarage
     },
     
     
