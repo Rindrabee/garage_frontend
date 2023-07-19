@@ -103,16 +103,16 @@
             alert("Entrer l'email avant d'envoyer")
         }
         else {
-            axios.post('http://localhost:8082/api/garages/mdpcode',  {'Email': this.Email })
-          .then(response => {
-            if(response.data.statut) {
-               console.log("Le code a été envoyer");
-               localStorage.setItem('mdpcode', response.data.code);
-            }
-            else {
-                console.log(response.data.statut)
-            }
-          })
+        axios.post('http://localhost:8082/api/garages/mdpcode',  {'Email': this.Email })
+        .then(response => {
+        if(response.data.statut) {
+            console.log("Le code a été envoyer");
+            localStorage.setItem('mdpcode', response.data.code);
+        }
+        else {
+            console.log(response.data.statut)
+        }
+        })
           this.$router.push({ name: 'vldoublie3', query: {'Email': this.Email }});
         }
         
