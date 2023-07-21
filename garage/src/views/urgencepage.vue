@@ -11,29 +11,54 @@
 </head>
 <body>
     <div class="cont">
-
-    <div class="registration-container">
-        <nav class="navbar">
-        <ul class="left">
+      <div class="registration-container">
+      <nav class="navbar">
+          <ul class="left">
             <li @click="versaccueil"><a href="/"><i class="fas fa-home"></i>&nbsp; Accueil</a></li>
+          </ul>
+
+        <ul style="margin-right: 50px;">
+          <li>
+          <a style="color: rgb(255, 255, 255);cursor: pointer;">
+          <i class="fas fa-bell"></i>&nbsp; Notification
+          <span @click="slide1" style="cursor: pointer;" v-if="nombreNotifications > 0" class="badge">{{ nombreNotifications }}</span>
+          </a>
+          </li>
         </ul>
+
         <ul class="right">
             <li><a href="loginpage"><i class="fas fa-sign-in-alt"></i>&nbsp; Se connecter</a></li>
             <li><a href="register"><i class="fas fa-user-plus"></i>&nbsp; S'inscrire</a></li>
         </ul>
-    </nav> 
+               
+              
+
+          <div id="rindra" class="settings-menu">
+            <div id="dark-btn">
+                <span></span>
+            </div>
+
+            <div class="settings-menu-inner">
+                <div class="settings-links">
+                    <img @click="modificationadmin" style="cursor: pointer;" src="../assets/images/mec.ico" class="settings-icon">
+                    <a @click="modificationadmin"  style="color: #000;font-family: century gothic;cursor: pointer;" href="#"> &nbsp; Mecanicien</a>
+                </div>
+            </div> 
+                  
+          </div>
+    </nav>
   
     
     <div style="margin-top: 90px;" class="container">
-    <h1  style="color: rgb(2, 2, 2);font-size: 40px;font-family:avant garde;">Bienvenue dans la demande de dépannage</h1>
-    <p style="font-family: century gothic;">D'abord, restez calme. Nous sommes là pour vous aider, ne vous inquiétez pas.</p>
-    <p style="font-family: century gothic;">Mais avant cela, veuillez remplir ce formulaire correctement afin que nous puissions vous aider et envoyer des</p>
-    <p style="font-family: century gothic;">mécaniciens où que vous soyez. N'oubliez pas de mentionner clairement votre localisation et de finaliser le </p>
-    <p style="font-family: century gothic;">paiement pour le déplacement des mécaniciens jusqu'à vous.</p>
+      <h1  style="color: rgb(2, 2, 2);font-size: 40px;font-family:avant garde;">Bienvenue dans la demande de dépannage</h1>
+      <p style="font-family: century gothic;">D'abord, restez calme. Nous sommes là pour vous aider, ne vous inquiétez pas.</p>
+      <p style="font-family: century gothic;">Mais avant cela, veuillez remplir ce formulaire correctement afin que nous puissions vous aider et envoyer des</p>
+      <p style="font-family: century gothic;">mécaniciens où que vous soyez. N'oubliez pas de mentionner clairement votre localisation et de finaliser le </p>
+      <p style="font-family: century gothic;">paiement pour le déplacement des mécaniciens jusqu'à vous.</p>
     </div>
 
     <div class="dialogue">
-            <span>Ne t'inquiète pas, je suis là</span>
+        <span>Ne t'inquiète pas, je suis là</span>
     </div>
     <div>
       <img class="mechanic-img" style="float: right;margin-top: -200px;margin-right: 80px;" src="../assets/images/mec.ico" alt="">
@@ -139,9 +164,9 @@
 </body>
 </html> 
   
-  </template>
+</template>
   
-  <script>
+<script>
 import AuthenticationService5 from '../services/AuthentificationService5.js'
 import axios from 'axios';
 
@@ -157,7 +182,10 @@ import axios from 'axios';
       Probleme: '',
       longitude: '',
       latitude: '',
-         
+
+
+      nombreNotifications: 1,
+
 
       nameError: '',
       emailError: '',
@@ -197,6 +225,15 @@ import axios from 'axios';
 
     },
 
+    // Afficher le notification du mecanicien
+    slide1() {
+    let a = document.getElementById("rindra");
+        if (a.style.display === "block") {
+        a.style.display = "none";
+        } else {
+        a.style.display = "block";
+        }
+    },
 
 
     
@@ -331,6 +368,62 @@ import axios from 'axios';
         transform: rotate(-5deg);
     }
 }
+.settings-menu{
+    position: absolute;
+    width: 70%;
+    max-width: 290px;
+    background: #9eaa9d;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+    border-radius: 10px;
+    overflow: hidden;
+    top : 108%;
+    margin-right: 200px;
+    right: 1%;
+    display: none;
+} 
+.settings-menu .settings-menu-inner {
+    background : var(--bg-color);
+    padding: 20px;
+}
+.settings-menu hr {
+    border: 0;
+    height: 1px;
+    background: #9a9a9a;
+    margin: 15px 0;
+}
+.settings-links {
+    display: flex;
+    align-items: center;
+    margin: 15px 0;
+}
+.settings-links .settings-icon {
+    width: 38px;
+    margin-right: 10px;
+    border-radius: 50%;
+}
+.settings-links a {
+    display: flex;
+    flex: 1;
+    align-items: center;
+    justify-content: space-between;
+    text-decoration: none;
+    color: #626262;
+}
+.settings-links a:hover {
+    background-color:  #eff5ef;
+    height: 37px;
+    border-radius: 10px;
+}
+
+/* ho anle notification  */
+.badge {
+  background-color: red;
+  color: white;
+  border-radius: 50%;
+  padding: 5px;
+  width: 20px;
+  height: 20px;
+}
 
 .dialogue {
   position: absolute;
@@ -359,7 +452,7 @@ import axios from 'axios';
 }
 
   /* Styles pour le navbar */
-.navbar {
+  .navbar {
   padding: 15px;
   display: flex;
   justify-content: space-between;
@@ -415,6 +508,7 @@ import axios from 'axios';
 .navbar ul li a:hover:after {
   width: 38%;
 }
+  
 
 /* Styles pour le footer */
 footer {

@@ -110,10 +110,9 @@
                         
                         <td v-if="g.Etat == null"><button @click="showadminmecanicien" class="btn btn-outline-danger">Voir profile</button></td>
                        
-
                         </tr>
     
-                   
+
                     </table>
                 </div>
     

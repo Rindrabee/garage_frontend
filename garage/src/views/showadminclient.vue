@@ -31,41 +31,41 @@
                                 </label>
                                 <br>
                                 <input @change="handleImage" ref="postImageInput" id="fileInput" style="width: 270px;" type="file" >
-                                
                                 <br>
                             </div>
+
                         </div>
+
                         <div class="col-sm-8 bg-white rounded-right">
                             <h3 class="mt-3 text-center">Information</h3>
                             <hr class="bg-primary">
                             <div class="row">
                                 <div class="col-sm-6">
-                                    <p  class="font-weight-bold">Nom : &nbsp; <input v-model="Nom" class="inuty" type="text"></p>
-                                   
+                                    <p  class="font-weight-bold">Nom : &nbsp; <input v-model="Client.Nom" class="inuty" type="text"></p>
                                     <!-- <h6 class="text-muted">rindratahinalisoa@gmail.com</h6> -->
                                 </div>
                                 <div class="col-sm-6">
-                                    <p class="font-weight-bold">Prénoms : &nbsp; <input v-model="Prenoms" class="inuty" type="text"></p>
+                                    <p class="font-weight-bold">Prénoms : &nbsp; <input v-model="Client.Prenoms" class="inuty" type="text"></p>
                                 </div>
     
                                 <div class="col-sm-6">
-                                    <p class="font-weight-bold">Email : &nbsp; <input v-model="Email" class="inuty" type="email"></p>
+                                    <p class="font-weight-bold">Email : &nbsp; <input v-model="Client.Email" class="inuty" type="email"></p>
                                 </div>
     
                                 <div class="col-sm-6">
-                                    <p class="font-weight-bold">Date de naissance : &nbsp; <input v-model="Naissance" class="inuty" type="date"></p>
+                                    <p class="font-weight-bold">Date de naissance : &nbsp; <input v-model="Client.Naissance" class="inuty" type="date"></p>
                                 </div>
     
                                 <div class="col-sm-6">
-                                    <p class="font-weight-bold">Profession : &nbsp; <input v-model="Profession" class="inuty" type="text"></p>
+                                    <p class="font-weight-bold">Profession : &nbsp; <input v-model="Client.Profession" class="inuty" type="text"></p>
                                 </div>
     
                                 <div class="col-sm-6">
-                                    <p class="font-weight-bold">Adresse : &nbsp; <input v-model="Adresse" class="inuty" type="text"></p>
+                                    <p class="font-weight-bold">Adresse : &nbsp; <input v-model="Client.Adresse" class="inuty" type="text"></p>
                                 </div>
     
                                 <div class="col-sm-6">
-                                    <p class="font-weight-bold">Telephone : &nbsp; <input v-model="Telephone" class="inuty" type="text"></p>
+                                    <p class="font-weight-bold">Telephone : &nbsp; <input v-model="Client.Telephone" class="inuty" type="text"></p>
                                 </div>
     
                                 <div class="col-sm-6">
@@ -80,14 +80,16 @@
 
                             </div>
                            
-                            
                             <hr class="bg-primary">
+
                             <ul class="list-unstyled d-flex justify-content-center mt-4">
                                 <li><a href="https://www.facebook.com"><i class="fab fa-facebook-f px-3 h4 text-dark"></i></a></li>
                                 <li><a href="https://www.youtube.com"><i class="fab fa-youtube px-3 h4 text-dark"></i></a></li>
                                 <li><a href="https://twitter.com/"><i class="fab fa-twitter px-3 text-dark"></i></a></li>
                             </ul>
+
                         </div>
+
                     </div>
                 </div>
             </div>
@@ -126,7 +128,10 @@
         },
         created() {
         this.getInformation();
+        this.getprofilclient()
         },
+
+
         mounted() {
         console.log("mounted");
         },
@@ -134,9 +139,22 @@
      
         //Rediriger vers le adminclient
         adminclient() {
+            localStorage.removeItem('id');
             this.$router.push({ name: 'adminCLIENT' });
         },
-    
+
+        // Prendre le client selectionner 
+        getprofilclient(){
+        axios.get('http://localhost:8082/api/admins/profilclient/' + localStorage.getItem('id'))
+        .then(response => {
+        this.Client = response.data
+        })
+        .catch(error => {
+        console.error(error);
+        this.MessageError = "Une erreur s'est produite lors de la déconnexion.";
+        });
+        },
+
         // Mise à jour de la client
         updateClient() {
           // Supposons que vous avez les données du client dans this.Client
