@@ -31,7 +31,6 @@
             <li><a href="register"><i class="fas fa-user-plus"></i>&nbsp; S'inscrire</a></li>
         </ul>
                
-              
 
           <div id="rindra" class="settings-menu">
             <div id="dark-btn">
@@ -338,6 +337,58 @@ import axios from 'axios';
   display: flex;
   flex-direction: column;
 }
+.container {
+    margin-top: 10px;
+    margin-left: 10px;
+}
+
+.container h1 {
+    color: #020202;
+    font-size: 40px;
+    font-family: "Avant Garde", sans-serif;
+    margin-left: 90px;
+    animation: slideInLeft 3s ease;
+}
+.container p {
+    font-family: "Century Gothic", sans-serif;
+    margin-left: 90px;
+    animation: fadeInUp 2s ease;
+}
+
+/* Animation fadeInUp */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+@keyframes slideInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+@keyframes slideInRight {
+    from {
+        opacity: 0;
+        transform: translateX(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+
+
   .registration-form {
     width: 700px;
     padding: 90px;
