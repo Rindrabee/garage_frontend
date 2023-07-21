@@ -30,9 +30,9 @@
                                 <i class="far fa-edit fa-2x mb-4"></i>
                                 </label>
                                 <br>
-                                <input @change="handleImage" ref="postImageInput" id="fileInput" type="file" >
+                                <input @change="handleImage" ref="postImageInput" style="width: 270px;" id="fileInput" type="file" >
                                 <br>
-                            </div>
+                            </div> 
                         </div>
                         <div class="col-sm-8 bg-white rounded-right">
                             <h3 class="mt-3 text-center">Information</h3>
@@ -40,9 +40,9 @@
                             <div class="row">
                                 <div class="col-sm-6">
                                     <p  class="font-weight-bold">Nom : &nbsp; <input  v-model="Nom"  class="inuty" type="text"></p>
-
                                     <!-- <h6 class="text-muted">rindratahinalisoa@gmail.com</h6> -->
                                 </div>
+
                                 <div class="col-sm-6">
                                     <p class="font-weight-bold">Prénoms : &nbsp; <input v-model="Prenoms" class="inuty" type="text"></p>
                                 </div>

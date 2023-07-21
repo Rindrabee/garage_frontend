@@ -40,13 +40,13 @@
 
     <div class="person-details">
     <img src="../assets/images/ft3.jpg" alt="Photo de la personne">
-    <h2>Nom :</h2>
-    <p>Adresse :</p>
-    <p>Specialite :</p>
-    <p>Heures d'ouverture :</p>
-    <p>Heures de fermeture :</p>
-    <p>Les services offertes :</p>
-    <p>Les équipements :</p>
+    <h2 style="font-family: century gothic;">Nom :</h2>
+    <p style="font-family: century gothic;">Adresse :</p>
+    <p style="font-family: century gothic;">Specialite :</p>
+    <p style="font-family: century gothic;">Heures d'ouverture :</p>
+    <p style="font-family: century gothic;">Heures de fermeture :</p>
+    <p style="font-family: century gothic;">Les services offertes :</p>
+    <p style="font-family: century gothic;">Les équipements :</p>
   </div>
 
 
@@ -224,7 +224,6 @@ export default {
   width: 100%;
   height: 250px;
   object-fit: cover;
-  
   margin-bottom: 10px;
 }
 
@@ -235,7 +234,7 @@ export default {
 }
 
 .person-details p {
-  font-size: 20px;
+  font-size: 17px;
   margin: 5px 0;
 }
 

@@ -30,7 +30,7 @@
                             <i class="far fa-edit fa-2x mb-4"></i>
                             </label>
                             <br>
-                            <input @change="handleImage" ref="postImageInput" id="fileInput" type="file" >
+                            <input @change="handleImage" ref="postImageInput" id="fileInput" style="width: 270px;" type="file" >
                             
                             <br>
                         </div>

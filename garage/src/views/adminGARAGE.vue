@@ -28,12 +28,12 @@
 
                     <div class="settings-menu-inner">
                         <div class="settings-links">
-                            <img style="cursor: pointer;" src="../assets/images/setting.png" class="settings-icon">
-                            <a style="color: #000;font-family: century gothic;cursor: pointer;" href="#">PROFILE<img style="width: 10px;" src="../assets/images/arrow.png" alt=""></a>
+                            <img @click="modificationadmin" style="cursor: pointer;" src="../assets/images/setting.png" class="settings-icon">
+                            <a @click="modificationadmin"   style="color: #000;font-family: century gothic;cursor: pointer;" href="#">PROFILE<img style="width: 10px;" src="../assets/images/arrow.png" alt=""></a>
                         </div>
                         
                         <div class="settings-links">
-                            <img style="cursor: pointer;" src="../assets/images/logout.png" class="settings-icon">
+                            <img @click="logout" style="cursor: pointer;" src="../assets/images/logout.png" class="settings-icon">
                             <a @click="logout" style="color: #000;font-family: century gothic;cursor: pointer;">DECONNECTION<img src="../assets/images/arrow.png"
                             width="10px" alt=""></a>
                             
@@ -87,21 +87,34 @@
                             <th>Action</th>
                         </tr>
                         
-                        <tr v-for="g in Garage" :key="g.id">
+
+                    
+                       
+                        <tr v-for="g in Garage" :key="g.id" >
+                      
 
                        
                         <td>
                         <img style="width: 80px; border-radius: 2%; height: 80px;" :src="'http://localhost:8082/' + g.Photo + '.jpeg'" alt="">
                         </td>
                         
-                        <td>{{ g.Nom }}</td>
-                        <td>{{ g.service_offerte }}</td>
-                        <td>{{ g.Adresse }}</td>
-                        <td style="color: rgb(25, 72, 224);">{{ g.Specialite }}</td>
-                        <td>{{ g.Telephone }}</td>
-                        <td><i style="margin-left: 30px;cursor: pointer;" class="fas fa-message"></i></td>
-                        <td><button class="btn btn-outline-danger">Bloquer</button></td>
-                        </tr>
+                        <td>{{ g.Nom }} </td>
+                        <td>{{ g.service_offerte }} </td>
+                        <td>{{ g.Adresse }} </td>
+                        <td style="color: rgb(25, 72, 224);"> {{ g.Specialite }} </td>
+                        <td> {{ g.Telephone }} </td>
+
+
+                      
+                       <td v-if="g.Etat == null"><i style="margin-left: 30px;cursor: pointer;" class="fas fa-warning"></i></td>
+
+                       <td v-if="g.Etat == 1"><i style="margin-left: 30px;cursor: pointer;" class="fas fa-message"></i></td>
+
+                       <td v-if="g.Etat == null"><button @click="showgarage" class="btn btn-outline-danger">Consulter</button></td>
+
+
+                        <!-- <td><button class="btn btn-outline-danger">Bloquer</button></td> -->
+                    </tr>
     
                    
                     </table>
@@ -143,12 +156,13 @@
             a.style.display = "block";
             }
         },
+
         listegarage() {
-       axios.get('http://localhost:8082/api/garages/listergarage')
-       .then(response => {
+        axios.get('http://localhost:8082/api/garages/listergarage')
+        .then(response => {
            this.Garage = response.data
-       })
-       },
+        })
+        },
         //Prendre le session de l'admin connecté
         adminconnecter() {
         axios.get('http://localhost:8082/api/admins/session', {
@@ -169,6 +183,16 @@
        verslistemecanicien() {
         this.$router.push({ name: 'adminMECANICIEN' });
        },
+
+        //Modification Admin 
+  modificationadmin() {
+        this.$router.push({ name: 'modificationadmin' });
+    },
+
+       showgarage() {
+        this.$router.push({ name: 'showadmingarage' });
+       },
+
         principale() {
         this.$router.push({ name: 'adminpage' });
         },

@@ -28,12 +28,12 @@
 
                     <div class="settings-menu-inner">
                         <div class="settings-links">
-                            <img style="cursor: pointer;" src="../assets/images/setting.png" class="settings-icon">
-                            <a style="color: #000;font-family: century gothic;cursor: pointer;" href="#">PROFILE<img style="width: 10px;" src="../assets/images/arrow.png" alt=""></a>
+                            <img @click="modificationadmin" style="cursor: pointer;" src="../assets/images/setting.png" class="settings-icon">
+                            <a @click="modificationadmin" style="color: #000;font-family: century gothic;cursor: pointer;" href="#">PROFILE<img style="width: 10px;" src="../assets/images/arrow.png" alt=""></a>
                         </div>
                         
                         <div class="settings-links">
-                            <img style="cursor: pointer;" src="../assets/images/logout.png" class="settings-icon">
+                            <img @click="logout" style="cursor: pointer;" src="../assets/images/logout.png" class="settings-icon">
                             <a @click="logout" style="color: #000;font-family: century gothic;cursor: pointer;">DECONNECTION<img src="../assets/images/arrow.png"
                             width="10px" alt=""></a>
                             
@@ -56,12 +56,15 @@
                <div class="sidebar-menu">
                <span @click="verslisteclient" class="fas fa-user"></span><p @click="verslisteclient" style="font-size: 13px;">Client</p>
                </div>
+
                <div class="sidebar-menu">
                 <span @click="listemecanicien" class="fas fa-wrench"></span><p @click="listemecanicien" style="font-size: 13px;">Mecanicien</p>
                </div>
+
                <div class="sidebar-menu">
                  <span @click="verslistegarage" class="fas fa-car"></span><p @click="verslistegarage" style="font-size: 13px;">Garage</p>
                </div>
+
            <div class="sidebar-menu">
              <span class="fas fa-file-invoice"></span><p style="font-size: 13px;">Comptabilité</p>
            </div>
@@ -99,8 +102,15 @@
                         <td>{{ g.Adresse }}</td>
                         <td style="color: rgb(25, 72, 224);">{{ g.Specialite }}</td>
                         <td>{{ g.Telephone }}</td>
-                        <td><i style="margin-left: 30px;cursor: pointer;" class="fas fa-message"></i></td>
-                        <td><button class="btn btn-outline-danger">Bloquer</button></td>
+
+
+                        <td v-if="g.Etat == null"><i style="margin-left: 30px;cursor: pointer;" class="fas fa-warning"></i></td>
+
+                        <td v-if="g.Etat == 1"><i style="margin-left: 30px;cursor: pointer;" class="fas fa-message"></i></td>
+                        
+                        <td v-if="g.Etat == null"><button @click="showadminmecanicien" class="btn btn-outline-danger">Voir profile</button></td>
+                       
+
                         </tr>
     
                    
@@ -164,6 +174,15 @@
        })
 
     },
+        //Modification Admin 
+        modificationadmin() {
+        this.$router.push({ name: 'modificationadmin' });
+         },
+
+        showadminmecanicien() {
+        this.$router.push({ name: 'showadminmecanicien' });
+        },
+
         verslisteclient() {
         this.$router.push({ name: 'adminCLIENT' });
         },
