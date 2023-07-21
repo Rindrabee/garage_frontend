@@ -58,74 +58,38 @@
 </h2>
     <br><br>
     <div class="main">
-    <div class="cards">
+    <div v-for="(g, index) in Garage" class="cards" v-if="index < 4 || Garage.length <= 4">
         <div class="image">
-            <img src="../assets/images/GRG1.png" alt="">
+            <img :src="'http://localhost:8082/' +  g.Photo  + '.jpeg'" alt="" class="image-container">
         </div>
         <div class="title">
-           <h1>Title Name</h1>
+           <h1>{{ g.Nom }} </h1>
         </div>
         <div class="des">
-            <p>Adresse : Antsirabe Mahazoarivo</p>
-            <p>Specialité : Moteur</p>
+            <p>Adresse : {{ g.Adresse }} </p>
+            <p>Specialité : {{ g.Specialite }} </p>
 
-            <button>Consulter</button>
+            <button @click="versdetailgarage">Consulter</button>
         </div>
     </div>
 
-    <div class="cards">
-        <div class="image">
-            <img src="../assets/images/GRG2.png" alt="">
-        </div>
-        <div class="title">
-           <h1>Title Name</h1>
-        </div>
-        <div class="des">
-            <p>Adresse : Antsirabe Mahazoarivo</p>
-            <p>Specialité : Moteur</p>
+  
 
-            <button>Consulter</button>
-        </div>
-    </div>
-
-    <div class="cards">
-        <div class="image">
-            <img src="../assets/images/GRG2.jpg" alt="">
-        </div>
-        <div class="title">
-           <h1>Title Name</h1>
-        </div>
-        <div class="des">
-            <p>Adresse : Antsirabe Mahazoarivo</p>
-            <p>Specialité : Moteur</p>
-
-            <button>Consulter</button>
-        </div>
-    </div>
+  
 
     
-    <div class="cards">
-        <div class="image">
-            <img src="../assets/images/GRG3.jpg" alt="">
-        </div>
-        <div class="title">
-           <h1>Title Name</h1>
-        </div>
-        <div class="des">
-            <p>Adresse : Antsirabe Mahazoarivo</p>
-            <p>Specialité : Moteur</p>
-
-            <button>Consulter</button>
-        </div>
-    </div>
+  
    
     </div>
     <div class="card-footer">
-        <button class="register-button">Veuillez vous inscrire pour voir tous les garages</button>
+        <button @click="versinscrire" class="register-button">Veuillez vous inscrire pour voir tous les garages</button>
     </div>
+
    
 </div>
-   
+<footer>
+<p>&copy; 2023 GarageFinder. Tous droits réservés.</p>
+</footer>
 </body>
 </html>
 </template>
@@ -137,18 +101,30 @@ import axios from 'axios';
     export default {
       data () {
         return {
-          
+         Garage: {},
            
         }
       },
       mounted(){
-   
+        this.listegarage();
       },
 
       methods: {
         versinscrire(){
             this.$router.push({name:'register'})
-        }
+        },
+        versdetailgarage() {
+            this.$router.push({name:'GARAGEshow'})
+        },
+
+        // Prendre la liste de tous garages
+        listegarage() {
+        axios.get('http://localhost:8082/api/garages/listergarage')
+        .then(response => {
+        this.Garage = response.data
+        })
+        },
+
       }
     }
 </script>
@@ -206,12 +182,18 @@ color: #fff;
 .cards:hover {
     box-shadow: 2px 2px 10px #ffa400;
 }
-.image img {
-    border-top-right-radius: 5px;
-    border-top-left-radius: 5px;
-    width: 100%;
-    height: 200px;
+.image {
+    width: 270px; /* Set your desired width here */
+    height: 200px; /* Set your desired height here */
 }
+
+/* Make sure the image fills the container without distorting the aspect ratio */
+.image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
 .title {
     text-align: center;
     padding: 5px;
@@ -342,7 +324,7 @@ button:hover {
     font-family: "Century Gothic";
     text-align: left;
     color: white;
-  
+    margin-top: 10px;
     margin-bottom: 40px;
     margin-left: 50px;
     max-width: 800px; /* Limite la largeur du texte */
@@ -357,12 +339,32 @@ button:hover {
 .welcome-text p {
     font-size: 15px;
     font-weight: normal;
+    animation: fadeInUp 2s ease;
     margin-bottom: 10px !important;
 }
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
 
 .logo-image {
     margin-left: auto;
     max-width: 200px; /* Ajustez la taille de l'image selon vos besoins */
+}
+
+/* Styles pour le footer */
+footer {
+  background-color: #03331d;
+  color: #fff;
+  text-align: center;
+  padding: 20px 0;
 }
 
 </style>

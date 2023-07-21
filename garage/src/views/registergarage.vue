@@ -15,7 +15,7 @@
               <div class="nav-links">
                   <p><router-link to="/">Accueil</router-link></p>
                   <div>
-                      <a href="#">Conseil</a>
+                      <a href="conseilpage">Conseil</a>
                       <a class="btn" href="loginpage">Se connecter</a>
                   </div>
               </div>

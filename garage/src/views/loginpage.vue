@@ -15,7 +15,7 @@
             <div class="nav-links">
                 <p><router-link to="/">Accueil</router-link></p>
                 <div>
-                    <a href="#">Conseil</a>
+                    <a href="conseilpage">Conseil</a>
                     <a class="btn" href="register">S'inscrire</a>
                 </div>
             </div>
@@ -138,7 +138,13 @@ export default {
         this.$router.push({name:'mdpoublier3'})
     }
 
+    },
+    
+    //redirection vers les autres pages
+    versconseilpage(){
+       this.$router.push({name:'conseilpage'})
     }
+
   }
 }
 </script>

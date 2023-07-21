@@ -497,6 +497,7 @@ h2 > span {
     font-size: 20px;
     cursor: pointer;
 }
+
 #toggle {
     display: none;
 }

@@ -31,11 +31,20 @@ import adminGARAGE from '../views/adminGARAGE.vue'
 import modificationadmin from '../views/modificationadmin.vue'
 import adminCLIENT from '../views/adminCLIENT.vue'
 import GARAGEshow from '../views/GARAGEshow.vue'
-import Ajoutervoiture from '../views/Ajoutervoiture.vue'
+import Listegarage from '../views/Listegarage.vue'
+import Listegarage2 from '../views/Listegarage2.vue'
 import adminMECANICIEN from '../views/adminMECANICIEN.vue'
 import urgencepage from '../views/urgencepage.vue'
 import modificationmecanicien from '../views/modificationmecanicien.vue'
 import modificationgarage from '../views/modificationgarage.vue'
+import conseilpage from '../views/conseilpage.vue'
+import conseilaccident from '../views/conseilaccident.vue'
+import showadmingarage from '../views/showadmingarage.vue'
+import showadminmecanicien from '../views/showadminmecanicien.vue'
+import showadminclient from '../views/showadminclient.vue'
+
+
+
 
 
 const router = createRouter({
@@ -98,7 +107,11 @@ const router = createRouter({
     {
       path: '/garagepage',
       name: 'garagepage',
-      component: garagepage
+      component: garagepage,
+      meta: {
+        middleware: auth
+      }
+      
     },
     {
       path: '/validationcode',
@@ -173,7 +186,10 @@ const router = createRouter({
     {
       path: '/adminGARAGE',
       name: 'adminGARAGE',
-      component: adminGARAGE
+      component: adminGARAGE,
+      meta: {
+        middleware: auth2
+      }
     },
     {
       path: '/modificationadmin',
@@ -183,12 +199,18 @@ const router = createRouter({
     {
       path: '/adminMECANICIEN',
       name: 'adminMECANICIEN',
-      component: adminMECANICIEN
+      component: adminMECANICIEN,
+      meta: {
+        middleware: auth2
+      }
     },
     {
       path: '/adminCLIENT',
       name: 'adminCLIENT',
-      component: adminCLIENT
+      component: adminCLIENT,
+      meta: {
+        middleware: auth2
+      }
     },
     {
       path: '/GARAGEshow',
@@ -196,9 +218,12 @@ const router = createRouter({
       component: GARAGEshow
     },
     {
-      path: '/Ajoutervoiture',
-      name: 'Ajoutervoiture',
-      component: Ajoutervoiture
+      path: '/Listegarage',
+      name: 'Listegarage',
+      component: Listegarage,
+      meta: {
+        middleware: auth
+      }
     },
     {
       path: '/urgencepage',
@@ -215,7 +240,36 @@ const router = createRouter({
       name: 'modificationgarage',
       component: modificationgarage
     },
-    
+    {
+      path: '/conseilpage',
+      name: 'conseilpage',
+      component: conseilpage
+    },
+    {
+      path: '/conseilaccident',
+      name: 'conseilaccident',
+      component: conseilaccident
+    },
+    {
+      path: '/showadmingarage',
+      name: 'showadmingarage',
+      component: showadmingarage
+    },
+    {
+      path: '/showadminmecanicien',
+      name: 'showadminmecanicien',
+      component: showadminmecanicien
+    },
+    {
+      path: '/showadminclient',
+      name: 'showadminclient',
+      component: showadminclient
+    },
+    {
+      path: '/Listegarage2',
+      name: 'Listegarage2',
+      component: Listegarage2
+    },
     
   ]
 })

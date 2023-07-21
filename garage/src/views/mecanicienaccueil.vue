@@ -49,11 +49,9 @@
                 <span class="fas fa-home"></span><p style="font-size: 13px;">Accueil</p>
             </div>
             <div class="sidebar-menu">
-                <span class="fas fa-tools"></span><p style="font-size: 13px;">Services</p>
+                <span @click="listegarage" class="fas fa-car"></span><p @click="listegarage" style="font-size: 13px;">Garages</p>
             </div>
-            <div class="sidebar-menu">
-                <span class="fas fa-wallet"></span><p style="font-size: 13px;">Tarifs</p>
-            </div>
+
             <div class="sidebar-menu">
                 <span class="fas fa-image"></span><p style="font-size: 13px;">Galerie</p>
             </div>
@@ -69,7 +67,7 @@
         </div>
         <!-- main dashboard -->
         <main>
-            <h1 style="color: white;font-size: 47px;" id="clignotant">Bienvenue Mr,</h1>
+            <h1 style="color: white;font-size: 47px;" id="clignotant">Bienvenue à vous,</h1>
             <p style="color: white;font-family: century gothic;font-size: 15px;">Vous pouvez voir ci dessous la liste de votre travail</p>
 
             <br><br>
@@ -77,6 +75,7 @@
                 <div class="detail-header">
                     <p style="font-family: century gothic;font-size: 18px; ">Voici les clients en panne que vous devez sauvez :</p>
                 </div>
+
                 <br>
                 <table>
                     <tr>
@@ -85,50 +84,16 @@
                         <th>Date d'arriver</th>
                         <th>Contact direct</th>
                     </tr>
+
                     <tr>
                         <td>#PW-0001</td>
                         <td>Potential Corp</td>
                         <td>Apr 11, 2021</td>
                         <td><span class="status
-                            confirmed"><i class="fas fa-message"></i></span></td>
-                    </tr>
-                    <tr>
-                        <td>#PW-0002</td>
-                        <td>Webcode inc</td>
-                        <td>Mar 29, 2021</td>
-                        <td><span class="status
-                            confirmed"><i class="fas fa-message"></i></span></td>
-                    </tr>
-                    <tr>
-                        <td>#PW-0003</td>
-                        <td>Coding time</td>
-                        <td>Feb 10, 2020</td>
-                        <td><span class="status
-                            confirmed"><i class="fas fa-message"></i></span></td>
+                            confirmed"><i style="cursor: pointer;" class="fas fa-message"></i></span></td>
                     </tr>
 
-                    <!-- apina -->
-                    <tr>
-                        <td>#PW-0001</td>
-                        <td>Potential Corp</td>
-                        <td>Apr 11, 2021</td>
-                        <td><span class="status
-                            confirmed"><i class="fas fa-message"></i></span></td>
-                    </tr>
-                    <tr>
-                        <td>#PW-0002</td>
-                        <td>Webcode inc</td>
-                        <td>Mar 29, 2021</td>
-                        <td><span class="status
-                            confirmed"><i class="fas fa-message"></i></span></td>
-                    </tr>
-                    <tr>
-                        <td>#PW-0003</td>
-                        <td>Coding time</td>
-                        <td>Feb 10, 2020</td>
-                        <td><span class="status
-                            confirmed"><i class="fas fa-message"></i></span></td>
-                    </tr>
+
                 </table>
             </div>
     </main>
@@ -149,7 +114,7 @@ export default {
     Mecanicien : {},
     }
     },
-    mounted(){
+    mounted() {
     this.mecanicienconnecter();
     },
     methods: {
@@ -165,6 +130,11 @@ export default {
     //Diriger vers la page modification
     modification() {
     this.$router.push({ name: 'modificationmecanicien' });
+    },
+
+    //Diriger vers la page liste des garages
+    listegarage() {
+    this.$router.push({ name: 'Listegarage2' });
     },
 
     //Prendre la session du mecanicien connecter

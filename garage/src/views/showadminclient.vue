@@ -14,23 +14,23 @@
         <div class="container">
             <div class="row d-flex justify-content-center">
                 <div class="col-md-10 mt-5 pt-5">
-                    <div style="box-shadow: 1px 1px 4px black;width: 1100px;margin-left: -100px;margin-top: -40px;margin-bottom: 50px;"  class="row z-depth-3">
+                    <div style="box-shadow: 1px 1px 4px black;width: 1100px;margin-left: -100px;margin-top: -40px;"  class="row z-depth-3">
                         <div class="col-sm-4 bg-success rounded-left">
     
-                            <i @click="garagepage" style="color: white;cursor: pointer;" class="fas fa-arrow-left"></i>
+                            <i @click="adminclient" style="color: white;cursor: pointer;" class="fas fa-arrow-left"></i>
                             
                             <div class="card-block text-center text-white">
-                                <img style="width: 180px;height: 170px;border-radius: 50%;" :src="'http://localhost:8082/' + Garage.Photo + '.jpeg'" alt="">
+                                <img style="width: 180px;height: 170px;border-radius: 50%;" :src="'http://localhost:8082/' + Client.Photo + '.jpeg'" alt="">
                                 <br><br>
-                                <h2 class="font-weight-bold mt-4">{{ Garage.Nom }}</h2>
-                                <p>{{ Garage.Profession }}</p>
+                                <h2 class="font-weight-bold mt-4">{{ Client.Nom }}</h2>
+                                <p>{{ Client.Profession }}</p>
     
                                 <!-- ito le upload photo -->
                                 <label for="fileInput">
                                 <i class="far fa-edit fa-2x mb-4"></i>
                                 </label>
                                 <br>
-                                <input @change="handleImage" ref="postImageInput" style="width: 270px;" id="fileInput" type="file" >
+                                <input @change="handleImage" ref="postImageInput" id="fileInput" style="width: 270px;" type="file" >
                                 
                                 <br>
                             </div>
@@ -44,17 +44,8 @@
                                    
                                     <!-- <h6 class="text-muted">rindratahinalisoa@gmail.com</h6> -->
                                 </div>
-
                                 <div class="col-sm-6">
-                                    <p class="font-weight-bold">Adresse : &nbsp; <input v-model="Adresse" class="inuty" type="text"></p>
-                                </div>
-    
-                                <div class="col-sm-6">
-                                    <p class="font-weight-bold">Latitude : <a style="color: green;cursor: pointer;" @click="redirigerVersGoogleMaps">Google Map</a> &nbsp; <input v-model="Latitude" class="inuty" type="text"></p>
-                                </div>
-    
-                                <div class="col-sm-6">
-                                    <p class="font-weight-bold">Longitude : &nbsp; <input v-model="Longitude" class="inuty" type="text"></p>
+                                    <p class="font-weight-bold">Prénoms : &nbsp; <input v-model="Prenoms" class="inuty" type="text"></p>
                                 </div>
     
                                 <div class="col-sm-6">
@@ -62,29 +53,21 @@
                                 </div>
     
                                 <div class="col-sm-6">
-                                    <p class="font-weight-bold">Télephone : &nbsp; <input v-model="Telephone" class="inuty" type="text"></p>
+                                    <p class="font-weight-bold">Date de naissance : &nbsp; <input v-model="Naissance" class="inuty" type="date"></p>
                                 </div>
     
                                 <div class="col-sm-6">
-                                    <p class="font-weight-bold">Spécialité : &nbsp; <input v-model="Specialite" class="inuty" type="text"></p>
+                                    <p class="font-weight-bold">Profession : &nbsp; <input v-model="Profession" class="inuty" type="text"></p>
                                 </div>
     
                                 <div class="col-sm-6">
-                                    <p class="font-weight-bold">Heure d'ouverture : &nbsp; <input v-model="Heures_ouverture" class="inuty" type="time"></p>
+                                    <p class="font-weight-bold">Adresse : &nbsp; <input v-model="Adresse" class="inuty" type="text"></p>
                                 </div>
-
+    
                                 <div class="col-sm-6">
-                                    <p class="font-weight-bold">Heure de fermeture : &nbsp; <input v-model="Heures_fermeture" class="inuty" type="time"></p>
+                                    <p class="font-weight-bold">Telephone : &nbsp; <input v-model="Telephone" class="inuty" type="text"></p>
                                 </div>
-
-                                <div class="col-sm-6">
-                                    <p class="font-weight-bold">Service offerte : &nbsp; <textarea v-model="service_offerte" class="inuty"></textarea></p>
-                                </div>
-
-                                <div class="col-sm-6">
-                                    <p class="font-weight-bold">Equipement du garage : &nbsp; <textarea v-model="equipement" class="inuty"></textarea></p>
-                                </div>
-
+    
                                 <div class="col-sm-6">
                                    <img style="width: 60px;margin-left: 90px;margin-top: 15px;" src="../assets/images/car2.ico" alt="">
                                 </div>
@@ -92,15 +75,12 @@
                             </div>
                             <br>
                             <div style="margin-left: 490px;" class="row">
-                            <div class="col-sm-5">
-                            <input @click="garagepage" class="btn btn-outline-success" type="button" value="Annuler">
-                            </div>
     
-                                <div class="col-sm-5">
-                                <input @click="updateGarage" class="btn btn-outline-success" type="button" value="Modifier">
-                                </div>
+                              
+
                             </div>
                            
+                            
                             <hr class="bg-primary">
                             <ul class="list-unstyled d-flex justify-content-center mt-4">
                                 <li><a href="https://www.facebook.com"><i class="fab fa-facebook-f px-3 h4 text-dark"></i></a></li>
@@ -128,22 +108,20 @@
       data () {
         return {
         Nom: '',
+        Prenoms: '',
+        Naissance: '',
+        Profession: '',
         Adresse: '',
-        Latitude: '',
-        Longitude: '',
+        Sexe: '',
         Telephone: '',
         Email: '',
-        Specialite: '',
-        Heures_ouverture: '',
-        Heures_fermeture: '',
-        equipement: '',
-        service_offerte: '',
+        Password: '',
         Photo: '',
     
     
     
         result : {},
-        Garage: {},
+        Client: {},
         }
         },
         created() {
@@ -154,36 +132,29 @@
         },
         methods: {
      
-        //Rediriger vers le garagepage
-        garagepage() {
-            this.$router.push({ name: 'garagepage' });
-        },
-        // vers google map
-        redirigerVersGoogleMaps() {
-        window.open('https://maps.google.com', '_blank');
+        //Rediriger vers le adminclient
+        adminclient() {
+            this.$router.push({ name: 'adminCLIENT' });
         },
     
-        // Mise à jour de la garage
-        updateGarage() {
-          // Supposons que vous avez les données du garage dans this.Garage
-          const updatedGarageData = {
+        // Mise à jour de la client
+        updateClient() {
+          // Supposons que vous avez les données du client dans this.Client
+          const updatedClientData = {
             Nom: this.Nom,
-            Adresse: this.Adresse,
+            Prenoms: this.Prenoms,
             Naissance: this.Naissance,
-            Latitude: this.Latitude,
-            Longitude: this.Longitude,
+            Profession: this.Profession,
+            Adresse: this.Adresse,
+            Sexe: this.Sexe,
             Telephone: this.Telephone,
             Email: this.Email,
-            Specialite: this.Specialite,
-            Heures_ouverture: this.Heures_ouverture,
-            Heures_fermeture: this.PhoHeures_fermetureto,
-            equipement: this.equipement,
-            service_offerte: this.service_offerte, 
+            Password: this.Password,
             Photo: this.Photo,
           };
     
           axios
-            .put('http://localhost:8082/api/garages/updateGarage/' + this.Garage.id, updatedGarageData)
+            .put('http://localhost:8082/api/clients/updateClient/' + this.Client.id, updatedClientData)
             .then(response => {
               alert('Modifié avec succès');
               console.log(response.data);
@@ -209,27 +180,23 @@
         reader.readAsDataURL(fileObject);
         },
       
-        //Prendre l'information du garage connecté
+        //Prendre l'information du client connecté
         getInformation() {
-        axios.get('http://localhost:8082/api/garages/session', {
+        axios.get('http://localhost:8082/api/clients/session', {
         headers: {
             Authorization: `Bearer ${localStorage.getItem('token')}`
         },
         })
         .then(response => {
-        this.Garage = response.data.grg;
-        this.Nom = this.Garage.Nom;
-        this.Adresse = this.Garage.Adresse;
-        this.Latitude = this.Garage.Latitude;
-        this.Longitude = this.Garage.Longitude;
-        this.Telephone = this.Garage.Telephone;
-        this.Email = this.Garage.Email;
-        this.Specialite = this.Garage.Specialite;
-        this.Heures_ouverture = this.Garage.Heures_ouverture;
-        this.Heures_fermeture = this.Garage.Heures_fermeture;
-        this.service_offerte = this.Garage.service_offerte;
-        this.equipement = this.Garage.equipement;
-        this.Photo = this.Garage.Photo;
+        this.Client = response.data.clt;
+        this.Nom = this.Client.Nom;
+        this.Prenoms = this.Client.Prenoms;
+        this.Naissance = this.Client.Naissance;
+        this.Profession = this.Client.Profession;
+        this.Adresse = this.Client.Adresse;
+        this.Telephone = this.Client.Telephone;
+        this.Email = this.Client.Email;
+        this.Photo = this.Client.Photo;
     
         }).catch(error => {
         console.log(error);

@@ -86,7 +86,7 @@
                     <h3 style="font-size: 20px;">GARAGE</h3>
                     <p style="font-family: century gothic;font-size: 13px;">Recherche garage</p>
                     <h2><span>NECESSAIRE</span></h2>
-                    <button class="btn btn-outline-success">Continuer</button>
+                    <button @click="listegarage" class="btn btn-outline-success">Continuer</button>
                     </div>
                     <div class="info-image">
                     <i class="fas fa-search"></i>
@@ -232,6 +232,12 @@ export default {
         localStorage.removeItem('id');
         this.$router.push({ name: 'clientpage' });
     },
+
+    listegarage() {
+        localStorage.removeItem('id');
+        this.$router.push({ name: 'Listegarage' });
+    },
+
 
     // Prendre le message du personne cliqué
     listermessage(){
