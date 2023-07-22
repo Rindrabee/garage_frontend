@@ -46,35 +46,25 @@
 
     <!-- concernant la location -->
 
-    <div class="details">
-        <h1>{{ Urgence.Nom }}</h1><p>- {{ Urgence.Adresse }} <i class="far fa-star rotate-image"></i><i class="far fa-star rotate-image "></i><i class="far fa-star rotate-image "></i></p> 
-    </div>
+  
 
-    <div class="details2">
-        <p style="position: absolute;margin-top: 30px;"><i class="fas fa-phone"></i>&nbsp;&nbsp;&nbsp;&nbsp;    </p>
-        <p style="margin-left: 250px;margin-top: 30px;"><i class="fas fa-envelope"></i>&nbsp;&nbsp;&nbsp;&nbsp;    </p>
-        
-    </div>
+    
 
-    <br><br>
+    <br><br><br>
     
     <!-- <Marker :options="{ position: { lat: lat, lng: lng } }" /> -->
-
     <div class="localisation">
-    <GoogleMap :api-key="apiKey" style="width: 100%; height: 500px" :center="{ lat: lat, lng: lng }" :zoom="15">
-     
-    <Marker v-if="isValidLocation" :options=" {
-      position: { lat: lati, lng: longi },
-      label: {
-      text: Urgence.Nom,
-      fontFamily: 'elephant, sans-serif' , 
-      fontWeight: 'bold', 
-      }
-    }" />
-
+        
+    <GoogleMap :api-key="apiKey" style="width: 100%; height: 500px" :center="{ lat: lati, lng: longi }" :zoom="15">
+      <Marker v-if="isValidLocation" :options="{
+        position: { lat: lati, lng: longi },
+        label: {
+          text: Urgence.Nom,
+          fontFamily: 'elephant, sans-serif',
+          fontWeight: 'bold',
+        }
+      }" />
     </GoogleMap>
-
-    
     </div>
 
     <div class="person-details">
@@ -121,8 +111,7 @@
     apiKey: "",
     lat: null,
     lng: null,
-    otherLat: -19.846379, 
-    otherLng:  47.033723, 
+   
     
     }
     },
@@ -224,7 +213,7 @@
     },
     computed: {
     isValidLocation() {
-      return this.isWithinBounds(this.otherLat, this.otherLng);
+      return this.isWithinBounds(this.lati, this.longi);
     },
     },
       

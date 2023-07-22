@@ -77,11 +77,13 @@
                     <div class="info-detail">
                     <h3 style="font-size: 20px;">Garage Automobile</h3>
                     <p>inscrit dans le site</p>
-                    <h2><strong>26</strong><span>&nbsp; GARAGE</span></h2>
+                    <h2><strong>{{ garageCount }}</strong><span>&nbsp; GARAGE</span></h2>
                     </div>
+
                     <div class="info-image">
                     <i class="fas fa-car"></i>
                     </div>
+
                 </div>
             </div>
             <div class="card total2">
@@ -89,7 +91,7 @@
                     <div class="info-detail">
                     <h3 style="font-size: 20px;">Membre des mecaniciens</h3>
                     <p>en cour de travail</p>
-                    <h2><strong>56</strong><span>&nbsp; PERSONNE</span></h2>
+                    <h2><strong>{{ mecanicienCount }}</strong><span>&nbsp; PERSONNE</span></h2>
                     </div>
                     <div class="info-image">
                     <i class="fas fa-boxes"></i>
@@ -102,7 +104,7 @@
                     <div class="info-detail">
                         <h3 style="font-size: 20px;">Client inscrit</h3>
                     <p>qui nous fait confiance jusqu'à maintenant</p>
-                    <h2><strong>340</strong> <span>PERSONNE</span></h2>
+                    <h2><strong>{{ clientCount }}</strong> <span>PERSONNE</span></h2>
                     </div>
                     <div class="info-image">
                     <i class="fas fa-user-friends"></i>
@@ -113,12 +115,12 @@
             <div class="card total4">
                 <div class="info">
                     <div class="info-detail">
-                    <h3 style="font-size: 20px;">Nombre des voitures</h3>
-                    <p>en cour de réparation </p>
-                    <h2><strong>56</strong> <span>VOITURE</span></h2>
+                    <h3 style="font-size: 20px;">Nombre des urgence</h3>
+                    <p>en attente de redirection </p>
+                    <h2><strong>{{ urgenceCount }}</strong> <span>URGENCE</span></h2>
                     </div>
                     <div class="info-image">
-                    <i class="fas fa-shipping-fast"></i>
+                    <i class="fas fa-life-ring"></i>
                 </div>
                 </div>
             </div>
@@ -149,7 +151,7 @@
                         <td><button @click="detailurgence(u.id)" class="btn btn-outline-danger">Voir</button></td>
                         <td><button class="btn btn-outline-success">Rediriger</button></td>
                     </tr>
-                    
+
                     <!-- apina -->
                 </table>
             </div>
@@ -259,6 +261,13 @@ export default {
     Urgence: {},
     Message: {},
     PrenomClt : '',
+    clientCount: 0,
+    garageCount: 0,
+    mecanicienCount: 0,
+    voitureCount: 0,
+    urgenceCount: 0,
+    
+
     PhotoClt : '',
     id_received: '',
     id_sender: '',
@@ -271,6 +280,11 @@ export default {
     this.selectpers();
     this.adminconnecter();
     this.listeurgence();
+    this.compterClients();
+    this.compterGarages();
+    this.compterMecaniciens();
+    this.comptervoitures();
+    this.compterUrgence();
 
     this.socket.on('chat message',(data) => {
         this.selectpers();
@@ -292,6 +306,66 @@ export default {
         this.Client = response.data
     })
     },
+
+    // Compter les listes des clients
+    compterClients() {
+      axios
+        .get('http://localhost:8082/api/clients/countClients')
+        .then(response => {
+          this.clientCount = response.data.count;
+        })
+        .catch(error => {
+          console.error('Une erreur s\'est produite lors du comptage des clients :', error);
+        });
+    },
+    // Compter les listes des clients
+    compterUrgence() {
+    axios
+    .get('http://localhost:8082/api/clients/counturgence')
+    .then(response => {
+        this.urgenceCount = response.data.count;
+    })
+    .catch(error => {
+        console.error('Une erreur s\'est produite lors du comptage des urgences :', error);
+    });
+},
+
+    // Compter les listes des garages
+    compterGarages() {
+    axios
+    .get('http://localhost:8082/api/garages/countGarages')
+    .then(response => {
+        this.garageCount = response.data.count;
+    })
+    .catch(error => {
+        console.error('Une erreur s\'est produite lors du comptage des garages :', error);
+    });
+    },
+
+    // Compter les listes des voitures
+    comptervoitures() {
+    axios
+    .get('http://localhost:8082/api/garages/countVoiture')
+    .then(response => {
+        this.voitureCount = response.data.count;
+    })
+    .catch(error => {
+        console.error('Une erreur s\'est produite lors du comptage des voitures :', error);
+    });
+    },
+
+    // Compter les listes des mecaniciens
+    compterMecaniciens() {
+    axios
+    .get('http://localhost:8082/api/mecaniciens/countMecaniciens')
+    .then(response => {
+        this.mecanicienCount = response.data.count;
+    })
+    .catch(error => {
+        console.error('Une erreur s\'est produite lors du comptage des mecaniciens :', error);
+    });
+    },
+
 
     //detail urgence
     detailurgence(id) {
