@@ -19,7 +19,7 @@
                 <input style="margin-left: -300px;width: 300px;color: gray;font-family: century gothic;" class="form-control" type="text" placeholder="Barre de recherche">
                 <span style="cursor: pointer;" class="fas fa-search"></span>
                 <img @click="slide1" style="cursor: pointer;" class="profile-image" src="../assets/images/profil.ico" alt="">
-                <p class="profile-name" style="cursor: pointer;">  {{ Admin.Nom }}</p>
+                <p class="profile-name" style="cursor: pointer;">  {{ Admin.Prenoms }}</p>
             </div>
 
             <div id="rindra" class="settings-menu">
@@ -47,31 +47,43 @@
         <!-- concernant la location -->
 
   <div class="details">
-        <h1>NOMDUGARAGE</h1><p>- localisation <i class="far fa-star rotate-image"></i><i class="far fa-star rotate-image "></i><i class="far fa-star rotate-image "></i></p> 
+        <h1>{{ Garage.Nom }}</h1><p>- {{ Garage.Adresse }} <i class="far fa-star rotate-image"></i><i class="far fa-star rotate-image "></i><i class="far fa-star rotate-image "></i></p> 
     </div>
     <div class="details2">
-        <p style="position: absolute;margin-top: 30px;"><i class="fas fa-phone"></i>&nbsp;&nbsp;&nbsp;&nbsp;    0341790551</p>
-        <p style="margin-left: 250px;margin-top: 30px;"><i class="fas fa-envelope"></i>&nbsp;&nbsp;&nbsp;&nbsp;    rindratahinalisoa@gmail.com</p>
+        <p style="position: absolute;margin-top: 30px;"><i class="fas fa-phone"></i>&nbsp;&nbsp;&nbsp;&nbsp;    {{ Garage.Telephone }}</p>
+        <p style="margin-left: 250px;margin-top: 30px;"><i class="fas fa-envelope"></i>&nbsp;&nbsp;&nbsp;&nbsp;    {{ Garage.Email }}</p>
         
     </div>
     <br><br>
+    
+ <!-- <Marker :options="{ position: { lat: lat, lng: lng } }" /> -->
 
     <div class="localisation">
     <GoogleMap :api-key="apiKey" style="width: 100%; height: 500px" :center="{ lat: lat, lng: lng }" :zoom="15">
-      <Marker :options="{ position: { lat: lat, lng: lng } }" />
-      <Marker v-if="isValidLocation" :options="{ position: { lat: otherLat, lng: otherLng }, label: 'Autre endroit' }" />
+     
+    <Marker v-if="isValidLocation" :options="{
+      position: { lat: lati, lng: longi },
+      label: {
+      text: Garage.Nom,
+      fontFamily: 'elephant, sans-serif' , 
+      fontWeight: 'bold', 
+      }
+    }" />
+
     </GoogleMap>
+
+    
     </div>
 
     <div class="person-details">
     <img src="../assets/images/ft3.jpg" alt="Photo de la personne">
-    <h2 style="font-family: century gothic;">Nom :</h2>
-    <p style="font-family: century gothic;">Adresse :</p>
-    <p style="font-family: century gothic;">Specialite :</p>
-    <p style="font-family: century gothic;">Heures d'ouverture :</p>
-    <p style="font-family: century gothic;">Heures de fermeture :</p>
-    <p style="font-family: century gothic;">Les services offertes :</p>
-    <p style="font-family: century gothic;">Les équipements :</p>
+    <h2 style="font-family: century gothic;">Nom :&nbsp; {{ Garage.Nom }}</h2>
+    <p style="font-family: century gothic;">Adresse :&nbsp; {{ Garage.Adresse }}</p>
+    <p style="font-family: century gothic;">Specialite :&nbsp; {{ Garage.Specialite  }}</p>
+    <p style="font-family: century gothic;">Heures d'ouverture :&nbsp; {{ Garage.Heures_ouverture }}</p>
+    <p style="font-family: century gothic;">Heures de fermeture :&nbsp; {{ Garage.Heures_fermeture  }}</p>
+    <p style="font-family: century gothic;">Les services offertes :&nbsp; {{ Garage.service_offerte }}  </p>
+    <p style="font-family: century gothic;">Les équipements :&nbsp; {{ Garage.equipement  }}</p>
 
     <br><br>
     <input style="width: 120px;" class="btn btn-outline-danger" value="Reffuser">
@@ -99,9 +111,13 @@
     GoogleMap,
     Marker
     },
+
     data () {
     return {
     Admin: {},
+    Garage : {},
+    lati: '',
+    longi: '',
 
 
     label: "",
@@ -125,7 +141,7 @@
     },
         mounted() {
         this.adminconnecter();
-      
+        this.getprofilgarage();
         },
         methods: {
         //Prendre le session de l'admin connecté
@@ -143,8 +159,25 @@
        })
 
         },
+
+        // Prendre le garage selectionner 
+        getprofilgarage() {
+        axios.get('http://localhost:8082/api/admins/profilegarage/' + localStorage.getItem('id'))
+        .then(response => {
+        this.Garage = response.data
+        this.lati = this.Garage.Latitude 
+        this.longi = this.Garage.Longitude 
+        })
+        .catch(error => {
+        console.error(error);
+        this.MessageError = "Une erreur s'est produite lors de la déconnexion.";
+        });
+        },
+
+
         // Diriger vers l'admin Garage
         Admingarage() {
+        localStorage.removeItem('id');
         this.$router.push({ name: 'adminGARAGE' });
         },
 
@@ -213,6 +246,7 @@
      display: flex;
      flex-direction: column;
     }
+   
     
     h2 {
         font: 18px;
@@ -367,8 +401,8 @@
 }
 .details p {
    font-size: 30px;
-   margin-left: 310px;
-   margin-top: -47px;
+   margin-left: 340px;
+   margin-top: -40px;
 }
 .details i {
    font-size: 30px;

@@ -202,7 +202,7 @@
       flex-direction: column;
     }
     /* asina animation kely ee */
-    .container {
+  .container {
     margin-top: 10px;
 }
 

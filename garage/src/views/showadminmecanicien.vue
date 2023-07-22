@@ -39,52 +39,53 @@
                             <hr class="bg-primary">
                             <div class="row">
                                 <div class="col-sm-6">
-                                    <p  class="font-weight-bold">Nom : &nbsp; <input  v-model="Nom"  class="inuty" type="text"></p>
+                                    <p  class="font-weight-bold">Nom : &nbsp; <input  v-model="Mecanicien.Nom"  class="inuty" type="text"></p>
                                     <!-- <h6 class="text-muted">rindratahinalisoa@gmail.com</h6> -->
                                 </div>
 
                                 <div class="col-sm-6">
-                                    <p class="font-weight-bold">Prénoms : &nbsp; <input v-model="Prenoms" class="inuty" type="text"></p>
+                                    <p class="font-weight-bold">Prénoms : &nbsp; <input v-model="Mecanicien.Prenoms" class="inuty" type="text"></p>
                                 </div>
     
                                 <div class="col-sm-6">
-                                    <p class="font-weight-bold">Email : &nbsp; <input v-model="Email"  class="inuty" type="email"></p>
+                                    <p class="font-weight-bold">Email : &nbsp; <input v-model="Mecanicien.Email"  class="inuty" type="email"></p>
                                 </div>
     
                                 <div class="col-sm-6">
-                                    <p class="font-weight-bold">Date de naissance : &nbsp; <input v-model="Naissance"  class="inuty" type="date"></p>
+                                    <p class="font-weight-bold">Date de naissance : &nbsp; <input v-model="Mecanicien.Naissance"  class="inuty" type="date"></p>
                                 </div>
     
                                 <div class="col-sm-6">
-                                    <p class="font-weight-bold">Adresse : &nbsp; <input v-model="Adresse"  class="inuty" type="text"></p>
+                                    <p class="font-weight-bold">Adresse : &nbsp; <input v-model="Mecanicien.Adresse"  class="inuty" type="text"></p>
                                 </div>
     
                                 <div class="col-sm-6">
-                                    <p class="font-weight-bold">Telephone : &nbsp; <input v-model="Telephone" class="inuty" type="text"></p>
+                                    <p class="font-weight-bold">Telephone : &nbsp; <input v-model="Mecanicien.Telephone" class="inuty" type="text"></p>
                                 </div>
     
                                 <div class="col-sm-6">
-                                    <p class="font-weight-bold">Spécialité : &nbsp; <input v-model="Specialite"  class="inuty" type="text"></p>
+                                    <p class="font-weight-bold">Spécialité : &nbsp; <input v-model="Mecanicien.Specialite"  class="inuty" type="text"></p>
                                 </div>
     
                                 <div class="col-sm-6">
-                                    <p class="font-weight-bold">Langue parler : &nbsp; <input v-model="langue_parle"  class="inuty" type="text"></p>
+                                    <p class="font-weight-bold">Langue parler : &nbsp; <input v-model="Mecanicien.langue_parle"  class="inuty" type="text"></p>
                                 </div>
     
                                 <div class="col-sm-6">
-                                    <p class="font-weight-bold">Expérience : &nbsp;  <textarea style="height: 70px;" v-model="Experience" class="inuty" ></textarea></p>
+                                    <p class="font-weight-bold">Expérience : &nbsp;  <textarea style="height: 70px;" v-model="Mecanicien.Experience" class="inuty" ></textarea></p>
                                 </div>
 
                                 <div class="col-sm-6">
-                                    <p class="font-weight-bold">Certification : &nbsp;  <textarea style="height: 70px;" v-model="certification" class="inuty" ></textarea></p>
+                                    <p class="font-weight-bold">Certification : &nbsp;  <textarea style="height: 70px;" v-model="Mecanicien.certification" class="inuty" ></textarea></p>
                                 </div>
+
                             </div>
                             <br>
 
                             <div style="margin-left: 490px;" class="row">
 
                             <div class="col-sm-5">
-                                <input @click="mecanicienpage" class="btn btn-outline-danger" type="button" value="Reffuser">
+                                <input  class="btn btn-outline-danger" type="button" value="Reffuser">
                                 </div>
     
                                 <div class="col-sm-5">
@@ -140,14 +141,16 @@
 
         created() {
         this.getInformation();
+        this.getprofilmecanicien();
         },
         mounted() {
         console.log("mounted");
         },
+
         methods: {
-     
         //Rediriger vers le page admin mecanicien
         adminmecanicienpage() {
+            localStorage.removeItem('id');
             this.$router.push({ name: 'adminMECANICIEN' });
         },
     
@@ -178,7 +181,20 @@
               console.log(error);
             });
         },
+        
+        // Prendre le mecanicien selectionner 
+        getprofilmecanicien() {
+        axios.get('http://localhost:8082/api/admins/profilmecanicien/' + localStorage.getItem('id'))
+        .then(response => {
+        this.Mecanicien = response.data
+        })
+        .catch(error => {
+        console.error(error);
+        this.MessageError = "Une erreur s'est produite lors de la déconnexion.";
+        });
+        },
     
+
         handleImage(event) {
         const file = event.target.files[0];
         this.createBase64Image(file);

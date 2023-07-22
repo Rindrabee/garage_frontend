@@ -75,7 +75,7 @@
                 <br>
                 <div class="card detail">
                     <div class="detail-header">
-                        <p style="font-family: century gothic;font-size: 18px; ">Liste des garages automobiles :</p>
+                        <p style="font-family: century gothic;font-size: 18px; ">Liste des mécaniciens :</p>
                     </div>
                     <br>
                     <table>
@@ -108,7 +108,7 @@
 
                         <td v-if="g.Etat == 1"><i style="margin-left: 30px;cursor: pointer;" class="fas fa-message"></i></td>
                         
-                        <td v-if="g.Etat == null"><button @click="showadminmecanicien" class="btn btn-outline-danger">Voir profile</button></td>
+                        <td v-if="g.Etat == null"><button @click="showadminmecanicien(g.id)" class="btn btn-outline-danger">Voir profile</button></td>
                        
                         </tr>
     
@@ -116,7 +116,6 @@
                     </table>
                 </div>
     
-                   
                    
         </main>
     </div>
@@ -141,8 +140,9 @@
         },
         mounted() {
         this.listemecanicien();
-        this.adminconnecter()
+        this.adminconnecter();
         },
+        
         methods: {
         slide1(){
             let a = document.getElementById("rindra");
@@ -178,8 +178,9 @@
         this.$router.push({ name: 'modificationadmin' });
          },
 
-        showadminmecanicien() {
+        showadminmecanicien(id) {
         this.$router.push({ name: 'showadminmecanicien' });
+        localStorage.setItem('id',id)
         },
 
         verslisteclient() {

@@ -128,15 +128,15 @@
         },
         created() {
         this.getInformation();
-        this.getprofilclient()
+        this.getprofilclient();
         },
 
 
         mounted() {
         console.log("mounted");
         },
+
         methods: {
-     
         //Rediriger vers le adminclient
         adminclient() {
             localStorage.removeItem('id');
@@ -144,7 +144,7 @@
         },
 
         // Prendre le client selectionner 
-        getprofilclient(){
+        getprofilclient() {
         axios.get('http://localhost:8082/api/admins/profilclient/' + localStorage.getItem('id'))
         .then(response => {
         this.Client = response.data

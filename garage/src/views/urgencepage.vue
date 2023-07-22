@@ -341,7 +341,6 @@ import axios from 'axios';
     margin-top: 10px;
     margin-left: 10px;
 }
-
 .container h1 {
     color: #020202;
     font-size: 40px;
