@@ -108,9 +108,11 @@
 
                         <td v-if="g.Etat == 1"><i style="margin-left: 30px;cursor: pointer;" class="fas fa-message"></i></td>
                         
-                        <td v-if="g.Etat == null"><button @click="showadminmecanicien(g.id)" class="btn btn-outline-danger">Voir profile</button></td>
+                        <td v-if="g.Etat == null"><button @click="showadminmecanicien(g.id)" class="btn btn-outline-danger">Consulter</button></td>
                        
-                        </tr>
+                        <td v-if="g.Etat == 1"><button @click="showadminmecanicien(g.id)" class="btn btn-outline-success">Voir profile</button></td>
+                       
+                    </tr>
     
 
                     </table>

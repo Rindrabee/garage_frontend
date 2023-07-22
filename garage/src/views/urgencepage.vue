@@ -48,7 +48,7 @@
     </nav>
   
     
-    <div style="margin-top: 90px;" class="container">
+    <div style="margin-top: 90px;" class="container2">
       <h1  style="color: rgb(2, 2, 2);font-size: 40px;font-family:avant garde;">Bienvenue dans la demande de dépannage</h1>
       <p style="font-family: century gothic;">D'abord, restez calme. Nous sommes là pour vous aider, ne vous inquiétez pas.</p>
       <p style="font-family: century gothic;">Mais avant cela, veuillez remplir ce formulaire correctement afin que nous puissions vous aider et envoyer des</p>
@@ -59,6 +59,7 @@
     <div class="dialogue">
         <span>Ne t'inquiète pas, je suis là</span>
     </div>
+
     <div>
       <img class="mechanic-img" style="float: right;margin-top: -200px;margin-right: 80px;" src="../assets/images/mec.ico" alt="">
     </div>
@@ -137,7 +138,7 @@
             <button class="btn btn-success" @click="nextStep">Suivant</button>
           </div>
 
-          <div v-if="step === 4">
+          <div class="container2" v-if="step === 4">
             <h2 style="font-size: 20px;font-family: century gothic;">Etape finale  : Récapitulatif</h2>
             <br><br>
             <p><strong>Nom:</strong> {{ name }}</p>
@@ -148,8 +149,10 @@
             <p><strong>longitude:</strong> {{ longitude }}</p>
             <p><strong>latitude:</strong> {{ latitude }}</p>
 
+            
             <button class="btn btn-success" @click="prevStep">Précédent</button>
             <button class="btn btn-success" @click="register">Envoyer</button>
+
           </div>
         </div>
       </div>
@@ -182,9 +185,7 @@ import axios from 'axios';
       longitude: '',
       latitude: '',
 
-
       nombreNotifications: 1,
-
 
       nameError: '',
       emailError: '',
@@ -217,7 +218,6 @@ import axios from 'axios';
 
     let a = document.getElementById("patiente");
     let b = document.getElementById("renseignemet");
-
 
     a.style.display = "inline-block";
     b.style.display = "none";
@@ -337,18 +337,18 @@ import axios from 'axios';
   display: flex;
   flex-direction: column;
 }
-.container {
+.container2 {
     margin-top: 10px;
     margin-left: 10px;
 }
-.container h1 {
+.container2 h1 {
     color: #020202;
     font-size: 40px;
     font-family: "Avant Garde", sans-serif;
     margin-left: 90px;
     animation: slideInLeft 3s ease;
 }
-.container p {
+.container2 p {
     font-family: "Century Gothic", sans-serif;
     margin-left: 90px;
     animation: fadeInUp 2s ease;

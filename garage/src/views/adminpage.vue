@@ -146,9 +146,10 @@
                         <td>{{ u.Probleme }}</td>
                       
                        
-                        <td><button class="btn btn-outline-danger">Voir</button></td>
+                        <td><button @click="detailurgence(u.id)" class="btn btn-outline-danger">Voir</button></td>
                         <td><button class="btn btn-outline-success">Rediriger</button></td>
                     </tr>
+                    
                     <!-- apina -->
                 </table>
             </div>
@@ -270,6 +271,7 @@ export default {
     this.selectpers();
     this.adminconnecter();
     this.listeurgence();
+
     this.socket.on('chat message',(data) => {
         this.selectpers();
     });
@@ -291,6 +293,12 @@ export default {
     })
     },
 
+    //detail urgence
+    detailurgence(id) {
+    this.$router.push({ name: 'showurgence' });
+    localStorage.setItem('id',id)
+    
+    },
     
     // Lister la liste des urgences
     listeurgence() {

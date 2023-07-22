@@ -14,7 +14,7 @@
     <div class="cont">
         <!-- navbar -->
         <nav class="navbar">
-            <h4 style="margin-left: -30px;"><i @click="Admingarage" style="cursor: pointer;" class="fas fa-left-long"></i></h4>
+            <h4 style="margin-left: -30px;"><i @click="Adminpage" style="cursor: pointer;" class="fas fa-left-long"></i></h4>
             <div class="profile">
                 <input style="margin-left: -300px;width: 300px;color: gray;font-family: century gothic;" class="form-control" type="text" placeholder="Barre de recherche">
                 <span style="cursor: pointer;" class="fas fa-search"></span>
@@ -44,27 +44,29 @@
         </nav>
        
 
-        <!-- concernant la location -->
+    <!-- concernant la location -->
 
-  <div class="details">
-        <h1>{{ Garage.Nom }}</h1><p>- {{ Garage.Adresse }} <i class="far fa-star rotate-image"></i><i class="far fa-star rotate-image "></i><i class="far fa-star rotate-image "></i></p> 
+    <div class="details">
+        <h1>{{ Urgence.Nom }}</h1><p>- {{ Urgence.Adresse }} <i class="far fa-star rotate-image"></i><i class="far fa-star rotate-image "></i><i class="far fa-star rotate-image "></i></p> 
     </div>
+
     <div class="details2">
-        <p style="position: absolute;margin-top: 30px;"><i class="fas fa-phone"></i>&nbsp;&nbsp;&nbsp;&nbsp;    {{ Garage.Telephone }}</p>
-        <p style="margin-left: 250px;margin-top: 30px;"><i class="fas fa-envelope"></i>&nbsp;&nbsp;&nbsp;&nbsp;    {{ Garage.Email }}</p>
+        <p style="position: absolute;margin-top: 30px;"><i class="fas fa-phone"></i>&nbsp;&nbsp;&nbsp;&nbsp;    </p>
+        <p style="margin-left: 250px;margin-top: 30px;"><i class="fas fa-envelope"></i>&nbsp;&nbsp;&nbsp;&nbsp;    </p>
         
     </div>
+
     <br><br>
     
- <!-- <Marker :options="{ position: { lat: lat, lng: lng } }" /> -->
+    <!-- <Marker :options="{ position: { lat: lat, lng: lng } }" /> -->
 
     <div class="localisation">
     <GoogleMap :api-key="apiKey" style="width: 100%; height: 500px" :center="{ lat: lat, lng: lng }" :zoom="15">
      
-    <Marker v-if="isValidLocation" :options="{
+    <Marker v-if="isValidLocation" :options=" {
       position: { lat: lati, lng: longi },
       label: {
-      text: Garage.Nom,
+      text: Urgence.Nom,
       fontFamily: 'elephant, sans-serif' , 
       fontWeight: 'bold', 
       }
@@ -78,28 +80,20 @@
     <div class="person-details">
     <img src="../assets/images/ft3.jpg" alt="Photo de la personne">
 
-    <h2 style="font-family: century gothic;">Nom :&nbsp; {{ Garage.Nom }}</h2>
-    <p style="font-family: century gothic;">Adresse :&nbsp; {{ Garage.Adresse }}</p>
-    <p style="font-family: century gothic;">Specialite :&nbsp; {{ Garage.Specialite }}</p>
-    <p style="font-family: century gothic;">Heures d'ouverture :&nbsp; {{ Garage.Heures_ouverture }}</p>
-    <p style="font-family: century gothic;">Heures de fermeture :&nbsp; {{ Garage.Heures_fermeture  }}</p>
-    <p style="font-family: century gothic;">Les services offertes :&nbsp; {{ Garage.service_offerte }}  </p>
-    <p style="font-family: century gothic;">Les équipements :&nbsp; {{ Garage.equipement  }}</p>
+    <p style="font-family: century gothic;">Nom : {{ Urgence.Nom }}</p>
+    <p style="font-family: century gothic;">Email : {{ Urgence.Email }}</p>
+    <p style="font-family: century gothic;">Télephone : {{ Urgence.Telephone }}</p>
+    <p style="font-family: century gothic;">Problème du voiture: {{ Urgence.Probleme  }}</p>
+   
     <br><br>
 
-    <input type="button" v-if="Garage.Etat == null"  @click="Reffuser" style="width: 120px;" class="btn btn-outline-danger" value="Reffuser">
-
-    <input type="button" v-if="Garage.Etat == null" @click="updateGarage" style="width: 120px;margin-left: 40px;" class="btn btn-outline-success" value="Accepter">
-
-    <input type="button" v-if="Garage.Etat == 1" @click="Bloquer" style="width: 120px;" class="btn btn-outline-danger" value="Bloquer">
+    <input v-if="Urgence.Etat == null" type="button" style="width: 120px;margin-left: 40px;" class="btn btn-outline-danger" value="Supprimer">
 
     </div>
-
-          
-    </div>
-    </body>
-    </html>
-    </template>
+</div>
+</body>
+</html>
+</template>
     
     <script>
     import AuthenticationService from '../services/AuthenticationService.js'
@@ -117,6 +111,7 @@
     return {
     Admin: {},
     Garage : {},
+    Urgence : {},
     lati: '',
     longi: '',
     Etat: '',
@@ -131,6 +126,7 @@
     
     }
     },
+    
     created() {
     this.$getLocation()
     .then((coordinates) => {
@@ -141,129 +137,89 @@
     console.log(error);
     });
     },
-        mounted() {
-        this.adminconnecter();
-        this.getprofilgarage();
-        },
-        methods: {
-        //Prendre le session de l'admin connecté
-       adminconnecter() {
-        axios.get('http://localhost:8082/api/admins/session', {
-        headers: {
-            Authorization: `Bearer ${localStorage.getItem('token')}`
-        },
-        })
-        .then(response => {
-        this.Admin = response.data.adm;
-        this.id_sender = this.Admin.id;
-        }).catch(error => {
-        console.log(error);
-        })
+    mounted() {
+    this.adminconnecter();
+    this.getdetailurgence();
+    },
 
-        },
+    methods: {
 
-        // Mise à jour de la garage
-        updateGarage() {
-        axios
-        .put('http://localhost:8082/api/garages/acceptergarage/' +  localStorage.getItem('id'))
-        .then(response => {
-        alert('Garage accepter !!');
-        console.log(response.data);
-        })
-        .catch(error => {
-        console.log(error);
-        });
-        },
+    //Prendre le session de l'admin connecté
+    adminconnecter() {
+    axios.get('http://localhost:8082/api/admins/session', {
+    headers: {
+    Authorization: `Bearer ${localStorage.getItem('token')}`
+    },
+    })
+    .then(response => {
+    this.Admin = response.data.adm;
+    this.id_sender = this.Admin.id;
+    }).catch(error => {
+    console.log(error);
+    })
+    },
 
-         // Reffuser demande garage
-        Reffuser() {
-        axios
-        .put('http://localhost:8082/api/garages/deletegarage/' +  localStorage.getItem('id'))
-        .then(response => {
-        alert('Demmande reffuser !!');
-        console.log(response.data);
-        })
-        .catch(error => {
-        console.log(error);
-        });
-        },
-
-        // Bloquer demande garage
-        Bloquer() {
-        axios
-        .put('http://localhost:8082/api/garages/bloquergarage/' +  localStorage.getItem('id'))
-        .then(response => {
-        alert('Garage bloquer !!');
-        console.log(response.data);
-        })
-        .catch(error => {
-        console.log(error);
-        });
-        },
+    // Prendre le detail de l'urgence venu
+    getdetailurgence() {
+    axios.get('http://localhost:8082/api/admins/detailurgence/' + localStorage.getItem('id'))
+    .then(response => {
+    this.Urgence = response.data
+    this.lati = this.Urgence.Latitude 
+    this.longi = this.Urgence.Longitude 
+    })
+    .catch(error => {
+    console.error(error);
+    this.MessageError = "Une erreur s'est produite.";
+    });
+    },
 
 
-        // Prendre le garage selectionner 
-        getprofilgarage() {
-        axios.get('http://localhost:8082/api/admins/profilegarage/' + localStorage.getItem('id'))
-        .then(response => {
-        this.Garage = response.data
-        this.lati = this.Garage.Latitude 
-        this.longi = this.Garage.Longitude 
-        this.Etat = this.Garage.Etat
-        })
-        .catch(error => {
-        console.error(error);
-        this.MessageError = "Une erreur s'est produite lors de la déconnexion.";
-        });
-        },
+    // Diriger vers l'adminpage
+    Adminpage() {
+    localStorage.removeItem('id');
+    this.$router.push({ name: 'adminpage' });
+    },
 
+    //Modification Admin 
+    modificationadmin() {
+    this.$router.push({ name: 'modificationadmin' });
+    },
 
-        // Diriger vers l'admin Garage
-        Admingarage() {
-        localStorage.removeItem('id');
-        this.$router.push({ name: 'adminGARAGE' });
-        },
+    // Se deconnecter
 
-        //Modification Admin 
-        modificationadmin() {
-        this.$router.push({ name: 'modificationadmin' });
-        },
+    logout() {
+    axios.post('http://localhost:8082/api/admins/logoutadmin')
+    .then(response => {
+    localStorage.removeItem('token');
+    // localStorage.removeItem('Email');
+    this.$router.push({ name: 'loginadm' });
+    })
+    .catch(error => {
+    console.error(error);
+    this.MessageError = "Une erreur s'est produite lors de la déconnexion.";
+    });
+    },
 
-        // Se deconnecter
+    slide1() {
+    let a = document.getElementById("rindra");
+    if (a.style.display === "block") {
+    a.style.display = "none";
+    } else {
+    a.style.display = "block";
+    }
+    },
+    isWithinBounds(lat, lng) {
+    // Limites géographiques de Madagascar
+    const minLat = -25.6086;
+    const maxLat = -11.9455;
+    const minLng = 43.2283;
+    const maxLng = 50.4839;
 
-        logout() {
-        axios.post('http://localhost:8082/api/admins/logoutadmin')
-        .then(response => {
-        localStorage.removeItem('token');
-        // localStorage.removeItem('Email');
-        this.$router.push({ name: 'loginadm' });
-        })
-        .catch(error => {
-        console.error(error);
-        this.MessageError = "Une erreur s'est produite lors de la déconnexion.";
-        });
-        },
-
-        slide1() {
-        let a = document.getElementById("rindra");
-        if (a.style.display === "block") {
-        a.style.display = "none";
-        } else {
-        a.style.display = "block";
-        }
-        },
-        isWithinBounds(lat, lng) {
-      // Limites géographiques de Madagascar
-      const minLat = -25.6086;
-      const maxLat = -11.9455;
-      const minLng = 43.2283;
-      const maxLng = 50.4839;
-
-      // Vérifier si les coordonnées se trouvent dans les limites de Madagascar
-      if (lat >= minLat && lat <= maxLat && lng >= minLng && lng <= maxLng) {
-        return true;
-      }
-      return false;
+    // Vérifier si les coordonnées se trouvent dans les limites de Madagascar
+    if (lat >= minLat && lat <= maxLat && lng >= minLng && lng <= maxLng) {
+    return true;
+    }
+    return false;
     },
     },
     computed: {
@@ -275,20 +231,20 @@
     }
     </script>
     
-    <style scoped>
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-        outline: none;
-        font-family: "Poppins",sans-serif;
-    }
-    .cont {
-     background-color: rgba(198, 209, 197, 0.9);
-     min-height: 100vh;
-     display: flex;
-     flex-direction: column;
-    }
+<style scoped>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    outline: none;
+    font-family: "Poppins",sans-serif;
+}
+.cont {
+    background-color: rgba(198, 209, 197, 0.9);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
    
     
     h2 {

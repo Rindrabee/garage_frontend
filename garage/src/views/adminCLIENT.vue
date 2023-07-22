@@ -101,7 +101,8 @@
                         <td>{{ clt.Telephone }}</td>
 
                         <td><button @click="detailclient(clt.id)" class="btn btn-outline-success">Profile</button></td>
-                        </tr>
+                        
+                    </tr>
     
                    
                     </table>

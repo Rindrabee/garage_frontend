@@ -73,12 +73,16 @@
                                 </div>
     
                             </div>
-                            <br>
-                            <div style="margin-left: 490px;" class="row">
-    
-                              
 
-                            </div>
+                            <br>
+
+                            <div style="margin-left: 490px;" class="row">
+                            
+                            <input type="button" v-if="Client.Etat == null"  @click="bloquerclient" style="width: 120px;" class="btn btn-outline-danger" value="Bloquer">
+
+                            <input type="button" v-if="Client.Etat == 1"  @click="debloquerclient" style="width: 120px;" class="btn btn-outline-danger" value="Débloquer">
+                           
+                        </div>
                            
                             <hr class="bg-primary">
 
@@ -154,6 +158,34 @@
         this.MessageError = "Une erreur s'est produite lors de la déconnexion.";
         });
         },
+        
+        
+        // Bloquer client
+        bloquerclient () {
+        axios
+        .put('http://localhost:8082/api/clients/bloquerclient/' +  localStorage.getItem('id'))
+        .then(response => {
+        alert('Client bloquer !!');
+        console.log(response.data);
+        })
+        .catch(error => {
+        console.log(error);
+        });
+        },
+        
+        // Débloquer  client
+        debloquerclient () {
+        axios
+        .put('http://localhost:8082/api/clients/accepterclient/' +  localStorage.getItem('id'))
+        .then(response => {
+        alert('Client débloquer !!');
+        console.log(response.data);
+        })
+        .catch(error => {
+        console.log(error);
+        });
+        },
+
 
         // Mise à jour de la client
         updateClient() {

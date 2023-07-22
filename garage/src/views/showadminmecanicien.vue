@@ -85,13 +85,18 @@
                             <div style="margin-left: 490px;" class="row">
 
                             <div class="col-sm-5">
-                                <input  class="btn btn-outline-danger" type="button" value="Reffuser">
-                                </div>
-    
-                                <div class="col-sm-5">
-                                <input @click="updateMecanicien" class="btn btn-outline-success" type="button" value="Accepter">
-                                </div>
+                            <input  v-if="Mecanicien.Etat == null" @click="reffusermecanicien" class="btn btn-outline-danger" type="button" value="Reffuser">
                             </div>
+    
+                            <div class="col-sm-5">
+                            <input v-if="Mecanicien.Etat == null" @click="acceptermecanicien" class="btn btn-outline-success" type="button" value="Accepter">
+                            </div>
+
+                            <div class="col-sm-5">
+                            <input v-if="Mecanicien.Etat == 1" style="margin-left: 100px;" @click="bloquermecanicien" class="btn btn-outline-danger" type="button" value="Bloquer">
+                            </div>
+                           
+                        </div>
                            
                             <hr class="bg-primary">
 
@@ -181,6 +186,51 @@
               console.log(error);
             });
         },
+
+        // Mise à jour de la mecanicien
+        acceptermecanicien() {
+        axios
+        .put('http://localhost:8082/api/mecaniciens/acceptermecanicien/' +  localStorage.getItem('id'))
+        .then(response => {
+        alert('Mecanicien accepter !!');
+        console.log(response.data);
+        })
+        .catch(error => {
+        console.log(error);
+        });
+        },
+
+        // Reffuser mécanicien
+        reffusermecanicien() {
+        axios
+        .put('http://localhost:8082/api/mecaniciens/deletemecanicien/' +  localStorage.getItem('id'))
+        .then(response => {
+        alert('Mecanicien reffuser !!');
+        console.log(response.data);
+        })
+        .catch(error => {
+        console.log(error);
+        });
+
+        this.$router.push({ name: 'adminMECANICIEN' });
+        
+        },
+
+        //  bloquer mécanicien
+
+        bloquermecanicien() {
+        axios
+        .put('http://localhost:8082/api/mecaniciens/bloquermecanicien/' +  localStorage.getItem('id'))
+        .then(response => {
+        alert('Mecanicien bloquer !!');
+        console.log(response.data);
+        })
+        .catch(error => {
+        console.log(error);
+        });
+        },
+
+
         
         // Prendre le mecanicien selectionner 
         getprofilmecanicien() {

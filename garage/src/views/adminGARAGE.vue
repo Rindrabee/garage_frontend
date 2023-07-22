@@ -90,7 +90,7 @@
 
                     
                        
-                        <tr v-for="g in Garage" :key="g.id" >
+                    <tr v-for="g in Garage" :key="g.id" >
                       
 
                        
@@ -104,6 +104,7 @@
                         <td style="color: rgb(25, 72, 224);"> {{ g.Specialite }} </td>
                         <td> {{ g.Telephone }} </td>
 
+
                       
                        <td v-if="g.Etat == null"><i style="margin-left: 30px;cursor: pointer;" class="fas fa-warning"></i></td>
 
@@ -111,10 +112,13 @@
 
                        <td v-if="g.Etat == null"><button @click="showgarage(g.id)" class="btn btn-outline-danger">Consulter</button></td>
 
+                       <td v-if="g.Etat == 1"><button @click="showgarage(g.id)" class="btn btn-outline-danger">Voir détail</button></td>
+                       
 
-                        <!-- <td><button class="btn btn-outline-danger">Bloquer</button></td> -->
+                    <!-- <td><button class="btn btn-outline-danger">Bloquer</button></td> -->
+
                     </tr>
-    
+
                    
                     </table>
                 </div>
