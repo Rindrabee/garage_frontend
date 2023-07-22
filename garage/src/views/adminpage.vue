@@ -49,15 +49,19 @@
         <div class="sidebar-menu">
             <span class="fas fa-home"></span><p style="font-size: 13px;">Accueil</p>
         </div>
+
         <div class="sidebar-menu">
             <span class="fas fa-exclamation-triangle"></span><p style="font-size: 13px;">Urgence</p>
         </div>
+
         <div class="sidebar-menu">
             <span @click="verslisteclient" class="fas fa-user"></span><p @click="verslisteclient" style="font-size: 13px;">Client</p>
         </div>
+
         <div class="sidebar-menu">
             <span @click="verslistemecanicien" class="fas fa-wrench"></span><p @click="verslistemecanicien" style="font-size: 13px;">Mecanicien</p>
         </div>
+
         <div class="sidebar-menu">
             <span @click="verslistegarage" class="fas fa-car"></span><p @click="verslistegarage" style="font-size: 13px;">Garage</p>
         </div>
@@ -115,7 +119,7 @@
             <div class="card total4">
                 <div class="info">
                     <div class="info-detail">
-                    <h3 style="font-size: 20px;">Nombre des urgence</h3>
+                    <h3 style="font-size: 20px;">Nombre des urgences</h3>
                     <p>en attente de redirection </p>
                     <h2><strong>{{ urgenceCount }}</strong> <span>URGENCE</span></h2>
                     </div>
@@ -149,7 +153,7 @@
                       
                        
                         <td><button @click="detailurgence(u.id)" class="btn btn-outline-danger">Voir</button></td>
-                        <td><button class="btn btn-outline-success">Rediriger</button></td>
+                        <td><button @click="discu2" class="btn btn-outline-success">Rediriger</button></td>
                     </tr>
 
                     <!-- apina -->
@@ -241,6 +245,36 @@
             </div>
         </div>
     </div>
+
+
+    <div id="choisir" style="display: none; box-shadow: 2px 2px 10px black; background-color: #0f530f; border-radius: 20px; position: fixed; top: 250px; margin-left: 270px; width: 550px;" class="container conversation">
+    <br>
+    <div style="width: 500px;text-align: center;margin-left: 10px;margin-bottom: 30px;" class="row">
+        <div>
+            <img @click="fermer" style="width: 30px; margin-left: 450px; cursor: pointer;" src="../assets/images/close.png" alt="">
+        </div>
+        <br><br>
+        <table style="background-color: palegreen; width: 100%; border-collapse: collapse;border-radius: 10px;">
+            <br>
+
+            <tr>
+                <th>N°</th>
+                <th>GARAGE</th>
+                <th>Action</th>
+            </tr> 
+           
+            <tr v-for="u in Garage" :key="u.id">
+                <td>{{ u.id }}</td>
+                <td>{{ u.Nom }}</td>
+                <td><button class="btn btn-outline-success">Coller</button></td>
+                <br><br><br>
+            </tr>
+        </table>
+        </div>
+    </div>
+
+
+    
     </main>
 </div>
 </body>
@@ -260,6 +294,7 @@ export default {
     Admin: {},
     Urgence: {},
     Message: {},
+    Garage: {},
     PrenomClt : '',
     clientCount: 0,
     garageCount: 0,
@@ -285,6 +320,7 @@ export default {
     this.compterMecaniciens();
     this.comptervoitures();
     this.compterUrgence();
+    this.listegarage();
 
     this.socket.on('chat message',(data) => {
         this.selectpers();
@@ -304,6 +340,14 @@ export default {
     axios.get('http://localhost:8082/api/clients/allClients')
     .then(response => {
         this.Client = response.data
+    })
+    },
+    
+    //Lister tous les garages
+    listegarage() {
+    axios.get('http://localhost:8082/api/garages/listergarage')
+    .then(response => {
+        this.Garage = response.data
     })
     },
 
@@ -420,6 +464,22 @@ export default {
     b.style.opacity = "70%";
 
     },
+    
+    // mapiseo anle div liste garage
+    discu2(){
+    let a = document.getElementById("choisir")
+    let b = document.getElementById("ambadika")
+
+
+    a.style.display = "block";
+    b.style.opacity = "70%";
+
+    },
+    
+
+
+
+
     // fermer le discussion
     fermerdiscu() {
     let a = document.getElementById("conversation")
@@ -432,6 +492,21 @@ export default {
     b.style.opacity = "100%";
 
     },
+
+    // fermer le liste de garage
+    fermer() {
+    let a = document.getElementById("choisir")
+    let b = document.getElementById("ambadika")
+
+   
+    a.style.display = "none";
+    b.style.opacity = "100%";
+
+    },
+
+
+
+
     //Modification Admin 
     modificationadmin() {
         this.$router.push({ name: 'modificationadmin' });
