@@ -259,123 +259,129 @@ import axios from 'axios';
 
 export default {
     data () {
-    return {
-      Numero: '',
-      Nom: '',
-      Date1: '',
-      Probleme: '',
-      Photo: '',
-      Voiture: {},
-      Garage: {},
-      id_garage : '',
-      
+        return {
+            Numero: '',
+            Nom: '',
+            Date1: '',
+            Probleme: '',
+            Photo: '',
+            Voiture: {},
+            Garage: {},
+            id_garage : '',
+            
 
-      isFieldEmpty: false,
-      isInvalidEmail: false,
-      acceptConditions: false,
-    }
-},
+            isFieldEmpty: false,
+            isInvalidEmail: false,
+            acceptConditions: false,
+        }
+    },
     mounted() {
-    this.listevoiture();
-    this.garageconnecter();
+        this.listevoiture();
+        this.garageconnecter();
+        this.listeurgence();
     },
-methods: {
-slide1() {
-    let a = document.getElementById("rindra");
-    if (a.style.display === "block") {
-    a.style.display = "none";
-    } else {
-    a.style.display = "block";
+    methods: {
+        slide1() {
+            let a = document.getElementById("rindra");
+            if (a.style.display === "block") {
+                a.style.display = "none";
+            } else {
+                a.style.display = "block";
+            }
+        },
+        // Ouvrir ajouter voiture
+        ajoutervoiture() {
+            let a = document.getElementById("ajoutervoiture")
+            let b = document.getElementById("ambany")
+
+            a.style.display = "flex";
+            b.style.opacity = "80%";
+
+        },
+        //Lister les voitres
+        listevoiture() {
+            axios.get('http://localhost:8082/api/garages/listervoiture')
+            .then(response => {
+                this.Voiture = response.data
+            })
+        },
+        //Prendre le session du garage connecté
+        garageconnecter() {
+            axios.get('http://localhost:8082/api/garages/session', {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem('token')}`
+                },
+            })
+            .then(response => {
+                this.Garage = response.data.grg;
+                this.id_garage = this.Garage.id;
+            }).catch(error => {
+                console.log(error);
+            })
+        },
+        //Modification garage
+        modificationgarage() {
+            this.$router.push({ name: 'modificationgarage' });
+        },
+
+        //Fermer ajouter voiture
+        fermerajoutervoiture() {
+            let a = document.getElementById("ajoutervoiture")
+            let b = document.getElementById("ambany")
+
+
+            a.style.display = "none";
+            b.style.opacity = "100%";
+
+            // Rafraîchir la page garageaccueil
+            window.location.reload();
+        },
+        listeurgence () {
+            axios.get('http://localhost:8082/api/garages/getAllUrgenceGarage', {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem('token')}`
+                },
+            }).then(response => {
+                console.log('urgences', response.data);
+            });
+        },
+
+        logout() {
+            axios.post('http://localhost:8082/api/garages/logout')
+            .then(response => {
+                localStorage.removeItem('token');
+                localStorage.removeItem('Email');
+                this.$router.push({ name: 'loginpage' });
+            })
+            .catch(error => {
+                console.error(error);
+                this.MessageError = "Une erreur s'est produite lors de la déconnexion.";
+            });
+        },
+
+        //Ajouter voiture 
+        async addcar() {
+            if (!this.Numero || !this.Nom || !this.Date1 || !this.Probleme || !this.Photo) {
+            this.isFieldEmpty = true;
+            return;
+        }
+        else {
+            this.isFieldEmpty = false;
+
+            const response = await AuthenticationService4.register({
+            Numero: this.Numero,
+            Nom: this.Nom,
+            Date1: this.Date1,
+            Probleme: this.Probleme,
+            Idgarage: this.id_garage,
+            Photo: this.Photo
+        });
+
+        this.$router.push({ name: 'garagepage' });
+        console.log(response.data);
+        alert("Enregistré avec succès");
+        
     }
-},
-// Ouvrir ajouter voiture
- ajoutervoiture() {
-    let a = document.getElementById("ajoutervoiture")
-    let b = document.getElementById("ambany")
-
-    a.style.display = "flex";
-    b.style.opacity = "80%";
-
- },
- //Lister les voitres
- listevoiture() {
-    axios.get('http://localhost:8082/api/garages/listervoiture')
-    .then(response => {
-        this.Voiture = response.data
-    })
-},
-  //Prendre le session du garage connecté
-    garageconnecter() {
-    axios.get('http://localhost:8082/api/garages/session', {
-    headers: {
-        Authorization: `Bearer ${localStorage.getItem('token')}`
-    },
-    })
-    .then(response => {
-    this.Garage = response.data.grg;
-    this.id_garage = this.Garage.id;
-
-    }).catch(error => {
-    console.log(error);
-    })
-    },
-
-    //Modification garage
-    modificationgarage() {
-        this.$router.push({ name: 'modificationgarage' });
-    },
-
- //Fermer ajouter voiture
- fermerajoutervoiture() {
-    let a = document.getElementById("ajoutervoiture")
-    let b = document.getElementById("ambany")
-
-
-    a.style.display = "none";
-    b.style.opacity = "100%";
-
-    // Rafraîchir la page garageaccueil
-    window.location.reload();
- },
-
-
-
-logout() {
-    axios.post('http://localhost:8082/api/garages/logout')
-    .then(response => {
-    localStorage.removeItem('token');
-    localStorage.removeItem('Email');
-    this.$router.push({ name: 'loginpage' });
-    })
-    .catch(error => {
-    console.error(error);
-    this.MessageError = "Une erreur s'est produite lors de la déconnexion.";
-    });
-    },
-
-    //Ajouter voiture 
-    async addcar() {
-    if (!this.Numero || !this.Nom || !this.Date1 || !this.Probleme || !this.Photo) {
-    this.isFieldEmpty = true;
-    return;
-    }
-    else {
-    this.isFieldEmpty = false;
-
-    const response = await AuthenticationService4.register({
-    Numero: this.Numero,
-    Nom: this.Nom,
-    Date1: this.Date1,
-    Probleme: this.Probleme,
-    Idgarage: this.id_garage,
-    Photo: this.Photo
-  });
-
-  this.$router.push({ name: 'garagepage' });
-  console.log(response.data);
-  alert("Enregistré avec succès");
-  
-}
 },
 
 

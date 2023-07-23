@@ -275,6 +275,7 @@ export default {
     alert("Veuillez accepter les conditions pour vous inscrire.");
     return;
   }
+
   
   const response = await AuthenticationService.register({
     Nom: this.Nom,
