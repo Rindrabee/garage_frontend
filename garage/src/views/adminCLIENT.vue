@@ -28,12 +28,12 @@
 
                     <div class="settings-menu-inner">
                         <div class="settings-links">
-                            <img style="cursor: pointer;" src="../assets/images/setting.png" class="settings-icon">
+                            <img @click="modificationadmin" style="cursor: pointer;" src="../assets/images/setting.png" class="settings-icon">
                             <a @click="modificationadmin"  style="color: #000;font-family: century gothic;cursor: pointer;" href="#">PROFILE<img style="width: 10px;" src="../assets/images/arrow.png" alt=""></a>
                         </div>
                         
                         <div class="settings-links">
-                            <img style="cursor: pointer;" src="../assets/images/logout.png" class="settings-icon">
+                            <img @click="logout" style="cursor: pointer;" src="../assets/images/logout.png" class="settings-icon">
                             <a @click="logout" style="color: #000;font-family: century gothic;cursor: pointer;">DECONNECTION<img src="../assets/images/arrow.png"
                             width="10px" alt=""></a>
                             
@@ -96,15 +96,17 @@
                         <td>{{ clt.Nom }}</td>
                         <td>{{ clt.Prenoms }}</td>
                         <td>{{ clt.Adresse }}</td>
+                        
                         <td style="color: rgb(25, 72, 224);">{{ clt.Sexe }}</td>
                         <td>{{ clt.Telephone }}</td>
-                        <td><button @click="detailclient" class="btn btn-outline-success">Profile</button></td>
-                        </tr>
+
+                        <td><button @click="detailclient(clt.id)" class="btn btn-outline-success">Profile</button></td>
+                        
+                    </tr>
     
                    
                     </table>
                 </div>
-    
                    
                    
         </main>
@@ -170,8 +172,9 @@
        },
 
        //detail client 
-       detailclient(){
+       detailclient(id) {
         this.$router.push({ name: 'showadminclient' });
+        localStorage.setItem('id',id)
        },
 
 

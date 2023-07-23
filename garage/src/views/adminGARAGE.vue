@@ -90,7 +90,7 @@
 
                     
                        
-                        <tr v-for="g in Garage" :key="g.id" >
+                    <tr v-for="g in Garage" :key="g.id" >
                       
 
                        
@@ -110,12 +110,15 @@
 
                        <td v-if="g.Etat == 1"><i style="margin-left: 30px;cursor: pointer;" class="fas fa-message"></i></td>
 
-                       <td v-if="g.Etat == null"><button @click="showgarage" class="btn btn-outline-danger">Consulter</button></td>
+                       <td v-if="g.Etat == null"><button @click="showgarage(g.id)" class="btn btn-outline-danger">Consulter</button></td>
 
+                       <td v-if="g.Etat == 1"><button @click="showgarage(g.id)" class="btn btn-outline-danger">Voir détail</button></td>
+                       
 
-                        <!-- <td><button class="btn btn-outline-danger">Bloquer</button></td> -->
+                    <!-- <td><button class="btn btn-outline-danger">Bloquer</button></td> -->
+
                     </tr>
-    
+
                    
                     </table>
                 </div>
@@ -189,8 +192,9 @@
         this.$router.push({ name: 'modificationadmin' });
     },
 
-       showgarage() {
+       showgarage(id) {
         this.$router.push({ name: 'showadmingarage' });
+        localStorage.setItem('id',id)
        },
 
         principale() {

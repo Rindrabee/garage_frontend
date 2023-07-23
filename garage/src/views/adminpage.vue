@@ -49,15 +49,19 @@
         <div class="sidebar-menu">
             <span class="fas fa-home"></span><p style="font-size: 13px;">Accueil</p>
         </div>
+
         <div class="sidebar-menu">
             <span class="fas fa-exclamation-triangle"></span><p style="font-size: 13px;">Urgence</p>
         </div>
+
         <div class="sidebar-menu">
             <span @click="verslisteclient" class="fas fa-user"></span><p @click="verslisteclient" style="font-size: 13px;">Client</p>
         </div>
+
         <div class="sidebar-menu">
             <span @click="verslistemecanicien" class="fas fa-wrench"></span><p @click="verslistemecanicien" style="font-size: 13px;">Mecanicien</p>
         </div>
+
         <div class="sidebar-menu">
             <span @click="verslistegarage" class="fas fa-car"></span><p @click="verslistegarage" style="font-size: 13px;">Garage</p>
         </div>
@@ -77,11 +81,13 @@
                     <div class="info-detail">
                     <h3 style="font-size: 20px;">Garage Automobile</h3>
                     <p>inscrit dans le site</p>
-                    <h2><strong>26</strong><span>&nbsp; GARAGE</span></h2>
+                    <h2><strong>{{ garageCount }}</strong><span>&nbsp; GARAGE</span></h2>
                     </div>
+
                     <div class="info-image">
                     <i class="fas fa-car"></i>
                     </div>
+
                 </div>
             </div>
             <div class="card total2">
@@ -89,7 +95,7 @@
                     <div class="info-detail">
                     <h3 style="font-size: 20px;">Membre des mecaniciens</h3>
                     <p>en cour de travail</p>
-                    <h2><strong>56</strong><span>&nbsp; PERSONNE</span></h2>
+                    <h2><strong>{{ mecanicienCount }}</strong><span>&nbsp; PERSONNE</span></h2>
                     </div>
                     <div class="info-image">
                     <i class="fas fa-boxes"></i>
@@ -102,7 +108,7 @@
                     <div class="info-detail">
                         <h3 style="font-size: 20px;">Client inscrit</h3>
                     <p>qui nous fait confiance jusqu'à maintenant</p>
-                    <h2><strong>340</strong> <span>PERSONNE</span></h2>
+                    <h2><strong>{{ clientCount }}</strong> <span>PERSONNE</span></h2>
                     </div>
                     <div class="info-image">
                     <i class="fas fa-user-friends"></i>
@@ -113,12 +119,12 @@
             <div class="card total4">
                 <div class="info">
                     <div class="info-detail">
-                    <h3 style="font-size: 20px;">Nombre des voitures</h3>
-                    <p>en cour de réparation </p>
-                    <h2><strong>56</strong> <span>VOITURE</span></h2>
+                    <h3 style="font-size: 20px;">Nombre des urgences</h3>
+                    <p>en attente de redirection </p>
+                    <h2><strong>{{ urgenceCount }}</strong> <span>URGENCE</span></h2>
                     </div>
                     <div class="info-image">
-                    <i class="fas fa-shipping-fast"></i>
+                    <i class="fas fa-life-ring"></i>
                 </div>
                 </div>
             </div>
@@ -146,9 +152,10 @@
                         <td>{{ u.Probleme }}</td>
                       
                        
-                        <td><button class="btn btn-outline-danger">Voir</button></td>
-                        <td><button class="btn btn-outline-success">Rediriger</button></td>
+                        <td><button @click="detailurgence(u.id)" class="btn btn-outline-danger">Voir</button></td>
+                        <td><button @click="discu2" class="btn btn-outline-success">Rediriger</button></td>
                     </tr>
+
                     <!-- apina -->
                 </table>
             </div>
@@ -238,6 +245,36 @@
             </div>
         </div>
     </div>
+
+
+    <div id="choisir" style="display: none; box-shadow: 2px 2px 10px black; background-color: #0f530f; border-radius: 20px; position: fixed; top: 250px; margin-left: 270px; width: 550px;" class="container conversation">
+    <br>
+    <div style="width: 500px;text-align: center;margin-left: 10px;margin-bottom: 30px;" class="row">
+        <div>
+            <img @click="fermer" style="width: 30px; margin-left: 450px; cursor: pointer;" src="../assets/images/close.png" alt="">
+        </div>
+        <br><br>
+        <table style="background-color: palegreen; width: 100%; border-collapse: collapse;border-radius: 10px;">
+            <br>
+
+            <tr>
+                <th>N°</th>
+                <th>GARAGE</th>
+                <th>Action</th>
+            </tr> 
+           
+            <tr v-for="u in Garage" :key="u.id">
+                <td>{{ u.id }}</td>
+                <td>{{ u.Nom }}</td>
+                <td><button class="btn btn-outline-success">Coller</button></td>
+                <br><br><br>
+            </tr>
+        </table>
+        </div>
+    </div>
+
+
+    
     </main>
 </div>
 </body>
@@ -257,7 +294,15 @@ export default {
     Admin: {},
     Urgence: {},
     Message: {},
+    Garage: {},
     PrenomClt : '',
+    clientCount: 0,
+    garageCount: 0,
+    mecanicienCount: 0,
+    voitureCount: 0,
+    urgenceCount: 0,
+    
+
     PhotoClt : '',
     id_received: '',
     id_sender: '',
@@ -270,6 +315,13 @@ export default {
     this.selectpers();
     this.adminconnecter();
     this.listeurgence();
+    this.compterClients();
+    this.compterGarages();
+    this.compterMecaniciens();
+    this.comptervoitures();
+    this.compterUrgence();
+    this.listegarage();
+
     this.socket.on('chat message',(data) => {
         this.selectpers();
     });
@@ -290,7 +342,81 @@ export default {
         this.Client = response.data
     })
     },
+    
+    //Lister tous les garages
+    listegarage() {
+    axios.get('http://localhost:8082/api/garages/listergarage')
+    .then(response => {
+        this.Garage = response.data
+    })
+    },
 
+    // Compter les listes des clients
+    compterClients() {
+      axios
+        .get('http://localhost:8082/api/clients/countClients')
+        .then(response => {
+          this.clientCount = response.data.count;
+        })
+        .catch(error => {
+          console.error('Une erreur s\'est produite lors du comptage des clients :', error);
+        });
+    },
+    // Compter les listes des clients
+    compterUrgence() {
+    axios
+    .get('http://localhost:8082/api/clients/counturgence')
+    .then(response => {
+        this.urgenceCount = response.data.count;
+    })
+    .catch(error => {
+        console.error('Une erreur s\'est produite lors du comptage des urgences :', error);
+    });
+},
+
+    // Compter les listes des garages
+    compterGarages() {
+    axios
+    .get('http://localhost:8082/api/garages/countGarages')
+    .then(response => {
+        this.garageCount = response.data.count;
+    })
+    .catch(error => {
+        console.error('Une erreur s\'est produite lors du comptage des garages :', error);
+    });
+    },
+
+    // Compter les listes des voitures
+    comptervoitures() {
+    axios
+    .get('http://localhost:8082/api/garages/countVoiture')
+    .then(response => {
+        this.voitureCount = response.data.count;
+    })
+    .catch(error => {
+        console.error('Une erreur s\'est produite lors du comptage des voitures :', error);
+    });
+    },
+
+    // Compter les listes des mecaniciens
+    compterMecaniciens() {
+    axios
+    .get('http://localhost:8082/api/mecaniciens/countMecaniciens')
+    .then(response => {
+        this.mecanicienCount = response.data.count;
+    })
+    .catch(error => {
+        console.error('Une erreur s\'est produite lors du comptage des mecaniciens :', error);
+    });
+    },
+
+
+    //detail urgence
+    detailurgence(id) {
+    this.$router.push({ name: 'showurgence' });
+    localStorage.setItem('id',id)
+    
+    },
     
     // Lister la liste des urgences
     listeurgence() {
@@ -338,6 +464,22 @@ export default {
     b.style.opacity = "70%";
 
     },
+    
+    // mapiseo anle div liste garage
+    discu2(){
+    let a = document.getElementById("choisir")
+    let b = document.getElementById("ambadika")
+
+
+    a.style.display = "block";
+    b.style.opacity = "70%";
+
+    },
+    
+
+
+
+
     // fermer le discussion
     fermerdiscu() {
     let a = document.getElementById("conversation")
@@ -350,6 +492,21 @@ export default {
     b.style.opacity = "100%";
 
     },
+
+    // fermer le liste de garage
+    fermer() {
+    let a = document.getElementById("choisir")
+    let b = document.getElementById("ambadika")
+
+   
+    a.style.display = "none";
+    b.style.opacity = "100%";
+
+    },
+
+
+
+
     //Modification Admin 
     modificationadmin() {
         this.$router.push({ name: 'modificationadmin' });

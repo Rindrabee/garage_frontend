@@ -21,7 +21,7 @@
                 <li><a href="register"><i class="fas fa-user-plus"></i>&nbsp; S'inscrire</a></li>
             </ul>
         </nav> 
-    
+    <br><br>
         <div style="margin-top: 90px;" class="container">
             <h1 style="color: rgb(2, 2, 2); font-size: 40px; font-family: avant garde;">Bienvenue dans le conseil pour eviter les accidents</h1>
             <p style="font-family: century gothic;">Voici quelques conseils pour éviter les accidents et assurer la sécurité de votre véhicule :</p>
@@ -201,6 +201,60 @@
       display: flex;
       flex-direction: column;
     }
+    /* asina animation kely ee */
+  .container {
+    margin-top: 10px;
+}
+
+.container h1 {
+    color: #020202;
+    font-size: 40px;
+    font-family: "Avant Garde", sans-serif;
+    margin-left: 90px;
+    animation: slideInLeft 3s ease;
+}
+.container p {
+    font-family: "Century Gothic", sans-serif;
+    margin-left: 90px;
+    animation: fadeInUp 2s ease;
+}
+.wrapper p {
+  font-family: "Century Gothic", sans-serif;
+    margin-left: 90px;
+    animation: slideInRight 2s ease;
+}
+
+/* Animation fadeInUp */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+@keyframes slideInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+@keyframes slideInRight {
+    from {
+        opacity: 0;
+        transform: translateX(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
     .wrapper {
         margin: 90px auto;
         width: 70%;

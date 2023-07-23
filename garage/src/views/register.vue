@@ -64,10 +64,12 @@
         <label for="sexe">Sexe</label>
         <div class="gender-category">
           <select v-model="Sexe" class="selecting" name="sexe" id="sexe">
+
             <option style="font-family: century gothic;" name="Masculin" value="Masculin">Masculin</option>
             <option style="font-family: century gothic;" name="Feminin" value="Feminin">Feminin</option>
             <option style="font-family: century gothic;" name="Personalisé" value="Personalisé">Personalisé</option>
           </select>
+          
         </div>
         <div style="color: red;margin-left: 9px;margin-top: -30px ;font-size: 15px;font-family: century gothic;" v-if="isFieldEmpty && !Sexe" class="field-message">Veuillez compléter ce champ</div>
         </div>
