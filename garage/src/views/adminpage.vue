@@ -153,7 +153,7 @@
                       
                        
                         <td><button @click="detailurgence(u.id)" class="btn btn-outline-danger">Voir</button></td>
-                        <td><button @click="discu2" class="btn btn-outline-success">Rediriger</button></td>
+                        <td><button @click="discu2(u.id)" class="btn btn-outline-success">Rediriger</button></td>
                     </tr>
 
                     <!-- apina -->
@@ -266,7 +266,7 @@
             <tr v-for="u in Garage" :key="u.id">
                 <td>{{ u.id }}</td>
                 <td>{{ u.Nom }}</td>
-                <td><button class="btn btn-outline-success">Coller</button></td>
+                <td><button class="btn btn-outline-success" @click="redirectUrgenceToGarage(u.id)">Coller</button></td>
                 <br><br><br>
             </tr>
         </table>
@@ -301,7 +301,8 @@ export default {
     mecanicienCount: 0,
     voitureCount: 0,
     urgenceCount: 0,
-    
+    idUrgence: 0,
+    idGarage: 0,
 
     PhotoClt : '',
     id_received: '',
@@ -420,9 +421,10 @@ export default {
     
     // Lister la liste des urgences
     listeurgence() {
-    axios.get('http://localhost:8082/api/admins/getAllurgence')
+    axios.get('http://localhost:8082/api/admins/getAllUrgence?Etat=1')
     .then(response => {
         this.Urgence = response.data
+        console.log('urgences', response.data);
     })
     },
 
@@ -466,20 +468,27 @@ export default {
     },
     
     // mapiseo anle div liste garage
-    discu2(){
-    let a = document.getElementById("choisir")
-    let b = document.getElementById("ambadika")
+    discu2(id){
+        let a = document.getElementById("choisir")
+        let b = document.getElementById("ambadika")
 
 
-    a.style.display = "block";
-    b.style.opacity = "70%";
-
+        a.style.display = "block";
+        b.style.opacity = "70%";
+        this.idUrgence = id;
     },
-    
+    redirectUrgenceToGarage (idGarage) {
+        const url = import.meta.env.VITE_API_URL + '/api/admins/redirectToGarage';
+        const body = {
+            'idGarage': idGarage,
+            'idUrgence': this.idUrgence
+        };
 
-
-
-
+        axios.post(url, body)
+        .then(response => {
+            window.location.reload();
+        });
+    },
     // fermer le discussion
     fermerdiscu() {
     let a = document.getElementById("conversation")
