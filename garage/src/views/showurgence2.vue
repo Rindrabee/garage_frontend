@@ -14,13 +14,14 @@
     <div class="cont">
         <!-- navbar -->
         <nav class="navbar">
-            <h4 style="margin-left: -30px;"><i @click="Adminpage" style="cursor: pointer;" class="fas fa-left-long"></i></h4>
+            <h4 style="margin-left: -30px;"><i @click="garagepage" style="cursor: pointer;" class="fas fa-left-long"></i></h4>
             <div class="profile">
                 <input style="margin-left: -300px;width: 300px;color: gray;font-family: century gothic;" class="form-control" type="text" placeholder="Barre de recherche">
                 <span style="cursor: pointer;" class="fas fa-search"></span>
-                <img @click="slide1" style="cursor: pointer;" class="profile-image" src="../assets/images/profil.ico" alt="">
-                <p class="profile-name" style="cursor: pointer;">  {{ Admin.Prenoms }}</p>
+                <img @click="slide1" style="cursor: pointer;" class="profile-image" :src="'http://localhost:8082/' +  Garage.Photo  + '.jpeg'" alt="">
+                <p class="profile-name" style="cursor: pointer;">  {{ Garage.Nom }}</p>
             </div>
+
 
             <div id="rindra" class="settings-menu">
                 <div id="dark-btn">
@@ -29,8 +30,8 @@
     
                 <div class="settings-menu-inner">
                     <div class="settings-links">
-                        <img @click="modificationadmin" style="cursor: pointer;" src="../assets/images/setting.png" class="settings-icon">
-                        <a style="color: #000;font-family: century gothic;cursor: pointer;" href="modificationadmin">PROFILE<img style="width: 10px;" src="../assets/images/arrow.png" alt=""></a>
+                        <img @click="modificationgarage" style="cursor: pointer;" src="../assets/images/setting.png" class="settings-icon">
+                        <a style="color: #000;font-family: century gothic;cursor: pointer;" href="modificationgarage">PROFILE<img style="width: 10px;" src="../assets/images/arrow.png" alt=""></a>
                     </div>
                     
                     <div class="settings-links">
@@ -128,22 +129,23 @@
     });
     },
     mounted() {
-    this.adminconnecter();
+    this.garageconnecter();
     this.getdetailurgence();
     },
 
     methods: {
 
-    //Prendre le session de l'admin connecté
-    adminconnecter() {
-    axios.get('http://localhost:8082/api/admins/session', {
+    //Prendre le session du garage connecté
+    garageconnecter() {
+    axios.get('http://localhost:8082/api/garages/session', {
     headers: {
     Authorization: `Bearer ${localStorage.getItem('token')}`
     },
+
     })
     .then(response => {
-    this.Admin = response.data.adm;
-    this.id_sender = this.Admin.id;
+    this.Garage = response.data.grg;
+    this.id_sender = this.Garage.id;
     }).catch(error => {
     console.log(error);
     })
@@ -164,15 +166,15 @@
     },
 
 
-    // Diriger vers l'adminpage
-    Adminpage() {
+    // Diriger vers le garagepage
+    garagepage() {
     localStorage.removeItem('id');
-    this.$router.push({ name: 'adminpage' });
+    this.$router.push({ name: 'garageurgence' });
     },
 
-    //Modification Admin 
-    modificationadmin() {
-    this.$router.push({ name: 'modificationadmin' });
+    //Modification garage
+    modificationgarage() {
+    this.$router.push({ name: 'modificationgarage' });
     },
 
     // Se deconnecter

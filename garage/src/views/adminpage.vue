@@ -146,18 +146,19 @@
                     </tr>
 
                     <tr v-for="u in Urgence" :key="u.id">
-                        <td>{{ u.id }}</td>
-                        <td>{{ u.Nom }}</td>
-                        <td>{{ u.Telephone }}</td>
-                        <td>{{ u.Probleme }}</td>
+                        <td v-if="u.Etat == null">{{ u.id }}</td>
+                        <td v-if="u.Etat == null">{{ u.Nom }}</td>
+                        <td v-if="u.Etat == null">{{ u.Telephone }}</td>
+                        <td v-if="u.Etat == null">{{ u.Probleme }}</td>
                       
-                       
-                        <td><button @click="detailurgence(u.id)" class="btn btn-outline-danger">Voir</button></td>
-                        <td><button @click="discu2(u.id)" class="btn btn-outline-success">Rediriger</button></td>
+                        <td v-if="u.Etat == null"><button @click="detailurgence(u.id)" class="btn btn-outline-danger">Voir</button></td>
+                        <td v-if="u.Etat == null"><button @click="discu2(u.id)" class="btn btn-outline-success">Rediriger</button></td>
+                   
                     </tr>
 
                     <!-- apina -->
                 </table>
+                
             </div>
             <div class="card customer">
                 <h3 style="font-family: Poppins,sans-serif;font-size: 18.5px;">Discussion</h3>
@@ -270,6 +271,7 @@
                 <br><br><br>
             </tr>
         </table>
+
         </div>
     </div>
 
@@ -421,7 +423,7 @@ export default {
     
     // Lister la liste des urgences
     listeurgence() {
-    axios.get('http://localhost:8082/api/admins/getAllUrgence?Etat=1')
+    axios.get('http://localhost:8082/api/admins/getAllUrgence')
     .then(response => {
         this.Urgence = response.data
         console.log('urgences', response.data);
@@ -477,6 +479,7 @@ export default {
         b.style.opacity = "70%";
         this.idUrgence = id;
     },
+
     redirectUrgenceToGarage (idGarage) {
         const url = import.meta.env.VITE_API_URL + '/api/admins/redirectToGarage';
         const body = {
@@ -486,9 +489,11 @@ export default {
 
         axios.post(url, body)
         .then(response => {
-            window.location.reload();
+           alert("Urgence envoyer vers ce garage")
         });
     },
+
+
     // fermer le discussion
     fermerdiscu() {
     let a = document.getElementById("conversation")

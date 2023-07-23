@@ -50,7 +50,7 @@
                 <span class="fas fa-home"></span><p style="font-size: 13px;">Accueil</p>
             </div>
             <div class="sidebar-menu">
-                <span class="fas fa-exclamation-triangle"></span><p style="font-size: 13px;">Urgence</p>
+                <span @click="urgencegarage" class="fas fa-exclamation-triangle"></span><p @click="urgencegarage" style="font-size: 13px;">Urgence</p>
             </div>
             <div class="sidebar-menu">
                 <span class="fas fa-calendar-alt"></span><p style="font-size: 13px;">Rendez-vous</p>
@@ -118,7 +118,12 @@
                   
                 </div>
     
-                <div class="card detail">
+           
+                
+    
+            </div>
+
+            <div  class="card detail">
                     <div class="detail-header">
                         <p style="font-family: century gothic;font-size: 18px; ">Liste des voitures dans le garage :</p>
                         <button @click="ajoutervoiture"> Ajouter</button>
@@ -126,7 +131,9 @@
                     <br>
                     <!-- Liste des voitures dans votre garages  -->
 
-                    <table>
+                    <div class="voiture">
+     
+                        <table>
                         <tr>
                             <th>Photo</th>
                             <th>Numéro</th>
@@ -155,46 +162,14 @@
                         <td  v-if="v.Idgarage == id_garage"><button class="btn btn-outline-danger">Supprimer</button></td>
                         </tr>
     
-                   
                     </table>
+                    </div>
+
+               
 
 
 
                 </div>
-                <div class="card customer">
-                    <h3 style="font-family: Poppins,sans-serif;font-size: 18.5px;">Discussion</h3>
-                    <br>
-                    <div class="customer-wrapper">
-                        <img class="customer-image" src="../assets/images/aza.jpg" alt="">
-                        <div class="customer-name">
-                            <h4>Mollitia rerum</h4>
-                            <p style="font-size: 12px;">Panina..</p>
-                        </div>
-                        <p class="customer-date">Today</p>
-                    </div>
-    
-                    <div class="customer-wrapper">
-                        <img class="customer-image" src="../assets/images/xel.jpg" alt="">
-                        <div class="customer-name">
-                            <h4>Dolor amet</h4>
-                            <p style="font-size: 12px;">Salut</p>
-                        </div>
-                        <p class="customer-date">Yesterday</p>
-                    </div>
-    
-                    <div class="customer-wrapper">
-                        <img class="customer-image" src="../assets/images/GRG1.png" alt="">
-                        <div class="customer-name">
-                            <h4>Ipsum volupta</h4>
-                            <p style="font-size: 12px;">De aona e</p>
-                        </div>
-                        <p class="customer-date">22/02/21</p>
-                    </div>
-
-                </div>
-                
-    
-            </div>
                                
             
        <!-- ajouter voiture -->
@@ -322,6 +297,10 @@ export default {
         //Modification garage
         modificationgarage() {
             this.$router.push({ name: 'modificationgarage' });
+        },
+       // urgence dans la garage
+        urgencegarage() {
+            this.$router.push({ name: 'garageurgence' });
         },
 
         //Fermer ajouter voiture
@@ -568,6 +547,7 @@ grid-template-areas:
 background-color: #fff;
 padding: 1rem;
 border-radius: 10px;
+
 }
 .total1 {
 grid-area: total1;
@@ -589,6 +569,7 @@ grid-area: total4;
 background-color: #F5F5F5;
 color: #000;
 }
+
 .detail {
 grid-area: detail;
 overflow-x: auto;
