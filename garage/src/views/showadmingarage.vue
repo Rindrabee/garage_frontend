@@ -38,8 +38,8 @@
                         <a @click="logout" style="color: #000;font-family: century gothic;cursor: pointer;">DECONNECTION<img src="../assets/images/arrow.png"
                         width="10px" alt=""></a>
                     </div>
-    
                 </div>    
+                
             </div>
         </nav>
        
