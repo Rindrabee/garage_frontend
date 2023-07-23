@@ -17,7 +17,7 @@
                     <div style="box-shadow: 1px 1px 4px black;width: 1100px;margin-left: -100px;margin-top: -40px;margin-bottom: 40px;"  class="row z-depth-3">
                         <div class="col-sm-4 bg-success rounded-left">
     
-                            <i @click="adminmecanicienpage" style="color: white;cursor: pointer;" class="fas fa-arrow-left"></i>
+                            <i @click="garagemecanicien" style="color: white;cursor: pointer;" class="fas fa-arrow-left"></i>
                             
                             <div class="card-block text-center text-white">
                                 <img style="width: 180px;height: 170px;border-radius: 50%;" :src="'http://localhost:8082/' + Mecanicien.Photo + '.jpeg'" alt="">
@@ -25,7 +25,8 @@
                                 <h2 class="font-weight-bold mt-4">{{ Mecanicien.Nom }}</h2>
                                 <p>{{ Mecanicien.Specialite }}</p>
     
-                             
+                               
+                              
                             </div> 
                         </div>
                         <div class="col-sm-8 bg-white rounded-right">
@@ -76,23 +77,23 @@
                             </div>
                             <br>
 
-                            <div style="margin-left: 490px;" class="row">
+                        <div style="margin-left: 490px;" class="row">
 
                             <div class="col-sm-5">
-                            <input  v-if="Mecanicien.Etat == null" @click="reffusermecanicien" class="btn btn-outline-danger" type="button" value="Reffuser">
+                            <input  v-if="Mecanicien.Etat2 == null" @click="reffusermecanicien" class="btn btn-outline-danger" type="button" value="Reffuser">
                             </div>
     
                             <div class="col-sm-5">
-                            <input v-if="Mecanicien.Etat == null" @click="acceptermecanicien" class="btn btn-outline-success" type="button" value="Accepter">
+                            <input v-if="Mecanicien.Etat2 == null" @click="acceptermecanicien" class="btn btn-outline-success" type="button" value="Accepter">
                             </div>
 
                             <div class="col-sm-5">
-                            <input v-if="Mecanicien.Etat == 1" style="margin-left: 100px;" @click="bloquermecanicien" class="btn btn-outline-danger" type="button" value="Bloquer">
+                            <input v-if="Mecanicien.Etat2 == 1" style="margin-left: 100px;" @click="bloquermecanicien" class="btn btn-outline-danger" type="button" value="Bloquer">
                             </div>
                            
-                            </div>
+                        </div>
                            
-                            <hr class="bg-primary">
+                        <hr class="bg-primary">
 
                             <ul class="list-unstyled d-flex justify-content-center mt-4">
                                 <li><a href="https://www.facebook.com"><i class="fab fa-facebook-f px-3 h4 text-dark"></i></a></li>
@@ -147,10 +148,10 @@
         },
 
         methods: {
-        //Rediriger vers le page admin mecanicien
-        adminmecanicienpage() {
+        //Rediriger vers le page mecanicien garage
+        garagemecanicien() {
             localStorage.removeItem('id');
-            this.$router.push({ name: 'adminMECANICIEN' });
+            this.$router.push({ name: 'garageMECANICIEN' });
         },
     
         // Mise à jour mécanicien
@@ -184,7 +185,7 @@
         // Mise à jour de la mecanicien
         acceptermecanicien() {
         axios
-        .put('http://localhost:8082/api/mecaniciens/acceptermecanicien/' +  localStorage.getItem('id'))
+        .put('http://localhost:8082/api/garages/acceptmec/' +  localStorage.getItem('id'))
         .then(response => {
         alert('Mecanicien accepter !!');
         console.log(response.data);
@@ -197,7 +198,7 @@
         // Reffuser mécanicien
         reffusermecanicien() {
         axios
-        .put('http://localhost:8082/api/mecaniciens/deletemecanicien/' +  localStorage.getItem('id'))
+        .put('http://localhost:8082/api/garages/reffusermec/' +  localStorage.getItem('id'))
         .then(response => {
         alert('Mecanicien reffuser !!');
         console.log(response.data);
@@ -206,7 +207,7 @@
         console.log(error);
         });
 
-        this.$router.push({ name: 'adminMECANICIEN' });
+        this.$router.push({ name: 'showgaragemeca' });
         
         },
 
@@ -214,7 +215,7 @@
 
         bloquermecanicien() {
         axios
-        .put('http://localhost:8082/api/mecaniciens/bloquermecanicien/' +  localStorage.getItem('id'))
+        .put('http://localhost:8082/api/garages/bloquermec/' +  localStorage.getItem('id'))
         .then(response => {
         alert('Mecanicien bloquer !!');
         console.log(response.data);

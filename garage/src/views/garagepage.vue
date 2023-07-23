@@ -56,7 +56,7 @@
                 <span class="fas fa-calendar-alt"></span><p style="font-size: 13px;">Rendez-vous</p>
             </div>
             <div class="sidebar-menu">
-                <span class="fas fa-wrench"></span><p style="font-size: 13px;">Mecanicien</p>
+                <span @click="garagemecanicien" class="fas fa-wrench"></span><p @click="garagemecanicien" style="font-size: 13px;">Mecanicien</p>
             </div>
            
             <div class="sidebar-menu">
@@ -301,6 +301,9 @@ export default {
        // urgence dans la garage
         urgencegarage() {
             this.$router.push({ name: 'garageurgence' });
+        },
+        garagemecanicien() {
+            this.$router.push({ name: 'garageMECANICIEN' });
         },
 
         //Fermer ajouter voiture

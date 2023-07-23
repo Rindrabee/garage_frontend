@@ -69,16 +69,10 @@
             <p>Adresse : {{ g.Adresse }} </p>
             <p>Specialité : {{ g.Specialite }} </p>
 
-            <button @click="versdetailgarage">Consulter</button>
+            <button @click="versdetailgarage(g.id)">Consulter</button>
         </div>
     </div>
 
-  
-
-  
-
-    
-  
    
     </div>
     <div class="card-footer">
@@ -113,8 +107,9 @@ import axios from 'axios';
         versinscrire(){
             this.$router.push({name:'register'})
         },
-        versdetailgarage() {
+        versdetailgarage(id) {
             this.$router.push({name:'GARAGEshow'})
+            localStorage.setItem('id',id)
         },
 
         // Prendre la liste de tous garages

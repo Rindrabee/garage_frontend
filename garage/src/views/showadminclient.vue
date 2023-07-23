@@ -25,13 +25,7 @@
                                 <h2 class="font-weight-bold mt-4">{{ Client.Nom }}</h2>
                                 <p>{{ Client.Profession }}</p>
     
-                                <!-- ito le upload photo -->
-                                <label for="fileInput">
-                                <i class="far fa-edit fa-2x mb-4"></i>
-                                </label>
-                                <br>
-                                <input @change="handleImage" ref="postImageInput" id="fileInput" style="width: 270px;" type="file" >
-                                <br>
+                           
                             </div>
 
                         </div>

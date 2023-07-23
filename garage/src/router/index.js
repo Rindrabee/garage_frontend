@@ -46,6 +46,8 @@ import rendezvous from '../views/rendezvous.vue'
 import showurgence from '../views/showurgence.vue'
 import garageurgence from '../views/garageurgence.vue'
 import showurgence2 from '../views/showurgence2.vue'
+import garageMECANICIEN from '../views/garageMECANICIEN.vue'
+import showgaragemeca from '../views/showgaragemeca.vue'
 
 
 
@@ -291,6 +293,16 @@ const router = createRouter({
       path: '/showurgence2',
       name: 'showurgence2',
       component: showurgence2
+    },
+    {
+      path: '/garageMECANICIEN',
+      name: 'garageMECANICIEN',
+      component: garageMECANICIEN
+    },
+    {
+      path: '/showgaragemeca',
+      name: 'showgaragemeca',
+      component: showgaragemeca
     },
     
   ]

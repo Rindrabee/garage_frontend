@@ -1,264 +1,492 @@
 <template>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./src/assets/bootstrap-5.0.2-dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="./src/assets/fontawesome-free-6.4.0-web/css/all.min.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins&display=swap">
-    <title>Document</title>
-</head>
-<body>
-    <div class="cont">
+  <!DOCTYPE html>
+  <html lang="en">
+  <head>
+      <meta charset="UTF-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="./src/assets/bootstrap-5.0.2-dist/css/bootstrap.min.css">
+        <link rel="stylesheet" href="./src/assets/fontawesome-free-6.4.0-web/css/all.min.css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins&display=swap">
+      <title>Document</title>
+  </head>
+  <body>
+  <div class="cont">
+    <!-- navbar -->
     <nav class="navbar">
-        <ul class="left">
-            <li><a href="/"><i class="fas fa-home"></i>&nbsp; Accueil</a></li>
-        </ul>
-        <ul class="right">
-            <li><a href="loginpage"><i class="fas fa-sign-in-alt"></i>&nbsp; Se connecter</a></li>
-            <li><a href="register"><i class="fas fa-user-plus"></i>&nbsp; S'inscrire</a></li>
-        </ul>
-    </nav> 
+        <h4 style="margin-left: -30px;"><i @click="decouvrir" style="cursor: pointer;" class="fas fa-left-long"></i></h4>
+        <div class="profile">
+          <input style="margin-left: -300px;width: 300px;color: gray;font-family: century gothic;" class="form-control" type="text" placeholder="Barre de recherche">
+            
+        </div>
 
-
-    <div class="details">
-        <h1>NOMDUGARAGE</h1><p>- localisation <i class="far fa-star rotate-image"></i><i class="far fa-star rotate-image "></i><i class="far fa-star rotate-image "></i></p> 
-    </div>
-    <div class="details2">
-        <p><i class="fas fa-phone"></i>&nbsp;&nbsp;&nbsp;&nbsp;    0341790551</p>
-        <p style="margin-left: 250px;margin-top: -40px;"><i class="fas fa-envelope"></i>&nbsp;&nbsp;&nbsp;&nbsp;    rindratahinalisoa@gmail.com</p>
         
-    </div>
+    </nav>
+     
+    <!-- concernant la location -->
 
-    <div class="localisation">
-    <GoogleMap :api-key="apiKey" style="width: 100%; height: 500px" :center="{ lat: lat, lng: lng }" :zoom="15">
-      <Marker :options="{ position: { lat: lat, lng: lng } }" />
-      <Marker v-if="isValidLocation" :options="{ position: { lat: otherLat, lng: otherLng }, label: 'Autre endroit' }" />
-    </GoogleMap>
-    </div>
+<div class="details">
+      <h1>{{ Garage.Nom }}</h1><p>- {{ Garage.Adresse }} <i class="far fa-star rotate-image"></i><i class="far fa-star rotate-image "></i><i class="far fa-star rotate-image "></i></p> 
+  </div>
+  <div class="details2">
+      <p style="position: absolute;margin-top: 30px;"><i class="fas fa-phone"></i>&nbsp;&nbsp;&nbsp;&nbsp;    {{ Garage.Telephone }}</p>
+      <p style="margin-left: 250px;margin-top: 30px;"><i class="fas fa-envelope"></i>&nbsp;&nbsp;&nbsp;&nbsp;    {{ Garage.Email }}</p>
+      
+  </div>
+  <br><br>
+  
+<!-- <Marker :options="{ position: { lat: lat, lng: lng } }" /> -->
 
-    <div class="person-details">
-    <img src="../assets/images/ft3.jpg" alt="Photo de la personne">
-    <h2 style="font-family: century gothic;">Nom :</h2>
-    <p style="font-family: century gothic;">Adresse :</p>
-    <p style="font-family: century gothic;">Specialite :</p>
-    <p style="font-family: century gothic;">Heures d'ouverture :</p>
-    <p style="font-family: century gothic;">Heures de fermeture :</p>
-    <p style="font-family: century gothic;">Les services offertes :</p>
-    <p style="font-family: century gothic;">Les équipements :</p>
+
+  <div class="localisation">
+  <GoogleMap :api-key="apiKey" style="width: 100%; height: 500px" :center="{ lat: lati, lng: longi }" :zoom="15">
+    <Marker v-if="isValidLocation" :options="{
+      position: { lat: lati, lng: longi },
+      label: {
+        text: Garage.Nom,
+        fontFamily: 'elephant, sans-serif',
+        fontWeight: 'bold',
+      }
+    }" />
+  </GoogleMap>
   </div>
 
+  <div class="person-details">
+  <img src="../assets/images/ft3.jpg" alt="Photo de la personne">
 
-</div>
-<footer>
-<p>&copy; 2023 GarageFinder. Tous droits réservés.</p>
-</footer>
-</body>
-</html>
-</template>
+  <h2 style="font-family: century gothic;">Nom :&nbsp; {{ Garage.Nom }}</h2>
+  <p style="font-family: century gothic;">Adresse :&nbsp; {{ Garage.Adresse }}</p>
+  <p style="font-family: century gothic;">Specialite :&nbsp; {{ Garage.Specialite }}</p>
+  <p style="font-family: century gothic;">Heures d'ouverture :&nbsp; {{ Garage.Heures_ouverture }}</p>
+  <p style="font-family: century gothic;">Heures de fermeture :&nbsp; {{ Garage.Heures_fermeture  }}</p>
+  <p style="font-family: century gothic;">Les services offertes :&nbsp; {{ Garage.service_offerte }}  </p>
+  <p style="font-family: century gothic;">Les équipements :&nbsp; {{ Garage.equipement  }}</p>
+  <br><br>
 
-<script>
-import { GoogleMap, Marker } from 'vue3-google-map'
+  
 
-export default {
+  </div>
+
+        
+  </div>
+  </body>
+  </html>
+  </template>
+  
+  <script>
+  import AuthenticationService from '../services/AuthenticationService.js'
+  import io from 'socket.io-client'
+  import axios from 'axios';
+  import { GoogleMap, Marker } from 'vue3-google-map'
+  
+  export default {
   components: {
-    GoogleMap,
-    Marker
-},
-
-  data() {
-    return {
-      label: "",
-      apiKey: "",
-      lat: null,
-      lng: null,
-      otherLat: -19.846379, 
-      otherLng:  47.033723, 
-    }
+  GoogleMap,
+  Marker
   },
 
+  data () {
+  return {
+  Admin: {},
+  Garage : {},
+  lati: '',
+  longi: '',
+  Etat: '',
+
+
+  label: "",
+  apiKey: "",
+  lat: null,
+  lng: null,
+
+  
+  }
+  },
   created() {
-    this.$getLocation()
-    .then((coordinates) => {
-    this.lat = coordinates.lat;
-    this.lng = coordinates.lng;
-    })
-    .catch((error) => {
-    console.log(error);
-    });
+  this.$getLocation()
+  .then((coordinates) => {
+  this.lat = coordinates.lat;
+  this.lng = coordinates.lng;
+  })
+  .catch((error) => {
+  console.log(error);
+  });
   },
+      mounted() {
+      this.adminconnecter();
+      this.getprofilgarage();
+      },
+      methods: {
+      //Prendre le session de l'admin connecté
+     adminconnecter() {
+      axios.get('http://localhost:8082/api/admins/session', {
+      headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`
+      },
+      })
+      .then(response => {
+      this.Admin = response.data.adm;
+      this.id_sender = this.Admin.id;
+      }).catch(error => {
+      console.log(error);
+      })
 
-  methods: {
-    isWithinBounds(lat, lng) {
-      // Limites géographiques de Madagascar
-      const minLat = -25.6086;
-      const maxLat = -11.9455;
-      const minLng = 43.2283;
-      const maxLng = 50.4839;
+      },
 
-      // Vérifier si les coordonnées se trouvent dans les limites de Madagascar
-      if (lat >= minLat && lat <= maxLat && lng >= minLng && lng <= maxLng) {
-        return true;
+      // Mise à jour de la garage
+      updateGarage() {
+      axios
+      .put('http://localhost:8082/api/garages/acceptergarage/' +  localStorage.getItem('id'))
+      .then(response => {
+      alert('Garage accepter !!');
+      console.log(response.data);
+      })
+      .catch(error => {
+      console.log(error);
+      });
+      },
+
+       // Reffuser demande garage
+      Reffuser() {
+      axios
+      .put('http://localhost:8082/api/garages/deletegarage/' +  localStorage.getItem('id'))
+      .then(response => {
+      alert('Demmande reffuser !!');
+      console.log(response.data);
+      })
+      .catch(error => {
+      console.log(error);
+      });
+      },
+
+      // Bloquer demande garage
+      Bloquer() {
+      axios
+      .put('http://localhost:8082/api/garages/bloquergarage/' +  localStorage.getItem('id'))
+      .then(response => {
+      alert('Garage bloquer !!');
+      console.log(response.data);
+      })
+      .catch(error => {
+      console.log(error);
+      });
+      },
+
+
+      // Prendre le garage selectionner 
+      getprofilgarage() {
+      axios.get('http://localhost:8082/api/admins/profilegarage/' + localStorage.getItem('id'))
+      .then(response => {
+      this.Garage = response.data
+      this.lati = this.Garage.Latitude 
+      this.longi = this.Garage.Longitude 
+      this.Etat = this.Garage.Etat
+      })
+      .catch(error => {
+      console.error(error);
+      this.MessageError = "Une erreur s'est produite lors de la déconnexion.";
+      });
+      },
+
+
+      // Diriger vers le page de découvrir
+      decouvrir() {
+      localStorage.removeItem('id');
+      this.$router.push({ name: 'decouvrir' });
+      },
+
+      //Modification Admin 
+      modificationadmin() {
+      this.$router.push({ name: 'modificationadmin' });
+      },
+
+      // Se deconnecter
+
+      logout() {
+      axios.post('http://localhost:8082/api/admins/logoutadmin')
+      .then(response => {
+      localStorage.removeItem('token');
+      // localStorage.removeItem('Email');
+      this.$router.push({ name: 'loginadm' });
+      })
+      .catch(error => {
+      console.error(error);
+      this.MessageError = "Une erreur s'est produite lors de la déconnexion.";
+      });
+      },
+
+      slide1() {
+      let a = document.getElementById("rindra");
+      if (a.style.display === "block") {
+      a.style.display = "none";
+      } else {
+      a.style.display = "block";
       }
-      return false;
-    },
-  },
+      },
+      isWithinBounds(lat, lng) {
+    // Limites géographiques de Madagascar
+    const minLat = -25.6086;
+    const maxLat = -11.9455;
+    const minLng = 43.2283;
+    const maxLng = 50.4839;
 
+    // Vérifier si les coordonnées se trouvent dans les limites de Madagascar
+    if (lat >= minLat && lat <= maxLat && lng >= minLng && lng <= maxLng) {
+      return true;
+    }
+    return false;
+  },
+  },
   computed: {
-    isValidLocation() {
-      return this.isWithinBounds(this.otherLat, this.otherLng);
-    },
+  isValidLocation() {
+    return this.isWithinBounds(this.lati, this.longi);
   },
-}
-</script>
-
-
-<style scoped>
-
-.cont {
-  background-color: rgba(198, 209, 197, 0.9);
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-}
-.details {
-    margin-top: 120px;
+  },
+    
+  }
+  </script>
+  
+  <style scoped>
+  * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      outline: none;
+      font-family: "Poppins",sans-serif;
+  }
+  .cont {
+   background-color: rgba(198, 209, 197, 0.9);
+   min-height: 100vh;
+   display: flex;
+   flex-direction: column;
+  }
+ 
+  
+  h2 {
+      font: 18px;
+      padding: 15px 0;
+  }
+  h2 > span {
+      font-size: 14px;
+  }
+  .navbar {
+      display: flex;
+      position: fixed;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      height: 55px;
+      top: 0;
+      left: 0;
+      background-color: #fff;
+      z-index: 2;
+      padding-left: 6rem;
+  }
+  .navbar .settings-menu {
+      position: absolute;
+      width: 70%;
+      max-width: 290px;
+      background: #fff;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+      border-radius: 4px;
+      overflow: hidden;
+      top : 108%;
+      right: 1%;
+      display: none;
+  } 
+  .navbar .settings-menu .settings-menu-inner {
+      background : var(--bg-color);
+      padding: 20px;
+  }
+  .settings-menu hr{
+      border: 0;
+      height: 1px;
+      background: #9a9a9a;
+      margin: 15px 0;
+  }
+  .settings-links {
+      display: flex;
+      align-items: center;
+      margin: 15px 0;
+  }
+  .settings-links .settings-icon {
+      width: 38px;
+      margin-right: 10px;
+      border-radius: 50%;
+  }
+  .settings-links a {
+      display: flex;
+      flex: 1;
+      align-items: center;
+      justify-content: space-between;
+      text-decoration: none;
+      color: #626262;
+  }
+  .settings-links a:hover {
+      background-color:  #eff5ef;
+      height: 37px;
+      border-radius: 10px;
+  }
+  .profile {
+      display: flex;
+      width: 32%;
+      max-width: 200px;
+      justify-content: space-around;
+      align-items: center;
+  }
+  .profile-image {
+      width: 30px;
+      height: 30px;
+      object-fit: cover;
+      border-radius: 50%;
+  }
+  .profile-name {
+      font-size: 0.9rem;
+      margin-left: -20px;
+  }   
+  /* rotation de l'image */
+  .rotate-image {
+    animation: rotation 5s infinite linear; 
+  }
+  
+  @keyframes rotation {
+    from {
+      transform: rotateY(0deg); 
+    }
+    to {
+      transform: rotateY(360deg); 
+    }
+  }
+  /* atao responsive lery  */
+  
+  @media screen and (max-width: 980px) {
+      .dashboard-container {
+          grid-template-columns: 1fr 1fr;
+          grid-template-areas: 
+          "total1 total2"
+          "total3 total4"
+          "detail detail"
+          "customer customer";
+      }
+  }
+  @media screen and (max-width : 480px) {
+      .profile-name {
+          display: none;
+      }
+      .sidebar {
+          display: none;
+      }
+      main {
+          padding: 6rem 2rem 2rem 2rem;
+      }
+      #toggle:checked ~ .sidebar {
+          width: 200px;
+          display: block;
+      }
+      #toggle:checked ~ .sidebar .sidebar-menu > p {
+          display: block;
+      }
+      #toggle:checked ~ main {
+          padding: 6rem 2rem 2rem 2rem;
+      }
+      .dashboard-container {
+          grid-template-columns: 1fr;
+          grid-template-areas: 
+          "total1"
+          "total2"
+          "total3"
+          "total4"
+          "detail"
+          "customer";
+      }
+      .detail table {
+          font-size: 0.9rem;
+      }
+  }
+  
+  /* Autre styde de CSS */
+  .details {
+  margin-top: 120px;
 }
 .details h1 {
-   font-size: 30px;
-   margin-left: 80px;
-   font-family: Tahoma, Arial, sans-serif;
+ font-size: 30px;
+ margin-left: 80px;
+ font-family: Tahoma, Arial, sans-serif;
 }
 .details p {
-   font-size: 30px;
-   margin-left: 310px;
-   margin-top: -47px;
+ font-size: 30px;
+ margin-left: 340px;
+ margin-top: -40px;
 }
 .details i {
-   font-size: 30px;
-   margin-left: 20px;
+ font-size: 30px;
+ margin-left: 20px;
 }
 .details2 p {
-    margin-left: 81px;
+  margin-left: 81px;
 }
 
 .localisation {
-    margin-bottom: 50px;
-    margin-left: 20px;
-    margin-right: 20px;
+  margin-bottom: 50px;
+  margin-left: 20px;
+  margin-right: 20px;
 }
-
-
-/* Styles pour le navbar */
-.navbar {
-    padding: 15px;
-    display: flex;
-    justify-content: space-between;
-    background-color: #03331d;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 999;
-    height: 70px; 
-}
-
-.navbar ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-}
-
-.navbar ul.left {
-    margin-right: auto;
-    margin-top: 10px;
-}
-.navbar ul.right {
-    margin-top: 10px;
-}
-
-.navbar ul li {
-    display: inline-block;
-    margin-right: 10px;
-}
-
-.navbar ul li a {
-    text-decoration: none;
-    color: #fff; 
-    padding: 5px 10px;
-    font-family: 'Tw Cen MT' , sans-serif;
-    position: relative;
-    font-size: 16px;
-}
-
-.navbar ul li a::after {
-    content: '';
-    background: #ffa400;
-    position: absolute; 
-    bottom: 0;
-    right: 0;
-    width: 0;
-    height: 3px;
-    transform: translate(-50%, 0.1px); 
-    transition: 0.3s;
-}
-
-.navbar ul li a:hover:after {
-    width: 38%;
-}
-
-/* Personne détails */
+  
+  
 .person-details {
-  width: 800px;
-  background-color: #fff;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 20px 20px rgba(0, 0, 0, 0.1);
-  text-align: center;
-  margin-left: 270px;
-  margin-bottom: 170px;
+width: 800px;
+background-color: #fff;
+padding: 20px;
+border-radius: 10px;
+box-shadow: 0 20px 20px rgba(0, 0, 0, 0.1);
+text-align: center;
+margin-left: 270px;
+margin-bottom: 170px;
 }
 
 .person-details img {
-  width: 100%;
-  height: 250px;
-  object-fit: cover;
-  margin-bottom: 10px;
+width: 100%;
+height: 250px;
+object-fit: cover;
+margin-bottom: 10px;
 }
 
 .person-details h2 {
-  font-size: 30px;
-  font-family: century family;
-  margin: 0;
+font-size: 30px;
+font-family: century family;
+margin: 0;
 }
 
 .person-details p {
-  font-size: 17px;
-  margin: 5px 0;
+font-size: 17px;
+margin: 5px 0;
 }
 
 /* Styles pour les étoiles */
 .rotate-image {
-  animation: rotation 30s infinite linear; 
+animation: rotation 30s infinite linear; 
 }
 
 @keyframes rotation {
-  from {
-    transform: rotateY(0deg); 
-  }
-  to {
-    transform: rotateY(360deg); 
-  }
+from {
+  transform: rotateY(0deg); 
+}
+to {
+  transform: rotateY(360deg); 
+}
 }
 
 
 /* Styles pour le footer */
 footer {
-  background-color: #03331d;
-  color: #fff;
-  text-align: center;
-  padding: 20px 0;
+background-color: #03331d;
+color: #fff;
+text-align: center;
+padding: 20px 0;
 }
+
+
+  
+
 
 </style>

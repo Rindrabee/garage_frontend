@@ -57,8 +57,14 @@
                             <p><span style="font-family: elephant;">Service offerte :</span> {{ g.service_offerte   }}</p>
                             <br>
 
-                            <button class="button">S'inscire</button>
-                            </p>
+                            <button v-if="Mecanicien.id_garage == null" @click="insciregarage(g.id)" class="button">S'inscire</button>
+                            
+                            <button v-if="Mecanicien.id_garage != null && Mecanicien.Etat2 == null" class="button">En attente</button>
+
+                            <button v-if="Mecanicien.Etat2 == 1" class="button">Déja Membre</button>
+                       
+                        </p>
+
                         </div>
 
                     </div>
@@ -87,11 +93,12 @@
             return {
              Garage: {},
              Mecanicien: {},
-             id_sender: ''
+             id_sender: '',
+             id_garage: '',
                
             }
           },
-          mounted(){
+          mounted() {
             this.listegarage();
             this.mecanicienconnecter();
           },
@@ -115,7 +122,29 @@
             this.Garage = response.data
             })
             },
-                //Prendre le session du mecanicien connecter
+
+        // S'inscire sur une garage
+       
+        insciregarage(idgrg) {
+       // Supposons que vous avez les données du client dans this.Client
+      const updatedClientData = {
+      id_garage: idgrg,
+      };
+
+      axios
+        .put('http://localhost:8082/api/mecaniciens/inscriregarage/' + this.Mecanicien.id, updatedClientData)
+        .then(response => {
+          alert('Demande envoyer avec succes');
+          console.log(response.data);
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    },
+
+
+    
+    //Prendre le session du mecanicien connecter
     mecanicienconnecter() {
     axios.get('http://localhost:8082/api/mecaniciens/session', {
     headers: {
@@ -125,6 +154,7 @@
     .then(response => {
     this.Mecanicien = response.data.mc;
     this.id_sender = this.Mecanicien.id;
+    this.id_garage = this.Mecanicien.id_garage;
     }).catch(error => {
     console.log(error);
     })

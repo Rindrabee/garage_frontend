@@ -131,7 +131,7 @@
 
             <div class="card detail">
                 <div class="detail-header">
-                    <p style="font-family: century gothic;font-size: 18px; ">Urgence 🔥 :</p>
+                    <p style="font-family: century gothic;font-size: 18px; ">Liste des urgences :</p>
                   
                 </div>
                 <br>
@@ -158,7 +158,7 @@
 
                     <!-- apina -->
                 </table>
-                
+
             </div>
             <div class="card customer">
                 <h3 style="font-family: Poppins,sans-serif;font-size: 18.5px;">Discussion</h3>
