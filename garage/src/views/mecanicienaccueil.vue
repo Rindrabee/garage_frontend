@@ -114,29 +114,17 @@
             </div>
           
             <br><br>
-            <div class="col-lg-3 left-col">
-                <div class="card friend-list">
-                    <div class="people-list">
-                        <ul class="list-unstyled chat-list mt-2 mb-0">
-                            <li class="clearfix">
-                                <div class="about">
-                                    <div class="name"><img style="width: 30px;height: 30px;margin-left: -30px;" src="../assets/images/an.ico"  alt="">&nbsp;</div>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
+        
 
             <!-- ito le soratra anarana eny ambony -->
-            <div style="height: 420px" class="col-lg-9 right-col">
+            <div style="height: 420px;width: 100%;" class="col-lg-9 right-col">
                 <div class="card chat" ref="chat">
                     <div style="position: fixed;margin-top: 182px;width: 40%;" class="chat-header clearfix">
                         <div class="row">
                             <div class="col-lg-6">
                                 <div class="chat-about">
                                     <a href="javascript:void(0);" data-toggle="modal" data-target="#view_info">
-                                        <img style="width: 40px;height: 40px;" src="../assets/images/an.ico"  alt="">
+                                        <img style="width: 35px;height: 35px;" src="../assets/images/urg.ico"  alt="">
                                     </a>
                                 </div>
                                 
@@ -146,31 +134,36 @@
 
                         </div>
                     </div>
+                    
                     <br>
 
                     <div class="chat-history">
                         <ul class="m-b-0">
-                            <li class="clearfix">
-                                <div class="message-data text-right">
+                            <li v-for="m in Message" :key="m.id" class="clearfix">
+                            <div class="message-data text-right">
 
-                                </div>
-                                <div  style="background-color: #C6F568;"  class="message other-message float-right"></div>
-                                <div  class="message my-message"></div>
+                            </div>
+                                
+                            <div v-if="m.id_sendermecanicien == id_sendermecanicien" style="background-color: #C6F568;"  class="message other-message float-right">{{ m.Text }}</div>
+                            <div v-if="m.id_senderclient  == id_receivedclient" class="message my-message">{{ m.Text }}</div>
+
                             </li>
+
                         </ul>
                     </div>
 
                    <br>
                    <!-- div le ery ambany le anoratana -->
                 </div>
-                <div  class="noo" style="position: fixed;width: 500px;margin-top: -75px;margin-left: 30px;">
+                <div class="noo" style="position: fixed;width: 700px;margin-top: -75px;margin-left: 30px;">
                     <div class="input-group mb-0">
                         <div class="input-group-prepend">
-                            <span  class="input-group-text" ><img  src="../assets/images/sendeo.png" style="width: 30px;height: 30px;cursor: pointer;" alt=""></span>
+                            <span @click="sendMessage" class="input-group-text" ><img  src="../assets/images/sendeo.png" style="width: 30px;height: 30px;cursor: pointer;" alt=""></span>
                         </div>
-                        <input  type="text" class="form-control" placeholder="Votre message ici...">                                    
+                        <input v-model="Text" type="text" class="form-control" placeholder="Votre message ici...">                                    
                     </div>
                 </div>
+
             </div>
         </div>
     </div>
@@ -190,20 +183,30 @@ import { tokenIsExpired } from '../utils/date.js';
 export default {
     data () {
     return {
+    Text : '',
     Mecanicien : {},
     Urgence: {},
     nomrugence: '',
+    Message: {},
 
     
-    id_received: '',
-    id_sender: '',
+    id_receivedclient: '',
+    id_sendermecanicien: '',
+   
+
     token: localStorage.getItem('token'),
     socket: io('http://localhost:8082')
+    
     }
     },
     mounted() {
     this.mecanicienconnecter();
     this.Prendrelesurgnece();
+    this.selectpers();
+
+    this.socket.on('chat message',(data) => {
+        this.selectpers();
+    });
     },
     methods: {
     slide1() {
@@ -234,6 +237,7 @@ export default {
     })
     .then(response => {
     this.Mecanicien = response.data.mc;
+    this.id_sendermecanicien = this.Mecanicien.id;
     // this.id_garage = this.Garage.id;
 
     }).catch(error => {
@@ -245,10 +249,11 @@ export default {
     axios.get('http://localhost:8082/api/admins/getAllUrgence')
     .then(response => {
     this.Urgence = response.data
+    this.id_receivedclient = this.Urgence.id
     console.log('urgences', response.data);
     })
     },
-   //detail urgence
+    //detail urgence
     detailurgence(id) {
     this.$router.push({ name: 'showurgence3' });
     localStorage.setItem('id',id)
@@ -266,6 +271,14 @@ export default {
     this.MessageError = "Une erreur s'est produite lors de la déconnexion.";
     });
     },
+    
+    // Prendre le message du urgence cliqué
+    selectpers() {
+    axios.get('http://localhost:8082/api/messages/listermessage2')
+    .then(response => {
+        this.Message = response.data
+    })
+    },
 
 
     mecanicienapropos() {
@@ -277,7 +290,7 @@ export default {
     let a = document.getElementById("conversation")
 
     localStorage.setItem("ID_RECEIVED",idurg)
-
+    this.id_receivedclient = localStorage.getItem("ID_RECEIVED");
    
     this.nomrugence = nomrugenc;
     a.style.display = "block";
@@ -295,8 +308,20 @@ export default {
     b.style.opacity = "100%";
 
     },
+
+    // Fonctio pour envoyer une message
+    sendMessage() {
+    // Envoi du message au serveur
+    const data = { Text: this.Text, id_sendermecanicien: this.id_sendermecanicien,id_receivedclient:this.id_receivedclient };
+
+    // Envoi de l'événement 'chat message' au serveur
+    this.socket.emit('mandefa message', data);
+
+    // Réinitialisation de l'input du message
+    this.Text = '';
+    },
     }
-}
+    }
 </script>
     
 <style scoped>

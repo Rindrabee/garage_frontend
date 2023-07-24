@@ -222,7 +222,7 @@
 
                     <div class="chat-history">
                         <ul class="m-b-0">
-                            <li class="clearfix" v-for="m in Message" :key="m.id" >
+                            <li class="clearfix" v-for="m in Message" :key="m.id">
                                 <div class="message-data text-right">
 
                                 </div>
@@ -447,7 +447,7 @@ export default {
 
     },
     // Prendre le message du personne cliqué
-    selectpers(){
+    selectpers() {
     axios.get('http://localhost:8082/api/messages/listermessage')
     .then(response => {
         this.Message = response.data

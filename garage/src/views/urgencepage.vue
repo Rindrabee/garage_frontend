@@ -40,16 +40,16 @@
             <div class="settings-menu-inner">
             <p style="font-size: 10px;">Je suis le mécanicien envoyer pour vous sécourir</p>
             
-            <div class="settings-links">
-              <img v-for="m in Mecanicien" style="cursor: pointer;height: 38px;" :src="'http://localhost:8082/' +  m.Photo  + '.jpeg'" class="settings-icon">
-              <a v-for="m in Mecanicien"  @click="discu" style="color: #000;font-family: century gothic;cursor: pointer;" href="#"> &nbsp; {{ m.Nom }}</a>
+            <div v-for="m in Mecanicien" class="settings-links">
+              <img v-if="m.id_urgence == newItemId" style="cursor: pointer;height: 38px;" :src="'http://localhost:8082/' +  m.Photo  + '.jpeg'" class="settings-icon">
+              <a v-if="m.id_urgence == newItemId" @click="discu(m.id)" style="color: #000;font-family: century gothic;cursor: pointer;" href="#"> &nbsp; {{ m.Nom }}</a>
             </div>
 
             </div> 
           </div>
     </nav>
 
-    
+
     
     <div style="margin-top: 90px;" class="container2">
       <h1  style="color: rgb(2, 2, 2);font-size: 40px;font-family:avant garde;">Bienvenue dans la demande de dépannage</h1>
@@ -164,75 +164,67 @@
     </div>
 
     <!-- mipotra ito refa cliquena le discussion -->
-    <div id="conversation"  style="display: none; box-shadow: 2px 2px 10px black;background-color: #0f530f;border-radius : 20px;position: fixed;top: 190px;margin-left: 290px;width: 800px;" class="container conversation">
+  
+        
+    <div id="conversation"  style="display: none; box-shadow: 2px 2px 10px black;background-color: #0f530f;border-radius : 20px;position: fixed;top: 170px;margin-left: 340px;width: 800px;" class="container conversation">
         <br>
         
             <div class="row">
-
             <div>
                 <img @click="fermerdiscu" style="width: 30px;margin-left: 720px;cursor: pointer;" src="../assets/images/close.png" alt="">
             </div>
           
             <br><br>
-
-            <div class="col-lg-3 left-col">
-                <div class="card friend-list">
-                    <div class="people-list">
-                        <ul class="list-unstyled chat-list mt-2 mb-0">
-                            <li class="clearfix">
-                                <div class="about">
-                                    <div class="name"><img style="width: 30px;height: 30px;margin-left: -10px;" src="../assets/images/mec.ico"  alt="">&nbsp;</div>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
+        
 
             <!-- ito le soratra anarana eny ambony -->
-            <div style="height: 420px" class="col-lg-9 right-col">
+            <div style="height: 420px;width: 100%;" class="col-lg-9 right-col">
                 <div class="card chat" ref="chat">
-                    <div style="position: fixed;margin-top: 232px;width: 40%;height: 10px;" class="chat-header clearfix">
+                    <div style="position: fixed;margin-top: 182px;width: 40%;" class="chat-header clearfix">
                         <div class="row">
                             <div class="col-lg-6">
-                              <div class="chat-about">
-                                  <a href="javascript:void(0);" data-toggle="modal" data-target="#view_info">
-                                    <img style="width: 40px;height: 40px;margin-top: -38px;" src="../assets/images/mec.ico"  alt="">
-                                  </a>
-                              </div>
+                                <div class="chat-about">
+                                    <a href="javascript:void(0);" data-toggle="modal" data-target="#view_info">
+                                        <img style="width: 35px;height: 35px;" src="../assets/images/urg.ico"  alt="">
+                                    </a>
+                                </div>
                                 
-                              <h6  style="font-family: century;margin-top : 2px" class="m-b-0">&nbsp; &nbsp;{{ nomrugence }}</h6>
+                                <h6  style="font-family: century;margin-top : 2px" class="m-b-0">&nbsp; &nbsp;{{ nomrugence }}</h6>
                                 
                             </div>
 
                         </div>
                     </div>
-                   
+                    
                     <br>
 
                     <div class="chat-history">
                         <ul class="m-b-0">
-                            <li class="clearfix">
-                                <div class="message-data text-right">
+                            <li v-for="m in Message" :key="m.id"  class="clearfix">
+                            <div class="message-data text-right">
 
-                                </div>
-                                <div  style="background-color: #C6F568;"  class="message other-message float-right"></div>
-                                <div  class="message my-message"></div>
+                            </div>
+                                
+                            <div v-if="m.id_senderclient == id_senderclient" style="background-color: #C6F568;"  class="message other-message float-right">{{ m.Text }}</div>
+                            <div v-if="m.id_sendermecanicien  == id_receivedmecanicien" class="message my-message">{{ m.Text }}</div>
+
                             </li>
+
                         </ul>
                     </div>
 
                    <br>
                    <!-- div le ery ambany le anoratana -->
                 </div>
-                <div  class="noo" style="position: fixed;width: 500px;margin-top: -75px;margin-left: 30px;">
+                <div class="noo" style="position: fixed;width: 700px;margin-top: -75px;margin-left: 30px;">
                     <div class="input-group mb-0">
                         <div class="input-group-prepend">
-                            <span  class="input-group-text" ><img  src="../assets/images/sendeo.png" style="width: 30px;height: 30px;cursor: pointer;" alt=""></span>
+                            <span @click="sendMessage" class="input-group-text" ><img  src="../assets/images/sendeo.png" style="width: 30px;height: 30px;cursor: pointer;" alt=""></span>
                         </div>
-                        <input  type="text" class="form-control" placeholder="Votre message ici...">                                    
+                        <input v-model="Text" type="text" class="form-control" placeholder="Votre message ici...">                                    
                     </div>
                 </div>
+
             </div>
         </div>
     </div>
@@ -250,7 +242,7 @@
 <script>
 import AuthenticationService5 from '../services/AuthentificationService5.js'
 import axios from 'axios';
-
+import io from 'socket.io-client'
 
   export default {
     data() {
@@ -265,9 +257,15 @@ import axios from 'axios';
       latitude: '',
       PrenomMc: '',
       PhotoMc: '',
-      id_received: '',
+      newItemId: '',
+      Text : '',
+      Message: {},
 
-      Mecanicien: {},
+      Mecanicien : {},
+      Urgence: {},
+
+      id_senderclient : '',
+      id_receivedmecanicien : '',
 
       nombreNotifications: 1,
 
@@ -278,48 +276,92 @@ import axios from 'axios';
       addressError: '',
       problemeError: '',
       longitudeError: '',
-      latitudeError: ''
-      
+      latitudeError: '',
+
+
+      token: localStorage.getItem('token'),
+      socket: io('http://localhost:8082')
+    
       };
     },
 
     mounted() {
       this.listemecanicien();
+      this.Prendrelesmecaniciens();
+      this.newItemId = localStorage.getItem('newItemId');
+      this.id_senderclient = localStorage.getItem('newItemId');
+      this.selectpers();
+
+      this.socket.on('chat message',(data) => {
+        this.selectpers();
+    });
     },
 
     methods: {
     //Ajouter une urgence 
     async register() {
+    const dataToSend = {
+        name: this.name,
+        email: this.email,
+        phone: this.phone,
+        address: this.address,
+        Probleme: this.Probleme,
+        longitude: this.longitude,
+        latitude: this.latitude,
+    };
+
+    try {
+        const response = await AuthenticationService5.register(dataToSend);
+        console.log(response.data);
+
+        // Assuming the response.data contains the unique ID of the newly added item
+        const newItemId = response.data.id;
+
+        // Store the new item's ID in localStorage
+        localStorage.setItem('newItemId', newItemId);
+
+        alert("Demande envoyée avec succès");
+
+        let a = document.getElementById("patiente");
+        let b = document.getElementById("renseignemet");
+
+        a.style.display = "inline-block";
+        b.style.display = "none";
+    } catch (error) {
+        console.error('Error registering the item:', error);
+        // Handle the error here if necessary
+    }
     
-    const response = await AuthenticationService5.register({
-    name: this.name,
-    email: this.email,
-    phone: this.phone,
-    address: this.address,
-    Probleme: this.Probleme,
-    longitude: this.longitude,
-    latitude: this.latitude,
-    });
+  },
 
-    console.log(response.data);
-    alert("Demmande envoyer avec succès");
-
-    let a = document.getElementById("patiente");
-    let b = document.getElementById("renseignemet");
-
-    a.style.display = "inline-block";
-    b.style.display = "none";
-
+    // Lister les mécaniciens
+    Prendrelesmecaniciens() {
+    axios.get('http://localhost:8082/api/mecaniciens/listermecanicien')
+    .then(response => {
+    this.Mecanicien = response.data
+    this.id_receivedmecanicien = this.Mecanicien.id
+    console.log('Mecanicien', response.data);
+    })
     },
 
+      // Prendre le message du urgence cliqué
+    selectpers() {
+    axios.get('http://localhost:8082/api/messages/listermessage2')
+    .then(response => {
+        this.Message = response.data
+    })
+    },
+
+
+   
     // Afficher le notification du mecanicien
     slide1() {
     let a = document.getElementById("rindra");
-        if (a.style.display === "block") {
-        a.style.display = "none";
-        } else {
-        a.style.display = "block";
-        }
+      if (a.style.display === "block") {
+      a.style.display = "none";
+      } else {
+      a.style.display = "block";
+      }
     },
 
     //Lister tous les mecaniciens
@@ -331,12 +373,12 @@ import axios from 'axios';
     },
     
     // mapiseo anle div message
-    discu() {
+    discu(idmec) {
     let a = document.getElementById("conversation")
     let b = document.getElementById("ambadika")
-
+   
     // localStorage.setItem("ID_RECEIVED",idmecanicien)
-    this.id_received=localStorage.getItem("ID_RECEIVED");
+    this.id_receivedmecanicien = idmec
 
     // this.PrenomMc = Prenoms
     // this.PhotoMc = Photo
@@ -350,11 +392,24 @@ import axios from 'axios';
     let b = document.getElementById("ambadika")
 
     localStorage.removeItem("ID_RECEIVED")
-
+   
 
     a.style.display = "none";
     b.style.opacity = "100%";
 
+    },
+    
+    // Fonctio pour envoyer une message
+      
+    sendMessage() {
+      // Envoi du message au serveur
+      const data = { Text: this.Text, id_senderclient: this.id_senderclient,id_receivedmecanicien:this.id_receivedmecanicien };
+
+      // Envoi de l'événement 'chat message' au serveur
+      this.socket.emit('mandefa message', data);
+
+      // Réinitialisation de l'input du message
+      this.Text = '';
     },
 
 
