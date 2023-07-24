@@ -150,22 +150,22 @@
             <br>
 
             <tr>
-                <th>N°</th>
-                <th>GARAGE</th>
+                <th>Nom</th>
+                <th>Specialité</th>
                 <th>Action</th>
             </tr> 
            
-            <tr v-for="u in Garage2" :key="u.id">
-                <td>{{ u.id }}</td>
+            <tr v-for="u in Mecanicien" :key="u.id">
                 <td>{{ u.Nom }}</td>
-                <td><button class="btn btn-outline-success" @click="redirectUrgenceToGarage(u.id)">Coller</button></td>
+                <td>{{ u.Specialite }}</td>
+                <td><button class="btn btn-outline-success" @click="redirectUrgenceTomecanicien(u.id)">Coller</button></td>
                 <br><br><br>
             </tr>
+
         </table>
 
         </div>
     </div>
-
 
        
     </main>
@@ -182,21 +182,25 @@
     export default {
         data () {
             return {
-                Numero: '',
-                Nom: '',
-                Date1: '',
-                Probleme: '',
-                Photo: '',
-                Voiture: {},
-                Garage: {},
-                Garage2: {},
-                id_garage : '',
-                Urgence: {},
-                
+            Numero: '',
+            Nom: '',
+            Date1: '',
+            Probleme: '',
+            Photo: '',
+            Voiture: {},
+            Garage: {},
+            Garage2: {},
+            idMecanicien : 0,
+            Urgence: {},
+            Mecanicien: {},
+            idUrgence: '',
     
-                isFieldEmpty: false,
-                isInvalidEmail: false,
-                acceptConditions: false,
+            
+
+            isFieldEmpty: false,
+            isInvalidEmail: false,
+            acceptConditions: false,
+            
             }
         },
         mounted() {
@@ -204,6 +208,7 @@
             this.garageconnecter();
             this.Prendrelesurgnece();
             this.listegarage();
+            this.listermecanicien();
         },
         methods: {
             slide1() {
@@ -231,6 +236,14 @@
             this.Garage2 = response.data
             })
             },
+            //Lister tous les mecaniciens
+            listermecanicien() {
+            axios.get('http://localhost:8082/api/mecaniciens/listermecanicien')
+            .then(response => {
+            this.Mecanicien = response.data
+            })
+            },
+
             //detail urgence
             detailurgence(id) {
             this.$router.push({ name: 'showurgence2' });
@@ -280,7 +293,7 @@
 
             // Accueil dans le garage
             garageaccueil() {
-                this.$router.push({ name: 'garagepage' });
+            this.$router.push({ name: 'garagepage' });
             },
     
             //Fermer ajouter voiture
@@ -304,20 +317,24 @@
                     console.log('urgences', response.data);
                 });
             },
-    // mapiseo anle div liste des mecaniciens
 
-    discu2(id) {
-        let a = document.getElementById("choisir")
-        let b = document.getElementById("ambadika")
+            // mapiseo anle div liste mecanicien
+            discu2(id){
+            localStorage.setItem('id',id)
+            let a = document.getElementById("choisir")
+            let b = document.getElementById("ambadika")
 
+            
 
-        a.style.display = "block";
-        b.style.opacity = "70%";
-        this.idUrgence = id;
-    },
+            a.style.display = "block";
+            b.style.opacity = "70%";
+
+            
+            },
     
     // fermer le liste des mecaniciens
     fermer() {
+    localStorage.removeItem('id')
     let a = document.getElementById("choisir")
     let b = document.getElementById("ambadika")
 
@@ -326,7 +343,24 @@
     b.style.opacity = "100%";
 
     },
-    
+    // Redirect to mecanicien
+    redirectUrgenceTomecanicien (idMecanicien) {
+        console.log(this.idUrgence)
+        const url = import.meta.env.VITE_API_URL + '/api/admins/redirectToMecanicien';
+        const body = {
+        'idMecanicien': idMecanicien,
+        'idUrgence': localStorage.getItem('id')
+        };
+        
+
+        axios.post(url, body)
+        .then(response => {
+        alert("Urgence envoyer vers ce mecanicien")
+        
+    });
+    },
+
+
             logout() {
                 axios.post('http://localhost:8082/api/garages/logout')
                 .then(response => {

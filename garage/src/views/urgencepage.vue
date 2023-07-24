@@ -34,19 +34,22 @@
 
           <div id="rindra" class="settings-menu">
             <div id="dark-btn">
-                <span></span>
+              <span></span>
             </div>
 
             <div class="settings-menu-inner">
-                <div class="settings-links">
-                    <img @click="modificationadmin" style="cursor: pointer;" src="../assets/images/mec.ico" class="settings-icon">
-                    <a @click="modificationadmin"  style="color: #000;font-family: century gothic;cursor: pointer;" href="#"> &nbsp; Mecanicien</a>
-                </div>
+            <p style="font-size: 10px;">Je suis le mécanicien envoyer pour vous sécourir</p>
+            
+            <div class="settings-links">
+              <img v-for="m in Mecanicien" style="cursor: pointer;height: 38px;" :src="'http://localhost:8082/' +  m.Photo  + '.jpeg'" class="settings-icon">
+              <a v-for="m in Mecanicien"  @click="discu" style="color: #000;font-family: century gothic;cursor: pointer;" href="#"> &nbsp; {{ m.Nom }}</a>
+            </div>
+
             </div> 
-                  
           </div>
     </nav>
-  
+
+    
     
     <div style="margin-top: 90px;" class="container2">
       <h1  style="color: rgb(2, 2, 2);font-size: 40px;font-family:avant garde;">Bienvenue dans la demande de dépannage</h1>
@@ -159,6 +162,82 @@
 
       
     </div>
+
+    <!-- mipotra ito refa cliquena le discussion -->
+    <div id="conversation"  style="display: none; box-shadow: 2px 2px 10px black;background-color: #0f530f;border-radius : 20px;position: fixed;top: 190px;margin-left: 290px;width: 800px;" class="container conversation">
+        <br>
+        
+            <div class="row">
+
+            <div>
+                <img @click="fermerdiscu" style="width: 30px;margin-left: 720px;cursor: pointer;" src="../assets/images/close.png" alt="">
+            </div>
+          
+            <br><br>
+
+            <div class="col-lg-3 left-col">
+                <div class="card friend-list">
+                    <div class="people-list">
+                        <ul class="list-unstyled chat-list mt-2 mb-0">
+                            <li class="clearfix">
+                                <div class="about">
+                                    <div class="name"><img style="width: 30px;height: 30px;margin-left: -10px;" src="../assets/images/mec.ico"  alt="">&nbsp;</div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ito le soratra anarana eny ambony -->
+            <div style="height: 420px" class="col-lg-9 right-col">
+                <div class="card chat" ref="chat">
+                    <div style="position: fixed;margin-top: 232px;width: 40%;height: 10px;" class="chat-header clearfix">
+                        <div class="row">
+                            <div class="col-lg-6">
+                              <div class="chat-about">
+                                  <a href="javascript:void(0);" data-toggle="modal" data-target="#view_info">
+                                    <img style="width: 40px;height: 40px;margin-top: -38px;" src="../assets/images/mec.ico"  alt="">
+                                  </a>
+                              </div>
+                                
+                              <h6  style="font-family: century;margin-top : 2px" class="m-b-0">&nbsp; &nbsp;{{ nomrugence }}</h6>
+                                
+                            </div>
+
+                        </div>
+                    </div>
+                   
+                    <br>
+
+                    <div class="chat-history">
+                        <ul class="m-b-0">
+                            <li class="clearfix">
+                                <div class="message-data text-right">
+
+                                </div>
+                                <div  style="background-color: #C6F568;"  class="message other-message float-right"></div>
+                                <div  class="message my-message"></div>
+                            </li>
+                        </ul>
+                    </div>
+
+                   <br>
+                   <!-- div le ery ambany le anoratana -->
+                </div>
+                <div  class="noo" style="position: fixed;width: 500px;margin-top: -75px;margin-left: 30px;">
+                    <div class="input-group mb-0">
+                        <div class="input-group-prepend">
+                            <span  class="input-group-text" ><img  src="../assets/images/sendeo.png" style="width: 30px;height: 30px;cursor: pointer;" alt=""></span>
+                        </div>
+                        <input  type="text" class="form-control" placeholder="Votre message ici...">                                    
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
     </div>
     <footer>
     <p>&copy; 2023 GarageFinder. Tous droits réservés.</p>
@@ -184,8 +263,14 @@ import axios from 'axios';
       Probleme: '',
       longitude: '',
       latitude: '',
+      PrenomMc: '',
+      PhotoMc: '',
+      id_received: '',
+
+      Mecanicien: {},
 
       nombreNotifications: 1,
+
 
       nameError: '',
       emailError: '',
@@ -198,6 +283,9 @@ import axios from 'axios';
       };
     },
 
+    mounted() {
+      this.listemecanicien();
+    },
 
     methods: {
     //Ajouter une urgence 
@@ -232,6 +320,41 @@ import axios from 'axios';
         } else {
         a.style.display = "block";
         }
+    },
+
+    //Lister tous les mecaniciens
+    listemecanicien() {
+    axios.get('http://localhost:8082/api/mecaniciens/listermecanicien')
+    .then(response => {
+      this.Mecanicien = response.data
+    })
+    },
+    
+    // mapiseo anle div message
+    discu() {
+    let a = document.getElementById("conversation")
+    let b = document.getElementById("ambadika")
+
+    // localStorage.setItem("ID_RECEIVED",idmecanicien)
+    this.id_received=localStorage.getItem("ID_RECEIVED");
+
+    // this.PrenomMc = Prenoms
+    // this.PhotoMc = Photo
+    a.style.display = "block";
+    b.style.opacity = "70%";
+
+    },
+    // fermer le discussion
+    fermerdiscu() {
+    let a = document.getElementById("conversation")
+    let b = document.getElementById("ambadika")
+
+    localStorage.removeItem("ID_RECEIVED")
+
+
+    a.style.display = "none";
+    b.style.opacity = "100%";
+
     },
 
 
@@ -502,7 +625,7 @@ import axios from 'axios';
 }
 
   /* Styles pour le navbar */
-  .navbar {
+.navbar {
   padding: 15px;
   display: flex;
   justify-content: space-between;
@@ -558,6 +681,295 @@ import axios from 'axios';
 .navbar ul li a:hover:after {
   width: 38%;
 }
+
+/* Discussion  */
+
+.conversation {
+    height: auto;
+    margin-top: -60px;
+}
+
+.row {
+    width: 100%;
+}
+
+.left-col, .right-col {
+    max-height: 100%;
+}
+
+.friend-list {
+    height: 80%;
+}
+
+.chat {
+    height: 80%;
+    overflow-y: scroll;
+    display: flex;
+    flex-direction: column-reverse;
+}
+
+
+#plist {
+    overflow-y: scroll;
+}
+
+.clearfix {
+    text-align: left;
+}
+
+
+.card {
+    background: #fff;
+    transition: .5s;
+    border: 0;
+    margin-bottom: 30px;
+    border-radius: .55rem;
+    position: relative;
+    width: 100%;
+    box-shadow: 0 1px 2px 0 rgb(0 0 0 / 10%);
+}
+.chat-app .people-list {
+    width: 280px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    padding: 20px;
+    z-index: 7
+}
+
+.chat-app .chat {
+    margin-left: 280px;
+    border-left: 1px solid #eaeaea
+}
+
+.people-list {
+    -moz-transition: .5s;
+    -o-transition: .5s;
+    -webkit-transition: .5s;
+    transition: .5s
+}
+
+.people-list .chat-list li {
+    padding: 10px 15px;
+    list-style: none;
+    border-radius: 3px
+}
+
+.people-list .chat-list li:hover {
+    background: #efefef;
+    cursor: pointer
+}
+
+.people-list .chat-list li.active {
+    background: #efefef
+}
+
+.people-list .chat-list li .name {
+   
+    font-size: 11px
+}
+
+.people-list .chat-list img {
+    width: 45px;
+    border-radius: 50%
+}
+
+.people-list img {
+    float: left;
+    border-radius: 50%
+}
+
+.people-list .about {
+    float: left;
+    padding-left: 8px
+}
+
+.people-list .status {
+    color: #999;
+    font-size: 13px
+}
+
+.chat .chat-header {
+    padding: 15px 20px;
+    border-bottom: 2px solid #f4f7f6;
+    background-color: #fff;
+    position: sticky;
+    top: 0px;
+    z-index: 2;
+}
+
+.chat .chat-header img {
+    float: left;
+    border-radius: 40px;
+    width: 40px
+}
+
+.chat .chat-header .chat-about {
+    float: left;
+    padding-left: 10px
+}
+
+.chat .chat-history {
+    padding: 20px;
+    border-bottom: 2px solid #fff
+}
+
+.chat .chat-history ul {
+    padding: 0
+}
+
+.chat .chat-history ul li {
+    list-style: none;
+    margin-bottom: 30px
+}
+
+.chat .chat-history ul li:last-child {
+    margin-bottom: 0px
+}
+
+.chat .chat-history .message-data {
+    margin-bottom: 15px
+}
+
+.chat .chat-history .message-data img {
+    border-radius: 40px;
+    width: 40px
+}
+
+.chat .chat-history .message-data-time {
+    color: #434651;
+    padding-left: 6px
+}
+
+.chat .chat-history .message {
+    color: #444;
+    padding: 0px 10px;
+    line-height: 26px;
+    font-size: 14px;
+    border-radius: 7px;
+    display: inline-block;
+    position: relative
+}
+
+.chat .chat-history .message:after {
+    bottom: 100%;
+    left: 7%;
+    border: solid transparent;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+    border-bottom-color: #fff;
+    border-width: 10px;
+    margin-left: -10px
+}
+
+.chat .chat-history .my-message {
+    background: #efefef
+}
+
+.chat .chat-history .my-message:after {
+    bottom: 100%;
+    left: 30px;
+    border: solid transparent;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+    border-bottom-color: #efefef;
+    border-width: 10px;
+    margin-left: -10px
+}
+
+.chat .chat-history .other-message {
+    background: #e8f1f3;
+    text-align: right
+}
+
+.chat .chat-history .other-message:after {
+    border-bottom-color: #e8f1f3;
+    left: 93%
+}
+
+/* .chat .chat-message {
+    padding: 20px;
+    position: sticky;
+    bottom: 0px;
+    z-index: 2;
+    background-color: #fff;
+} */
+
+.online,
+.offline,
+.me {
+    margin-right: 2px;
+    font-size: 8px;
+    vertical-align: middle
+}
+
+
+
+.float-right {
+    float: right
+}
+
+.clearfix:after {
+    visibility: hidden;
+    display: block;
+    font-size: 0;
+    content: " ";
+    clear: both;
+    height: 0
+}
+
+@media only screen and (max-width: 767px) {
+    .chat-app .people-list {
+        height: 465px;
+        width: 100%;
+        overflow-x: auto;
+        background: #fff;
+        left: -400px;
+        display: none
+    }
+    .chat-app .people-list.open {
+        left: 0
+    }
+    .chat-app .chat {
+        margin: 0
+    }
+    .chat-app .chat .chat-header {
+        border-radius: 0.55rem 0.55rem 0 0
+    }
+    .chat-app .chat-history {
+        height: 300px;
+        overflow-x: auto
+    }
+}
+
+@media only screen and (min-width: 768px) and (max-width: 992px) {
+    .chat-app .chat-list {
+        height: 650px;
+        overflow-x: auto
+    }
+    .chat-app .chat-history {
+        height: 600px;
+        overflow-x: auto
+    }
+}
+
+@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: landscape) and (-webkit-min-device-pixel-ratio: 1) {
+    .chat-app .chat-list {
+        height: 480px;
+        overflow-x: auto
+    }
+    .chat-app .chat-history {
+        height: calc(100vh - 350px);
+        overflow-x: auto
+    }
+}
+
   
 
 /* Styles pour le footer */

@@ -455,7 +455,7 @@ export default {
     },
 
     // mapiseo anle div message
-    discu(idclient,Prenoms,Photo){
+    discu(idclient,Prenoms,Photo) {
     let a = document.getElementById("conversation")
     let b = document.getElementById("ambadika")
 

@@ -12,14 +12,15 @@
     </head>
     <body>
     <div class="cont">
+        
         <!-- navbar -->
         <nav class="navbar">
-            <h4 style="margin-left: -30px;"><i @click="garagepage" style="cursor: pointer;" class="fas fa-left-long"></i></h4>
+            <h4 style="margin-left: -30px;"><i @click="mecanicienaccueil" style="cursor: pointer;" class="fas fa-left-long"></i></h4>
             <div class="profile">
                 <input style="margin-left: -300px;width: 300px;color: gray;font-family: century gothic;" class="form-control" type="text" placeholder="Barre de recherche">
                 <span style="cursor: pointer;" class="fas fa-search"></span>
-                <img @click="slide1" style="cursor: pointer;" class="profile-image" :src="'http://localhost:8082/' +  Garage.Photo  + '.jpeg'" alt="">
-                <p class="profile-name" style="cursor: pointer;">  {{ Garage.Nom }}</p>
+                <img @click="slide1" style="cursor: pointer;" class="profile-image" :src="'http://localhost:8082/' +  Mecanicien.Photo  + '.jpeg'" alt="">
+                <p class="profile-name" style="cursor: pointer;">{{ Mecanicien.Nom }}</p>
             </div>
 
 
@@ -30,8 +31,8 @@
     
                 <div class="settings-menu-inner">
                     <div class="settings-links">
-                        <img @click="modificationgarage" style="cursor: pointer;" src="../assets/images/setting.png" class="settings-icon">
-                        <a style="color: #000;font-family: century gothic;cursor: pointer;" href="modificationgarage">PROFILE<img style="width: 10px;" src="../assets/images/arrow.png" alt=""></a>
+                        <img @click="modificationmecanicien" style="cursor: pointer;" src="../assets/images/setting.png" class="settings-icon">
+                        <a style="color: #000;font-family: century gothic;cursor: pointer;" href="modificationmecanicien">PROFILE<img style="width: 10px;" src="../assets/images/arrow.png" alt=""></a>
                     </div>
                     
                     <div class="settings-links">
@@ -102,7 +103,7 @@
     data () {
     return {
     Admin: {},
-    Garage : {},
+    Mecanicien : {},
     Urgence : {},
     lati: '',
     longi: '',
@@ -129,23 +130,23 @@
     });
     },
     mounted() {
-    this.garageconnecter();
+    this.mecanicienconnecter();
     this.getdetailurgence();
     },
 
     methods: {
 
-    //Prendre le session du garage connecté
-    garageconnecter() {
-    axios.get('http://localhost:8082/api/garages/session', {
+    //Prendre le session du mecanicien connecté
+    mecanicienconnecter() {
+    axios.get('http://localhost:8082/api/mecaniciens/session', {
     headers: {
     Authorization: `Bearer ${localStorage.getItem('token')}`
     },
 
     })
     .then(response => {
-    this.Garage = response.data.grg;
-    this.id_sender = this.Garage.id;
+    this.Mecanicien = response.data.mc;
+    this.id_sender = this.Mecanicien.id;
     }).catch(error => {
     console.log(error);
     })
@@ -166,15 +167,15 @@
     },
 
 
-    // Diriger vers le garagepage
-    garagepage() {
+    // Diriger vers le mecanicienacceuil
+    mecanicienaccueil() {
     localStorage.removeItem('id');
-    this.$router.push({ name: 'garageurgence' });
+    this.$router.push({ name: 'mecanicienaccueil' });
     },
 
-    //Modification garage
-    modificationgarage() {
-    this.$router.push({ name: 'modificationgarage' });
+    //Modification mecanicien
+    modificationmecanicien() {
+    this.$router.push({ name: 'modificationmecanicien' });
     },
 
     // Se deconnecter

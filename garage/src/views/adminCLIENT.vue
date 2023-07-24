@@ -158,7 +158,7 @@
         })
         },
         verslisteclient() {
-       axios.get('http://localhost:8082/api/clients/allClients')
+        axios.get('http://localhost:8082/api/clients/allClients')
        .then(response => {
            this.Client = response.data
        })

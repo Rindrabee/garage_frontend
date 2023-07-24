@@ -26,7 +26,7 @@
     <!-- concernant la location -->
 
 <div class="details">
-      <h1>{{ Garage.Nom }}</h1><p>- {{ Garage.Adresse }} <i class="far fa-star rotate-image"></i><i class="far fa-star rotate-image "></i><i class="far fa-star rotate-image "></i></p> 
+      <h1>{{ Garage.Nom }}</h1><p> - {{ Garage.Adresse }} <i class="far fa-star rotate-image"></i><i class="far fa-star rotate-image "></i><i class="far fa-star rotate-image "></i></p> 
   </div>
   <div class="details2">
       <p style="position: absolute;margin-top: 30px;"><i class="fas fa-phone"></i>&nbsp;&nbsp;&nbsp;&nbsp;    {{ Garage.Telephone }}</p>
