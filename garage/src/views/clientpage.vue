@@ -202,22 +202,23 @@
     <div style="height: 420px;width: 100%;" class="col-lg-9 right-col">
         <div class="card chat" ref="chat">
             <div style="position: fixed;margin-top: 182px;width: 37%;height: 15px;" class="chat-header clearfix">
-                <p style="margin-top: -8px;">Demmande de rendez-vous</p>
+                <p style="margin-top: -8px;">Demmande de rendez-vous </p>
 
                 <div>
-
-                <p style="margin-top: 70px;position: absolute;">Date du rendez vous</p><input style="margin-top: 70px;margin-left: 290px;position: absolute;" type="date" name="" id="">
-
-                <p style="margin-top: 130px;position: absolute;">Heure du rendez vous</p><input style="margin-top: 130px;margin-left: 290px;position: absolute;" type="time" name="" id="">
-
-
-                <p style="margin-top: 190px;position: absolute;">Garage</p><select v-for="g in Garage" :key="g.id" style="margin-top: 190px;margin-left: 290px;position: absolute;" name="" id="">
-                <option value="{{ g.id }}">{{ g.Nom }}</option>
-                </select>
-                
+                <div class="date-section">
+                <p class="appointment-label">Date du rendez-vous :</p>
+                <!-- Utilisez la liaison de données pour définir la date minimale -->
+                <input v-model="Dates" class="appointment-input" type="date" name="" id="" :min="minDate">
                 </div>
 
+                <div class="time-section">
+                <p  class="appointment-label">Heure du rendez-vous :</p>
+                <input v-model="Heure" class="appointment-input" type="time" name="" id="">
+                </div>
+            
+                <button class="btn btn-success" v-for="g in Garage" :key="g.id" v-if="Client.id_garage != null" @click="register(Client.id_garage)" style="margin-top: 240px;margin-left: 590px;">Envoyer</button>
                 
+                </div>
 
             </div>
 
@@ -237,7 +238,7 @@
 </template>
 
 <script>
-import AuthenticationService from '../services/AuthenticationService.js'
+import AuthenticationService6 from '../services/AuthentificationService6.js'
 import io from 'socket.io-client'
 import axios from 'axios';
 
@@ -250,6 +251,15 @@ export default {
     Message: {},
     PrenomClt : '',
     Garage: {},
+    minDate: "", 
+
+
+    Nom: '',
+    Email: '',
+    Telephone: '',
+    Dates: '',
+    Heure: '',
+    id_garage: '',
 
 
     PhotoClt : '',
@@ -257,6 +267,7 @@ export default {
     id_sender: '',
     token: localStorage.getItem('token'),
     socket: io('http://localhost:8082')
+    
     }
     },
     mounted() {
@@ -269,7 +280,38 @@ export default {
         this.listermessage();
     });
     },
+    created(){
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = String(today.getMonth() + 1).padStart(2, "0");
+    const day = String(today.getDate()).padStart(2, "0");
+    this.minDate = `${year}-${month}-${day}`;
+    },
     methods: {
+    async register(id) {
+    const dataToSend = {
+    Nom: this.Client.Nom,
+    Email: this.Client.Email,
+    Telephone: this.Client.Telephone,
+    Date: this.Dates,
+    Heure: this.Heure,
+    id_garage: id,
+   
+    };
+
+    try {
+    const response = await AuthenticationService6.register(dataToSend);
+    console.log(response.data);
+
+
+    alert("Demmande de rendez-vous envoyer !");
+
+    } catch (error) {
+    console.error('Error registering the item:', error);
+        // Handle the error here if necessary
+    }
+    
+  },
     slide1() {
     let a = document.getElementById("rindra");
     if (a.style.display === "block") {
@@ -295,7 +337,7 @@ export default {
 
 
     // Prendre le message du personne cliqué
-    listermessage(){
+    listermessage() {
     axios.get('http://localhost:8082/api/messages/listermessage')
     .then(response => {
         this.Message = response.data
@@ -328,6 +370,7 @@ export default {
     .then(response => {
     this.Client = response.data.clt;
     this.id_sender = this.Client.id;
+    this.Email = this.Client.Email;
     }).catch(error => {
     console.log(error);
     })
@@ -430,6 +473,42 @@ h2 {
 h2 > span {
     font-size: 14px;
 }
+
+.appointment-label,
+  .appointment-input {
+    position: absolute;
+  }
+
+  /* Styles for the "Date du rendez-vous" section */
+  .date-section .appointment-label {
+    margin-top: 70px;
+  }
+
+  .date-section .appointment-input {
+    margin-top: 70px;
+    margin-left: 290px;
+    width: 300px;
+    height: 40px;
+    border-radius: 5px;
+    border-color: green;
+  }
+
+  /* Styles for the "Heure du rendez-vous" section */
+  .time-section .appointment-label {
+    margin-top: 130px;
+  }
+
+  .time-section .appointment-input {
+    margin-top: 130px;
+    margin-left: 290px;
+    width: 300px;
+    border-radius: 5px;
+    height: 40px;
+    border-color: green;
+  }
+
+
+
 .navbar {
     display: flex;
     position: fixed;

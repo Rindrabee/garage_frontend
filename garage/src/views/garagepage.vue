@@ -63,7 +63,7 @@
             </div>
 
             <div class="sidebar-menu">
-                <span class="fas fa-calendar-alt"></span><p style="font-size: 13px;">Rendez-vous</p>
+                <span @click="garagerendezvous" class="fas fa-calendar-alt"></span><p @click="garagerendezvous" style="font-size: 13px;">Rendez-vous</p>
             </div>
           
 
@@ -312,6 +312,9 @@ export default {
         },
         garageclient() {
             this.$router.push({ name: 'garageclient' });
+        },
+        garagerendezvous() {
+            this.$router.push({ name: 'garagerendezvous' });
         },
 
         //Fermer ajouter voiture

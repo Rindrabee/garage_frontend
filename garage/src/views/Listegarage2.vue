@@ -44,25 +44,28 @@
                                 </div>
                         </div>  
 
-                        <div class="card-content">
-                           <h2 class="name">{{ g.Nom }}</h2>
-                           <br>
-                           <p class="description">
-                            <p><span style="font-family: elephant;">Specialité :</span> {{ g.Specialite }}</p>
-                            <p><span style="font-family: elephant;">Adresse :</span> {{ g.Adresse }}</p>
-                            <p><span style="font-family: elephant;">Email :</span> {{ g.Email }}</p>
-                            <p><span style="font-family: elephant;">Telephone :</span> {{ g.Telephone }}</p>
-                            <p><span style="font-family: elephant;">Heure d'ouverture :</span> {{ g.Heures_ouverture }}</p>
-                            <p><span style="font-family: elephant;">Heure de fermeture :</span> {{ g.Heures_fermeture  }}</p>
-                            <p><span style="font-family: elephant;">Service offerte :</span> {{ g.service_offerte   }}</p>
-                            <br>
+                    <div class="card-content">
+                        <h2 class="name">{{ g.Nom }}</h2>
+                        <br>
+                        <p class="description">
+                        <p><span style="font-family: elephant;">Specialité :</span> {{ g.Specialite }}</p>
+                        <p><span style="font-family: elephant;">Adresse :</span> {{ g.Adresse }}</p>
+                        <p><span style="font-family: elephant;">Email :</span> {{ g.Email }}</p>
+                        <p><span style="font-family: elephant;">Telephone :</span> {{ g.Telephone }}</p>
+                        <p><span style="font-family: elephant;">Heure d'ouverture :</span> {{ g.Heures_ouverture }}</p>
+                        <p><span style="font-family: elephant;">Heure de fermeture :</span> {{ g.Heures_fermeture  }}</p>
+                        <p><span style="font-family: elephant;">Service offerte :</span> {{ g.service_offerte   }}</p>
+                        <br>
+  
+                           
 
-                            <button v-if="Mecanicien.id_garage == null" @click="insciregarage(g.id)" class="button">S'inscire</button>
-                            
-                            <button v-if="Mecanicien.id_garage != null && Mecanicien.Etat2 == null" class="button">En attente</button>
+                        <p v-if="Mecanicien.Etat2 == null && Mecanicien.id_garage == g.id" style="color: red;">En attente</p>
 
-                            <button v-if="Mecanicien.Etat2 == 1" class="button">Déja Membre</button>
-                       
+                        <button v-if="Mecanicien.Etat2 == 1 && Mecanicien.id_garage == g.id" class="button">Déja Membre</button>
+
+                        <button v-if="Mecanicien.Etat2 == null || Mecanicien.id_garage != g.id" @click="insciregarage(g.id)" class="button">S'inscire</button>
+                    
+                    
                         </p>
 
                         </div>
@@ -125,8 +128,8 @@
 
         // S'inscire sur une garage
        
-        insciregarage(idgrg) {
-       // Supposons que vous avez les données du client dans this.Client
+       insciregarage(idgrg) {
+      
       const updatedClientData = {
       id_garage: idgrg,
       };

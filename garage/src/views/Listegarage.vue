@@ -58,13 +58,15 @@
                             <br>
 
                              
-                            <button v-if="Client.id_garage != null && Client.Etat2 == null" class="button">En attente</button>
+                            <p v-if="Client.Etat2 == null && Client.id_garage == g.id" style="color: red;">En attente</p>
 
-                            <button v-if="Client.Etat2 == 1" class="button">Déja Membre</button>
+                            <button v-if="Client.Etat2 == 1 && Client.id_garage == g.id" class="button">Déja Membre</button>
 
-                            <button v-if="Client.id_garage == null" @click="insciregarage(g.id)" class="button">S'inscire</button>
+                            <button v-if="Client.Etat2 == null || Client.id_garage != g.id" @click="insciregarage(g.id)" class="button">S'inscire</button>
                             
-                        </p>
+                           
+                            </p>
+                        
                         </div>
 
                     </div>

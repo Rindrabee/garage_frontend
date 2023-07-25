@@ -64,7 +64,7 @@
             </div>
 
             <div class="sidebar-menu">
-                <span class="fas fa-calendar-alt"></span><p style="font-size: 13px;">Rendez-vous</p>
+                <span @click="garagerendezvous" class="fas fa-calendar-alt"></span><p @click="garagerendezvous" style="font-size: 13px;">Rendez-vous</p>
             </div>
 
          
@@ -79,6 +79,7 @@
                     <div class="detail-header">
                         <p style="font-family: century gothic;font-size: 18px; ">Liste des clients :</p>
                     </div>
+
                     <br>
 
                     <table>
@@ -121,8 +122,8 @@
 
                     </table>
                 </div>
-    
                    
+
         </main>
     </div>
     </body>
@@ -194,6 +195,10 @@
 
         garagemecanicien() {
         this.$router.push({ name: 'garageMECANICIEN' });
+        },
+
+        garagerendezvous() {
+        this.$router.push({ name: 'garagerendezvous' });
         },
 
 

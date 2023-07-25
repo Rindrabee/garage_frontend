@@ -49,132 +49,128 @@
                 <div class="sidebar-menu">
                     <span @click="garageaccueil" class="fas fa-home"></span><p @click="garageaccueil" style="font-size: 13px;">Accueil</p>
                 </div>
-
+    
                 <div class="sidebar-menu">
-                   <span @click="garageclient" class="fas fa-user"></span><p @click="garageclient" style="font-size: 13px;">Client</p>
+                    <span @click="garageclient" class="fas fa-user"></span><p @click="garageclient"  style="font-size: 13px;">Client</p>
                 </div>
-
+    
                 <div class="sidebar-menu">
                     <span @click="garagemecanicien" class="fas fa-wrench"></span><p @click="garagemecanicien" style="font-size: 13px;">Mecanicien</p>
                 </div>
+    
                 <div class="sidebar-menu">
-                    <span class="fas fa-exclamation-triangle"></span><p style="font-size: 13px;">Urgence</p>
+                    <span @click="urgencegarage" class="fas fa-exclamation-triangle"></span><p @click="urgencegarage" style="font-size: 13px;">Urgence</p>
                 </div>
-
+    
                 <div class="sidebar-menu">
                     <span @click="garagerendezvous" class="fas fa-calendar-alt"></span><p @click="garagerendezvous" style="font-size: 13px;">Rendez-vous</p>
                 </div>
-             
             </div>
+
+            
             <!-- main dashboard -->
             <main>
                 <div id="ambany" class="dashboard-container">
                     <!-- cards top -->
-                   
-
-                 
-                
-                <div class="card detail">
-                <div class="detail-header">
-                    <p style="font-family: century gothic;font-size: 18px; ">Listes des urgences en attente :</p>
-                  
                 </div>
-                <br>
-                <table>
-                    <tr>
-                        <th>Numero</th>
-                        <th>Nom</th>
-                        <th>Telephone</th>
-                        <th>Probleme</th>
-                        <th>Action1</th>
-                        <th>Action2</th>
-                    </tr>
-
-                    <tr v-for="u in Urgence" :key="u.id">
-                        <td v-if="u.Etat == 2 && u.id_garage == Garage.id">{{ u.id }}</td>
-                        <td v-if="u.Etat == 2 && u.id_garage == Garage.id">{{ u.Nom }}</td>
-                        <td v-if="u.Etat == 2 && u.id_garage == Garage.id">{{ u.Telephone }}</td>
-                        <td v-if="u.Etat == 2 && u.id_garage == Garage.id">{{ u.Probleme }}</td>
-                      
-                        <td v-if="u.Etat == 2 && u.id_garage == Garage.id"><button @click="detailurgence(u.id)" class="btn btn-outline-danger">Voir</button></td>
-                        <td v-if="u.Etat == 2 && u.id_garage == Garage.id"><button @click="discu2(u.id)" class="btn btn-outline-success">Rediriger</button></td>
-                   
-                    </tr>
-
-                    <!-- apina -->
-
-                </table>
-                
-            </div>
-
-                    <div class="card customer">
-                        <h3 style="font-family: Poppins,sans-serif;font-size: 18.5px;">Discussion</h3>
+    
+                <div  class="card detail">
+                        <div class="detail-header">
+                        <p style="font-family: century gothic;font-size: 18px; ">Liste des rendez-vous :</p>
+                          
+                        </div>
                         <br>
-                        <div class="customer-wrapper">
-                            <img class="customer-image" src="../assets/images/aza.jpg" alt="">
-                            <div class="customer-name">
-                                <h4>Mollitia rerum</h4>
-                                <p style="font-size: 12px;">Panina..</p>
-                            </div>
-                            <p class="customer-date">Today</p>
-                        </div>
+                        <!-- Liste des voitures dans votre garages  -->
+    
+                        <div class="voiture">
+         
+                            <table>
+                            <tr>
+                               
+                                <th>Numéro</th>
+                                <th>Nom</th>
+                                <th>Email</th>
+                                <th>Telephone</th>
+                                <th>Date</th>
+                                <th>Heure</th>
+                                <th>Action1</th>
+                                <th>Action2</th>
+                         
+                            </tr>
+                            
+                            <tr v-for="v in rendez" :key="v.id">
+                            
+                            <td v-if="v.id_garage == id_garage">{{ v.id }}</td>
+                            <td v-if="v.id_garage == id_garage">{{ v.Nom }}</td>
+                            <td v-if="v.id_garage == id_garage">{{ v.Email }}</td>
+                            <td v-if="v.id_garage == id_garage">{{ v.Telephone }}</td>
+                            <td v-if="v.id_garage == id_garage">{{ v.Date }}</td>
+                            <td v-if="v.id_garage == id_garage">{{ v.Heure }}</td>
+
+                          
+                            <td v-if="v.id_garage == id_garage"><button class="btn btn-outline-success">Accepter</button></td>
+                            <td v-if="v.id_garage == id_garage"><button class="btn btn-outline-danger">Reffuser</button></td>
+                            </tr>
         
-                        <div class="customer-wrapper">
-                            <img class="customer-image" src="../assets/images/xel.jpg" alt="">
-                            <div class="customer-name">
-                                <h4>Dolor amet</h4>
-                                <p style="font-size: 12px;">Salut</p>
-                            </div>
-                            <p class="customer-date">Yesterday</p>
+                        </table>
                         </div>
-        
-                        <div class="customer-wrapper">
-                            <img class="customer-image" src="../assets/images/GRG1.png" alt="">
-                            <div class="customer-name">
-                                <h4>Ipsum volupta</h4>
-                                <p style="font-size: 12px;">De aona e</p>
-                            </div>
-                            <p class="customer-date">22/02/21</p>
-                        </div>
+    
+                   
+    
+    
     
                     </div>
-                    
-        
-                </div>
                                    
-        <div id="choisir" style="display: none; box-shadow: 2px 2px 10px black; background-color: #0f530f; border-radius: 20px; position: fixed; top: 120px; margin-left: 270px; width: 550px;" class="container conversation">
-        <br>
-        <div style="width: 500px;text-align: center;margin-left: 10px;margin-bottom: 30px;" class="row">
-        <div>
-            <img @click="fermer" style="width: 30px; margin-left: 450px; cursor: pointer;" src="../assets/images/close.png" alt="">
-        </div>
-        <br><br>
-        <table style="background-color: palegreen; width: 100%; border-collapse: collapse;border-radius: 10px;">
-            <br>
-
-            <tr>
-                <th>Photo</th>
-                <th>Nom</th>
-                <th>Specialité</th>
-                <th>Action</th>
-            </tr> 
-
-
-            <tr v-for="u in Mecanicien" :key="u.id">
-                <td v-if="u.id_garage == Garage.id && u.Etat2 == 1"><img style="width: 40px;height: 40px;border-radius: 50%;" :src="'http://localhost:8082/' +  u.Photo  + '.jpeg'" alt=""></td>
-                <td v-if="u.id_garage == Garage.id && u.Etat2 == 1">{{ u.Nom }}</td>
-                <td v-if="u.id_garage == Garage.id && u.Etat2 == 1">{{ u.Specialite }}</td>
-                <td v-if="u.id_garage == Garage.id && u.Etat2 == 1"><button class="btn btn-outline-success" @click="redirectUrgenceTomecanicien(u.id)">Coller</button></td>
-                <br><br><br>
-            </tr>
-            
-        </table>
-
+                
+           <!-- ajouter voiture -->
+           <div id="ajoutervoiture" style="display: none; box-shadow: 2px 2px 10px black;background-color: #0f530f;border-radius : 20px;position: fixed;top: 130px;margin-left: 140px;width: 728px;" class="container">
+    
+        <form>
+        <div  class="box">
+        <h1 class="form-title">Ajouter un voiture<img @click="fermerajoutervoiture" style="width: 30px;margin-left: 327.5px;cursor: pointer;" src="../assets/images/close.png" alt=""></h1>
+    
+        <div id="pejy1" class="page1">
+        <div class="user-input-box">
+          <label for="numero">Numero de la voiture</label>
+          <input v-model="Numero" type="text" id="numero" name="numero" :placeholder="isFieldEmpty && !Numero ? 'Le numero du voiture' : 'Le numero du voiture'" :class="{'error': isFieldEmpty && !Numero}">
         </div>
     
+        <div class="user-input-box">
+          <label for="nom">Nom de la voiture</label>
+          <input v-model="Nom" type="text" id="nom" name="nom" :placeholder="isFieldEmpty && !Nom ? 'Le nom du voiture' : 'Le nom du voiture'" :class="{'error': isFieldEmpty && !Nom}">
+        </div>
+    
+    
+        <div class="user-input-box">
+          <label for="date">Date d'enter au garage</label>
+          <input v-model="Date1" style="color: grey;" type="date" id="date" name="date" placeholder="Date d'entrer au garage">
+          <div style="color: red;margin-right: 100px;font-size: 12px;" v-if="isFieldEmpty && !Date1" class="field-message">Veuillez compléter ce champ</div>
+        </div>
+    
+        <div class="user-input-box">
+          <label for="probleme">Problème de la voiture</label>
+          <input v-model="Probleme" type="text" id="probleme" name="probleme" :placeholder="isFieldEmpty && !Probleme ? 'Le problème du voiture' : 'Le problème du voiture'" :class="{'error': isFieldEmpty && !Probleme}">
+        </div>
+    
+    
+        <div class="user-input-box">
+          <label for="photo">Photo de la voiture</label>
+          <input @change="handleImage" ref="postImageInput" style="background: white;" type="file" id="photo" name="photo" placeholder="Choisir votre photo">
+          <div style="color: red;margin-right: 100px;font-size: 12px;" v-if="isFieldEmpty && !Photo" class="field-message">Veuillez compléter ce champ</div>
+        </div>
+    
+    
+        <h2 style="margin-top: 49px;opacity: 0%;">45</h2>
+      
+      </div>
+      </div> 
+      </form>
+    
+      <div style="position: absolute;margin-top: 320px;" @click="addcar" id="next" class="form-submit-btn">
+        <input style="margin-left: 20px;" type="button" class="btn btn-success"  value="Enregistrer">
+      </div>
+    
     </div>
-
-       
     </main>
     </div>
     </body>
@@ -189,33 +185,27 @@
     export default {
         data () {
             return {
-            Numero: '',
-            Nom: '',
-            Date1: '',
-            Probleme: '',
-            Photo: '',
-            Voiture: {},
-            Garage: {},
-            Garage2: {},
-            idMecanicien : 0,
-            Urgence: {},
-            Mecanicien: {},
-            idUrgence: '',
+                Numero: '',
+                Nom: '',
+                Date1: '',
+                Probleme: '',
+                Photo: '',
+                Voiture: {},
+                rendez: {},
+                Garage: {},
+                id_garage : '',
+                
     
-            
-
-            isFieldEmpty: false,
-            isInvalidEmail: false,
-            acceptConditions: false,
-            
+                isFieldEmpty: false,
+                isInvalidEmail: false,
+                acceptConditions: false,
             }
         },
         mounted() {
             this.listevoiture();
+            this.listerendezvous();
             this.garageconnecter();
-            this.Prendrelesurgnece();
-            this.listegarage();
-            this.listermecanicien();
+            this.listeurgence();
         },
         methods: {
             slide1() {
@@ -235,38 +225,13 @@
                 b.style.opacity = "80%";
     
             },
-
-            //Lister tous les garages
-            listegarage() {
-            axios.get('http://localhost:8082/api/garages/listergarage')
-            .then(response => {
-            this.Garage2 = response.data
-            })
+            // Liste rendez vous 
+            listerendezvous() {
+                axios.get('http://localhost:8082/api/rendes/listerrendezvous')
+                .then(response => {
+                    this.rendez = response.data
+                })
             },
-            //Lister tous les mecaniciens
-            listermecanicien() {
-            axios.get('http://localhost:8082/api/mecaniciens/listermecanicien')
-            .then(response => {
-            this.Mecanicien = response.data
-            })
-            },
-
-            //detail urgence
-            detailurgence(id) {
-            this.$router.push({ name: 'showurgence2' });
-            localStorage.setItem('id',id)
-            },
-
-            // Lister la liste des urgences
-            Prendrelesurgnece() {
-            axios.get('http://localhost:8082/api/admins/getAllUrgence')
-            .then(response => {
-            this.Urgence = response.data
-            console.log('urgences', response.data);
-            })
-            },
-
-
             //Lister les voitres
             listevoiture() {
                 axios.get('http://localhost:8082/api/garages/listervoiture')
@@ -292,7 +257,10 @@
             modificationgarage() {
                 this.$router.push({ name: 'modificationgarage' });
             },
-
+           // urgence dans la garage
+            urgencegarage() {
+                this.$router.push({ name: 'garageurgence' });
+            },
             garagemecanicien() {
                 this.$router.push({ name: 'garageMECANICIEN' });
             },
@@ -300,13 +268,11 @@
                 this.$router.push({ name: 'garageclient' });
             },
 
+            garageaccueil() {
+                this.$router.push({ name: 'garagepage' });
+            },
             garagerendezvous() {
                 this.$router.push({ name: 'garagerendezvous' });
-            },
-
-            // Accueil dans le garage
-            garageaccueil() {
-            this.$router.push({ name: 'garagepage' });
             },
     
             //Fermer ajouter voiture
@@ -330,50 +296,7 @@
                     console.log('urgences', response.data);
                 });
             },
-
-            // mapiseo anle div liste mecanicien
-            discu2(id){
-            localStorage.setItem('id',id)
-            let a = document.getElementById("choisir")
-            let b = document.getElementById("ambadika")
-
-            
-
-            a.style.display = "block";
-            b.style.opacity = "70%";
-
-            
-            },
     
-    // fermer le liste des mecaniciens
-    fermer() {
-    localStorage.removeItem('id')
-    let a = document.getElementById("choisir")
-    let b = document.getElementById("ambadika")
-
-   
-    a.style.display = "none";
-    b.style.opacity = "100%";
-
-    },
-    // Redirect to mecanicien
-    redirectUrgenceTomecanicien (idMecanicien) {
-        console.log(this.idUrgence)
-        const url = import.meta.env.VITE_API_URL + '/api/admins/redirectToMecanicien';
-        const body = {
-        'idMecanicien': idMecanicien,
-        'idUrgence': localStorage.getItem('id')
-        };
-        
-
-        axios.post(url, body)
-        .then(response => {
-        alert("Urgence envoyer vers ce mecanicien")
-        
-    });
-    },
-
-
             logout() {
                 axios.post('http://localhost:8082/api/garages/logout')
                 .then(response => {
@@ -596,6 +519,7 @@
     background-color: #fff;
     padding: 1rem;
     border-radius: 10px;
+    
     }
     .total1 {
     grid-area: total1;
@@ -617,9 +541,10 @@
     background-color: #F5F5F5;
     color: #000;
     }
+    
     .detail {
     grid-area: detail;
-    margin-bottom: 50px;
+    overflow-x: auto;
     }
     .customer {
     grid-area: customer;

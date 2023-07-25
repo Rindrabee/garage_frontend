@@ -166,7 +166,7 @@
     <!-- mipotra ito refa cliquena le discussion -->
   
         
-    <div id="conversation"  style="display: none; box-shadow: 2px 2px 10px black;background-color: #0f530f;border-radius : 20px;position: fixed;top: 170px;margin-left: 340px;width: 800px;" class="container conversation">
+    <div id="conversation"  style="display: none; box-shadow: 2px 2px 10px black;background-color: #0f530f;border-radius : 20px;position: fixed;top: 180px;margin-left: 300px;width: 800px;" class="container conversation">
         <br>
         
             <div class="row">
@@ -180,7 +180,7 @@
             <!-- ito le soratra anarana eny ambony -->
             <div style="height: 420px;width: 100%;" class="col-lg-9 right-col">
                 <div class="card chat" ref="chat">
-                    <div style="position: fixed;margin-top: 182px;width: 40%;" class="chat-header clearfix">
+                    <div style="position: fixed;margin-top: 192px;width: 40%;" class="chat-header clearfix">
                         <div class="row">
                             <div class="col-lg-6">
                                 <div class="chat-about">
