@@ -49,19 +49,24 @@
             <div class="sidebar-menu">
                 <span class="fas fa-home"></span><p style="font-size: 13px;">Accueil</p>
             </div>
+
+            <div class="sidebar-menu">
+                <span @click="garageclient" class="fas fa-user"></span><p @click="garageclient"  style="font-size: 13px;">Client</p>
+            </div>
+
+            <div class="sidebar-menu">
+            <span @click="garagemecanicien" class="fas fa-wrench"></span><p @click="garagemecanicien" style="font-size: 13px;">Mecanicien</p>
+            </div>
+
             <div class="sidebar-menu">
                 <span @click="urgencegarage" class="fas fa-exclamation-triangle"></span><p @click="urgencegarage" style="font-size: 13px;">Urgence</p>
             </div>
+
             <div class="sidebar-menu">
                 <span class="fas fa-calendar-alt"></span><p style="font-size: 13px;">Rendez-vous</p>
             </div>
-            <div class="sidebar-menu">
-                <span @click="garagemecanicien" class="fas fa-wrench"></span><p @click="garagemecanicien" style="font-size: 13px;">Mecanicien</p>
-            </div>
-           
-            <div class="sidebar-menu">
-                <span class="fas fa-file-invoice"></span><p style="font-size: 13px;">Comptabilité</p>
-            </div>
+          
+
         </div>
         <!-- main dashboard -->
         <main>
@@ -304,6 +309,9 @@ export default {
         },
         garagemecanicien() {
             this.$router.push({ name: 'garageMECANICIEN' });
+        },
+        garageclient() {
+            this.$router.push({ name: 'garageclient' });
         },
 
         //Fermer ajouter voiture

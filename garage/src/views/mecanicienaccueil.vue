@@ -84,7 +84,8 @@
                         <th>Problème</th>
                         <th>Telephone</th>
                         <th>Discussion</th>
-                        <th>Action</th>
+                        <th>Action1</th>
+                        <th>Action2</th>
                     </tr>
 
                     <tr v-for="u in Urgence" :key="u.id">
@@ -96,8 +97,9 @@
                         <td v-if="u.Etat == 3 && u.id_mecanicien == Mecanicien.id"><span @click="discu(u.id,u.Nom)" class="status
                             confirmed"><i @click="discu(u.id,u.Nom)" style="cursor: pointer;" class="fas fa-message"></i></span></td>
                         
-                        <td v-if="u.Etat == 3 && u.id_mecanicien == Mecanicien.id"><button @click="detailurgence(u.id)" class="btn btn-outline-danger">Voir</button></td>
+                        <td v-if="u.Etat == 3 && u.id_mecanicien == Mecanicien.id"><button @click="detailurgence(u.id)" class="btn btn-outline-info">Voir</button></td>
                         
+                        <td v-if="u.Etat == 3 && u.id_mecanicien == Mecanicien.id"><button @click="supprimer(u.id)" class="btn btn-outline-danger">Terminer</button></td>
                     </tr>
 
                 </table>
@@ -253,6 +255,18 @@ export default {
     console.log('urgences', response.data);
     })
     },
+
+    // Supprimer ou terminer un urgences
+    supprimer(id) {
+    axios.delete('http://localhost:8082/api/admins/supprimerurgence/'+id)
+    .then(response => {
+    alert("Vous avez terminer votre travail")
+    console.log(response.data);
+    })
+    },
+
+
+
     //detail urgence
     detailurgence(id) {
     this.$router.push({ name: 'showurgence3' });
@@ -536,7 +550,7 @@ color: #ffa400;
 width: 100%;
 border-collapse: collapse;
 }
-.detail table tr:nth-child(odd){
+.detail table tr:nth-child(odd) {
 background-color: #f8f8fb;
 }
 .detail table th {
@@ -546,7 +560,6 @@ background-color: #f4f4fb;
 .detail table td {
 padding:  0.8rem 0.2rem;
 text-align: left;
-min-width: 120px;
 font-size: 14px;
 }
 .detail table tr:hover {

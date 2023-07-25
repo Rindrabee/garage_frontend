@@ -49,19 +49,22 @@
                 <div class="sidebar-menu">
                     <span @click="garageaccueil" class="fas fa-home"></span><p @click="garageaccueil" style="font-size: 13px;">Accueil</p>
                 </div>
+
                 <div class="sidebar-menu">
-                    <span class="fas fa-exclamation-triangle"></span><p style="font-size: 13px;">Urgence</p>
+                   <span @click="garageclient" class="fas fa-user"></span><p @click="garageclient" style="font-size: 13px;">Client</p>
                 </div>
-                <div class="sidebar-menu">
-                    <span class="fas fa-calendar-alt"></span><p style="font-size: 13px;">Rendez-vous</p>
-                </div>
+
                 <div class="sidebar-menu">
                     <span @click="garagemecanicien" class="fas fa-wrench"></span><p @click="garagemecanicien" style="font-size: 13px;">Mecanicien</p>
                 </div>
-               
                 <div class="sidebar-menu">
-                    <span class="fas fa-file-invoice"></span><p style="font-size: 13px;">Comptabilité</p>
+                    <span class="fas fa-exclamation-triangle"></span><p style="font-size: 13px;">Urgence</p>
                 </div>
+
+                <div class="sidebar-menu">
+                    <span class="fas fa-calendar-alt"></span><p style="font-size: 13px;">Rendez-vous</p>
+                </div>
+             
             </div>
             <!-- main dashboard -->
             <main>
@@ -150,21 +153,24 @@
             <br>
 
             <tr>
+                <th>Photo</th>
                 <th>Nom</th>
                 <th>Specialité</th>
                 <th>Action</th>
             </tr> 
-           
+
+
             <tr v-for="u in Mecanicien" :key="u.id">
-                <td>{{ u.Nom }}</td>
-                <td>{{ u.Specialite }}</td>
-                <td><button class="btn btn-outline-success" @click="redirectUrgenceTomecanicien(u.id)">Coller</button></td>
+                <td v-if="u.id_garage == Garage.id && u.Etat2 == 1"><img style="width: 40px;height: 40px;border-radius: 50%;" :src="'http://localhost:8082/' +  u.Photo  + '.jpeg'" alt=""></td>
+                <td v-if="u.id_garage == Garage.id && u.Etat2 == 1">{{ u.Nom }}</td>
+                <td v-if="u.id_garage == Garage.id && u.Etat2 == 1">{{ u.Specialite }}</td>
+                <td v-if="u.id_garage == Garage.id && u.Etat2 == 1"><button class="btn btn-outline-success" @click="redirectUrgenceTomecanicien(u.id)">Coller</button></td>
                 <br><br><br>
             </tr>
-
         </table>
 
         </div>
+    
     </div>
 
        
@@ -289,7 +295,9 @@
             garagemecanicien() {
                 this.$router.push({ name: 'garageMECANICIEN' });
             },
-
+            garageclient() {
+                this.$router.push({ name: 'garageclient' });
+            },
 
             // Accueil dans le garage
             garageaccueil() {

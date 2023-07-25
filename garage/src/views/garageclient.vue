@@ -51,11 +51,12 @@
             </div>
 
             <div class="sidebar-menu">
-                <span @click="garageclient" class="fas fa-user"></span><p @click="garageclient" style="font-size: 13px;">Client</p>
+                <span class="fas fa-user"></span><p style="font-size: 13px;">Client</p>
             </div>
 
+
             <div class="sidebar-menu">
-                <span class="fas fa-wrench"></span><p style="font-size: 13px;">Mecanicien</p>
+                <span @click="garagemecanicien" class="fas fa-wrench"></span><p @click="garagemecanicien" style="font-size: 13px;">Mecanicien</p>
             </div>
 
             <div class="sidebar-menu">
@@ -66,6 +67,9 @@
                 <span class="fas fa-calendar-alt"></span><p style="font-size: 13px;">Rendez-vous</p>
             </div>
 
+         
+           
+           
         </div>
             <!-- main dashboard -->
             <main>
@@ -73,22 +77,23 @@
                 <br>
                 <div class="card detail">
                     <div class="detail-header">
-                        <p style="font-family: century gothic;font-size: 18px; ">Liste des mécaniciens :</p>
+                        <p style="font-family: century gothic;font-size: 18px; ">Liste des clients :</p>
                     </div>
                     <br>
+
                     <table>
                         <tr>
                             <th>Photo</th>
                             <th>Nom</th>
                             <th>Naissance </th>
                             <th>Adresse</th>
-                            <th>Specialite </th>
+                          
                             <th>Télephone </th>
                             <th>Discussion</th>
                             <th>Action</th>
                         </tr>
                         
-                        <tr v-for="g in Mecanicien" :key="g.id">
+                        <tr v-for="g in Client" :key="g.id">
 
                        
                         <td v-if="g.id_garage == Garage.id">
@@ -98,7 +103,7 @@
                         <td v-if="g.id_garage == Garage.id">{{ g.Nom }}</td>
                         <td v-if="g.id_garage == Garage.id">{{ g.Naissance }}</td>
                         <td v-if="g.id_garage == Garage.id">{{ g.Adresse }}</td>
-                        <td v-if="g.id_garage == Garage.id" style="color: rgb(25, 72, 224);">{{ g.Specialite }}</td>
+                     
                         <td v-if="g.id_garage == Garage.id">{{ g.Telephone }}</td>
 
 
@@ -106,10 +111,11 @@
 
                         <td v-if="g.Etat2 == 1 && g.id_garage == Garage.id"><i style="margin-left: 30px;cursor: pointer;" class="fas fa-message"></i></td>
                         
-                        <td v-if="g.Etat2 == null && g.id_garage == Garage.id"><button @click="showgaragemecanicien(g.id)" class="btn btn-outline-danger">Consulter</button></td>
+                        <td v-if="g.Etat2 == null && g.id_garage == Garage.id"><button @click="showgaragecli(g.id)" class="btn btn-outline-danger">Consulter</button></td>
                        
-                        <td v-if="g.Etat2 == 1 && g.id_garage == Garage.id"><button @click="showgaragemecanicien(g.id)" class="btn btn-outline-success">Voir profile</button></td>
+                        <td v-if="g.Etat2 == 1 && g.id_garage == Garage.id"><button @click="showgaragecli(g.id)" class="btn btn-outline-success">Voir profile</button></td>
                        
+
                         </tr>
     
 
@@ -132,7 +138,7 @@
     export default {
         data () {
         return {
-         Mecanicien : {},
+         Client: {},
          id_sender: '',
          Garage: {},
          mecid : '',
@@ -140,7 +146,7 @@
         }
         },
         mounted() {
-        this.listedesmecanicien();
+        this.listedesclients();
         this.garageconnecter();
         },
         
@@ -154,11 +160,11 @@
             }
         },
 
-        listedesmecanicien() {
-        axios.get('http://localhost:8082/api/mecaniciens/listermecanicien')
+        listedesclients() {
+        axios.get('http://localhost:8082/api/clients/allClients')
         .then(response => {
-        this.Mecanicien = response.data
-        this.mecid = this.Mecanicien.id_garage
+        this.Client = response.data
+        this.mecid = this.Client.id_garage
         })
         },
         //Prendre le session du garage connecté
@@ -184,16 +190,21 @@
         urgencegarage() {
         this.$router.push({ name: 'garageurgence' });
         },
+
+
+        garagemecanicien() {
+        this.$router.push({ name: 'garageMECANICIEN' });
+        },
+
+
         garagepage() {
         this.$router.push({ name: 'garagepage' });
         },
-        garageclient() {
-            this.$router.push({ name: 'garageclient' });
-        },
 
-        showgaragemecanicien(id) {
-        this.$router.push({ name: 'showgaragemeca' });
+        showgaragecli(id) {
+        this.$router.push({ name: 'showgaragecli' });
         localStorage.setItem('id',id)
+        
         },
 
        

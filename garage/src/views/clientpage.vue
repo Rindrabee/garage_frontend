@@ -71,7 +71,7 @@
                     <h3 style="font-size: 20px;">Rendez-vous</h3>
                     <p style="font-family: century gothic;font-size: 13px;">prendre rendez-vous</p>
                     <h2><span>UTILE</span></h2>
-                    <button class="btn btn-outline-success">Continuer</button>
+                    <button @click="showrendezvous" class="btn btn-outline-success">Continuer</button>
                     </div>
                     <div class="info-image">
                     <i class="fas fa-calendar-check"></i>
@@ -86,7 +86,7 @@
                     <h3 style="font-size: 20px;">GARAGE</h3>
                     <p style="font-family: century gothic;font-size: 13px;">Recherche garage</p>
                     <h2><span>NECESSAIRE</span></h2>
-                    <button @click="listegarage" class="btn btn-outline-success">Continuer</button>
+                    <button @click="listegaragerr" class="btn btn-outline-success">Continuer</button>
                     </div>
                     <div class="info-image">
                     <i class="fas fa-search"></i>
@@ -156,6 +156,7 @@
                         </div>
                     </div>
                     <br>
+
                     <div class="chat-history">
                         <ul class="m-b-0">
                             <li class="clearfix" v-for="m in Message" :key="m.id" >
@@ -166,6 +167,7 @@
                             </li>
                         </ul>
                     </div>
+
                    <br>
                    <!-- div le ery ambany le anoratana -->
                 </div>
@@ -179,6 +181,54 @@
                 </div>
             </div>
         </div>
+    </div>
+
+
+     
+    <!-- Rehefa anao demande na rendez-vous -->
+
+    <div id="rendez"  style="display: none; box-shadow: 2px 2px 10px black;background-color: #0f530f;border-radius : 20px;position: fixed;top: 170px;margin-left: -40px;width: 800px;" class="container conversation">
+    <br>
+        
+    <div class="row">
+
+    <div>
+        <img @click="fermerrendez" style="width: 30px;margin-left: 720px;cursor: pointer;" src="../assets/images/close.png" alt="">
+    </div>
+          
+    <br><br>
+
+    <!-- ito le soratra anarana eny ambony -->
+    <div style="height: 420px;width: 100%;" class="col-lg-9 right-col">
+        <div class="card chat" ref="chat">
+            <div style="position: fixed;margin-top: 182px;width: 37%;height: 15px;" class="chat-header clearfix">
+                <p style="margin-top: -8px;">Demmande de rendez-vous</p>
+
+                <div>
+
+                <p style="margin-top: 70px;position: absolute;">Date du rendez vous</p><input style="margin-top: 70px;margin-left: 290px;position: absolute;" type="date" name="" id="">
+
+                <p style="margin-top: 130px;position: absolute;">Heure du rendez vous</p><input style="margin-top: 130px;margin-left: 290px;position: absolute;" type="time" name="" id="">
+
+
+                <p style="margin-top: 190px;position: absolute;">Garage</p><select v-for="g in Garage" :key="g.id" style="margin-top: 190px;margin-left: 290px;position: absolute;" name="" id="">
+                <option value="{{ g.id }}">{{ g.Nom }}</option>
+                </select>
+                
+                </div>
+
+                
+
+            </div>
+
+            <br>
+            <!-- div le ery ambany le anoratana -->
+        </div>
+        
+    </div>
+    </div>
+
+
     </div>
     </main>
     </div>
@@ -199,6 +249,9 @@ export default {
     Admin: {},
     Message: {},
     PrenomClt : '',
+    Garage: {},
+
+
     PhotoClt : '',
     id_received: '',
     id_sender: '',
@@ -210,6 +263,8 @@ export default {
     this.listeadmin();
     this.listermessage();
     this.clientconnecter();
+    this.listegarage();
+
     this.socket.on('chat message',(data) => {
         this.listermessage();
     });
@@ -233,7 +288,7 @@ export default {
         this.$router.push({ name: 'clientpage' });
     },
 
-    listegarage() {
+    listegaragerr() {
         localStorage.removeItem('id');
         this.$router.push({ name: 'Listegarage' });
     },
@@ -254,6 +309,14 @@ export default {
     })
     },
 
+    //Lister les garages
+    listegarage() {
+    axios.get('http://localhost:8082/api/garages/listergarage')
+    .then(response => {
+        this.Garage = response.data
+    })
+    },
+
 
     //Prendre le session du client connecté
     clientconnecter() {
@@ -268,6 +331,28 @@ export default {
     }).catch(error => {
     console.log(error);
     })
+    },
+
+    // Qui montre le div du rendez-vous
+    showrendezvous() {
+    let a = document.getElementById("rendez")
+    let b = document.getElementById("ambadika")
+   
+    
+    a.style.display = "block";
+    b.style.opacity = "70%";
+
+    },
+    
+    // fermer le div du rendez-vous
+    fermerrendez() {
+    let a = document.getElementById("rendez")
+    let b = document.getElementById("ambadika")
+
+
+    a.style.display = "none";
+    b.style.opacity = "100%";
+
     },
 
     // mapiseo anle div message
@@ -842,5 +927,7 @@ main {
         overflow-x: auto
     }
 }
+
+
 
 </style>

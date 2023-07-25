@@ -94,6 +94,7 @@ import axios from 'axios';
       methods: {
         versurgencepage() {
             localStorage.removeItem("newItemId")
+            this.supprimemessage();
             this.$router.push({name:'urgencepage'})
         },
         versconseilpage() {
@@ -101,6 +102,15 @@ import axios from 'axios';
         },
         versconseilaccident() {
             this.$router.push({name:'conseilaccident'})
+        },
+
+        // Supprimer tous les messages
+
+        supprimemessage() {
+        axios.delete('http://localhost:8082/api/messages/deletemessage2')
+        .then(response => {
+         console.log(response.data)
+        })
         },
       }
     }

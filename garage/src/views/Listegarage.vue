@@ -57,8 +57,14 @@
                             <p><span style="font-family: elephant;">Service offerte :</span> {{ g.service_offerte   }}</p>
                             <br>
 
-                            <button class="button">S'inscire</button>
-                            </p>
+                             
+                            <button v-if="Client.id_garage != null && Client.Etat2 == null" class="button">En attente</button>
+
+                            <button v-if="Client.Etat2 == 1" class="button">Déja Membre</button>
+
+                            <button v-if="Client.id_garage == null" @click="insciregarage(g.id)" class="button">S'inscire</button>
+                            
+                        </p>
                         </div>
 
                     </div>
@@ -86,7 +92,8 @@
           data () {
             return {
              Garage: {},
-             Client: {}
+             Client: {},
+             id_garage: '',
                
             }
           },
@@ -126,6 +133,26 @@
     }).catch(error => {
     console.log(error);
     })
+    },
+
+
+    // S'inscire sur une garage
+       
+    insciregarage(idgrg) {
+    // Supposons que vous avez les données du client dans this.Client
+    const updatedClientData = {
+    id_garage: idgrg,
+    };
+
+    axios
+    .put('http://localhost:8082/api/clients/inscriregarage/' + this.Client.id, updatedClientData)
+    .then(response => {
+        alert('Demande envoyer avec succes');
+        console.log(response.data);
+    })
+    .catch(error => {
+        console.log(error);
+    });
     },
     
           }

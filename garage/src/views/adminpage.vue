@@ -265,6 +265,7 @@
             </tr> 
            
             <tr v-for="u in Garage" :key="u.id">
+                <td><img style="width: 40px;height: 40px;border-radius: 50%;" :src="'http://localhost:8082/' +  u.Photo  + '.jpeg'" alt=""></td>
                 <td>{{ u.id }}</td>
                 <td>{{ u.Nom }}</td>
                 <td><button class="btn btn-outline-success" @click="redirectUrgenceToGarage(u.id)">Coller</button></td>
