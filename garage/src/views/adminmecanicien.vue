@@ -86,7 +86,7 @@
                             <th>Adresse </th>
                             <th>Specialite </th>
                             <th>Télephone </th>
-                            <th>Discussion</th>
+                            <th>Position</th>
                             <th>Action</th>
                         </tr>
                         
@@ -104,9 +104,9 @@
                         <td>{{ g.Telephone }}</td>
 
 
-                        <td v-if="g.Etat == null"><i style="margin-left: 30px;cursor: pointer;" class="fas fa-warning"></i></td>
+                        <td v-if="g.Etat == null"><p style="color: red;">En attente</p></td>
 
-                        <td v-if="g.Etat == 1"><i style="margin-left: 30px;cursor: pointer;" class="fas fa-message"></i></td>
+                        <td v-if="g.Etat == 1"><p style="color: green;">Membre</p></td>
                         
                         <td v-if="g.Etat == null"><button @click="showadminmecanicien(g.id)" class="btn btn-outline-danger">Consulter</button></td>
                        

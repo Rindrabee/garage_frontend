@@ -90,7 +90,7 @@
                             <th>Adresse</th>
                           
                             <th>Télephone </th>
-                            <th>Discussion</th>
+                            <th>Position</th>
                             <th>Action</th>
                         </tr>
                         
@@ -108,9 +108,9 @@
                         <td v-if="g.id_garage == Garage.id">{{ g.Telephone }}</td>
 
 
-                        <td v-if="g.Etat2 == null && g.id_garage == Garage.id"><i style="margin-left: 30px;cursor: pointer;" class="fas fa-warning"></i></td>
+                        <td v-if="g.Etat2 == null && g.id_garage == Garage.id"><p style="color: red;">En attente</p></td>
 
-                        <td v-if="g.Etat2 == 1 && g.id_garage == Garage.id"><i style="margin-left: 30px;cursor: pointer;" class="fas fa-message"></i></td>
+                        <td v-if="g.Etat2 == 1 && g.id_garage == Garage.id"><p style="color: green;">Membre</p></td>
                         
                         <td v-if="g.Etat2 == null && g.id_garage == Garage.id"><button @click="showgaragecli(g.id)" class="btn btn-outline-danger">Consulter</button></td>
                        

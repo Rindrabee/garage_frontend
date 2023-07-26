@@ -265,10 +265,10 @@
             </tr> 
            
             <tr v-for="u in Garage" :key="u.id">
-                <td><img style="width: 40px;height: 40px;border-radius: 50%;" :src="'http://localhost:8082/' +  u.Photo  + '.jpeg'" alt=""></td>
-                <td>{{ u.id }}</td>
-                <td>{{ u.Nom }}</td>
-                <td><button class="btn btn-outline-success" @click="redirectUrgenceToGarage(u.id)">Coller</button></td>
+                <td v-if="u.Etat == 1"><img style="width: 40px;height: 40px;border-radius: 50%;" :src="'http://localhost:8082/' +  u.Photo  + '.jpeg'" alt=""></td>
+                <td v-if="u.Etat == 1">{{ u.id }}</td>
+                <td v-if="u.Etat == 1">{{ u.Nom }}</td>
+                <td v-if="u.Etat == 1"><button class="btn btn-outline-success" @click="redirectUrgenceToGarage(u.id)">Coller</button></td>
                 <br><br><br>
             </tr>
         </table>

@@ -77,7 +77,7 @@
    
     <br><br>
 
-    <input v-if="Urgence.Etat == null" type="button" style="width: 120px;margin-left: 40px;" class="btn btn-outline-danger" value="Supprimer">
+    <input @click="supprimer(Urgence.id)" v-if="Urgence.Etat == null" type="button" style="width: 150px;margin-left: 40px;" class="btn btn-outline-danger" value="Pas disponible">
 
     </div>
     
@@ -162,6 +162,17 @@
     this.MessageError = "Une erreur s'est produite.";
     });
     },
+
+    // Rejeter l'urgence
+
+    supprimer(id) {
+    axios.delete('http://localhost:8082/api/admins/supprimerurgence/'+id)
+    .then(response => {
+    alert("Vous avez rejeter le demmande d'urgence")
+    console.log(response.data);
+    })
+    },
+
 
 
     // Diriger vers l'adminpage

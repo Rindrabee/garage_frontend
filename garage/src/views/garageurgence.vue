@@ -41,6 +41,7 @@
     
                 </div>
             </nav>
+            
             <!-- sidebar -->
             <input type="checkbox" id="toggle">
             <label class="side-toggle" for="toggle"><span class="fas fa-bars"></span></label>
@@ -57,6 +58,7 @@
                 <div class="sidebar-menu">
                     <span @click="garagemecanicien" class="fas fa-wrench"></span><p @click="garagemecanicien" style="font-size: 13px;">Mecanicien</p>
                 </div>
+
                 <div class="sidebar-menu">
                     <span class="fas fa-exclamation-triangle"></span><p style="font-size: 13px;">Urgence</p>
                 </div>
@@ -107,42 +109,103 @@
                 
             </div>
 
-                    <div class="card customer">
-                        <h3 style="font-family: Poppins,sans-serif;font-size: 18.5px;">Discussion</h3>
-                        <br>
-                        <div class="customer-wrapper">
-                            <img class="customer-image" src="../assets/images/aza.jpg" alt="">
-                            <div class="customer-name">
-                                <h4>Mollitia rerum</h4>
-                                <p style="font-size: 12px;">Panina..</p>
-                            </div>
-                            <p class="customer-date">Today</p>
-                        </div>
-        
-                        <div class="customer-wrapper">
-                            <img class="customer-image" src="../assets/images/xel.jpg" alt="">
-                            <div class="customer-name">
-                                <h4>Dolor amet</h4>
-                                <p style="font-size: 12px;">Salut</p>
-                            </div>
-                            <p class="customer-date">Yesterday</p>
-                        </div>
-        
-                        <div class="customer-wrapper">
-                            <img class="customer-image" src="../assets/images/GRG1.png" alt="">
-                            <div class="customer-name">
-                                <h4>Ipsum volupta</h4>
-                                <p style="font-size: 12px;">De aona e</p>
-                            </div>
-                            <p class="customer-date">22/02/21</p>
-                        </div>
-    
+            <div class="card customer">
+                <h3 style="font-family: Poppins,sans-serif;font-size: 18.5px;">Discussion</h3>
+                <br>
+
+                <div @click="discu(c.id,c.Prenoms,c.Photo)" v-for="c in Mecanicien" :key="c.id" style="cursor: pointer;"  class="customer-wrapper">
+                    <img v-if="c.id_garage == Garage.id && c.Etat2 != null" class="customer-image" :src="'http://localhost:8082/' + c.Photo + '.jpeg'" alt="">
+                    <div class="customer-name">
+                        <h4 v-if="c.id_garage == Garage.id && c.Etat2 != null" style="margin-top: 9px;">{{ c.Prenoms  }}</h4>
+                        <!-- <p style="font-size: 12px;">Panina..</p> -->
                     </div>
-                    
-        
+                    <!-- <p class="customer-date">Today</p> -->
                 </div>
+     
+            </div>
+        
+        </div>
+
+
+      <!-- mipotra ito refa cliquena le discussion -->
+        
+      <div id="conversation"  style="display: none; box-shadow: 2px 2px 10px black;background-color: #0f530f;border-radius : 20px;position: fixed;top: 170px;margin-left: 130px;width: 800px;" class="container conversation">
+        <br>
+        
+            <div class="row">
+            <div>
+                <img @click="fermerdiscu" style="width: 30px;margin-left: 720px;cursor: pointer;" src="../assets/images/close.png" alt="">
+            </div>
+          
+            <br><br>
+            <div class="col-lg-3 left-col">
+                <div class="card friend-list">
+                    <div @click="discu(c.id,c.Prenoms,c.Photo)" v-for="c in Mecanicien" :key="c.id" class="people-list">
+                        <ul class="list-unstyled chat-list mt-2 mb-0">
+                            <li class="clearfix">
+                                <div class="about">
+                                    <div class="name"><img style="width: 30px;height: 30px;margin-left: -30px;"  :src="'http://localhost:8082/' + c.Photo + '.jpeg'" alt="">&nbsp; {{ c.Prenoms }}</div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ito le soratra anarana eny ambony -->
+            <div style="height: 420px" class="col-lg-9 right-col">
+                <div class="card chat" ref="chat">
+                    <div style="position: fixed;margin-top: 182px;width: 40%;" class="chat-header clearfix">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="chat-about">
+                                    <a href="javascript:void(0);" data-toggle="modal" data-target="#view_info">
+                                        <img style="width: 40px;height: 40px;"  :src="'http://localhost:8082/' + MecPhoto + '.jpeg'" alt="">
+                                    </a>
+                                </div>
+                                
+                                <h6  style="font-family: century;margin-top : 2px" class="m-b-0">&nbsp; &nbsp; {{ MecPrenom }}</h6>
+                                
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+
+                    <div class="chat-history">
+                        <ul class="m-b-0">
+                            <li class="clearfix" v-for="m in Message" :key="m.id">
+                                <div class="message-data text-right">
+
+                                </div>
+                                <div v-if="m.id_sendergarage == id_sendergarage" style="background-color: #C6F568;"  class="message other-message float-right">{{ m.Text }}</div>
+                                <div v-if="m.id_sendermecanicien  == id_receivedmecanicien" class="message my-message">{{ m.Text }}</div>
+                            </li>
+                        </ul>
+                    </div>
+
+                <br>
+                <!-- div le ery ambany le anoratana -->
+                
+                </div>
+                <div  class="noo" style="position: fixed;width: 500px;margin-top: -75px;margin-left: 30px;">
+                    <div class="input-group mb-0">
+                        <div class="input-group-prepend">
+                            <span @click="sendMessage" class="input-group-text" ><img  src="../assets/images/sendeo.png" style="width: 30px;height: 30px;cursor: pointer;" alt=""></span>
+                        </div>
+                        <input v-model="Text" type="text" class="form-control" placeholder="Votre message ici...">                                    
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
                                    
-        <div id="choisir" style="display: none; box-shadow: 2px 2px 10px black; background-color: #0f530f; border-radius: 20px; position: fixed; top: 120px; margin-left: 270px; width: 550px;" class="container conversation">
+        <div id="choisir" style="display: none; box-shadow: 2px 2px 10px black; background-color: #0f530f; border-radius: 20px; position: fixed; top: 160px; margin-left: 270px; width: 550px;" class="container conversation">
         <br>
         <div style="width: 500px;text-align: center;margin-left: 10px;margin-bottom: 30px;" class="row">
         <div>
@@ -151,7 +214,6 @@
         <br><br>
         <table style="background-color: palegreen; width: 100%; border-collapse: collapse;border-radius: 10px;">
             <br>
-
             <tr>
                 <th>Photo</th>
                 <th>Nom</th>
@@ -184,6 +246,7 @@
     <script>
     import AuthenticationService4 from '../services/AuthentificationService4.js'
     import { tokenIsExpired } from '../utils/date.js';
+    import io from 'socket.io-client'
     import axios from 'axios';
     
     export default {
@@ -201,14 +264,26 @@
             Urgence: {},
             Mecanicien: {},
             idUrgence: '',
+
+            MecPrenom: '',
+            MecPhoto: '',
     
             
 
             isFieldEmpty: false,
             isInvalidEmail: false,
             acceptConditions: false,
+            Message: {},
+
+    
+            id_receivedmecanicien: '',
+            id_sendergarage: '',
+
+
+            token: localStorage.getItem('token'),
+            socket: io('http://localhost:8082')
             
-            }
+        }
         },
         mounted() {
             this.listevoiture();
@@ -216,6 +291,12 @@
             this.Prendrelesurgnece();
             this.listegarage();
             this.listermecanicien();
+
+            this.selectpers();
+
+            this.socket.on('chat message',(data) => {
+            this.selectpers();
+        });
         },
         methods: {
             slide1() {
@@ -235,6 +316,54 @@
                 b.style.opacity = "80%";
     
             },
+            // mapiseo anle div message
+            discu(idclient,Prenoms,Photo) {
+            let a = document.getElementById("conversation")
+            let b = document.getElementById("ambadika")
+
+            localStorage.setItem("ID_RECEIVED",idclient)
+            this.id_receivedmecanicien = localStorage.getItem("ID_RECEIVED");
+
+            this.MecPrenom = Prenoms
+            this.MecPhoto = Photo
+            a.style.display = "block";
+            b.style.opacity = "70%";
+
+            },
+    
+            // Prendre le message du urgence cliqué
+            selectpers() {
+            axios.get('http://localhost:8082/api/messages/listermessage3')
+            .then(response => {
+            this.Message = response.data
+            })
+            },
+            
+            // Fonction pour envoyer une message
+            sendMessage() {
+            // Envoi du message au serveur
+            const data = { Text: this.Text, id_sendergarage: this.id_sendergarage,id_receivedmecanicien:this.id_receivedmecanicien };
+
+            // Envoi de l'événement 'chat message' au serveur
+            this.socket.emit('mandefa message2', data);
+
+            // Réinitialisation de l'input du message
+            this.Text = '';
+            },
+
+            // fermer le discussion  
+            fermerdiscu() {
+            let a = document.getElementById("conversation")
+            let b = document.getElementById("ambadika")
+
+            localStorage.removeItem("ID_RECEIVED")
+
+
+            a.style.display = "none";
+            b.style.opacity = "100%";
+
+            },
+    
 
             //Lister tous les garages
             listegarage() {
@@ -284,6 +413,7 @@
                 .then(response => {
                     this.Garage = response.data.grg;
                     this.id_garage = this.Garage.id;
+                    this.id_sendergarage = this.Garage.id;
                 }).catch(error => {
                     console.log(error);
                 })
@@ -946,7 +1076,294 @@
         opacity: 0.10;
     }
     
-    
+
+/* Discussion  */
+
+.conversation {
+    height: auto;
+    margin-top: -60px;
+}
+
+.row {
+    width: 100%;
+}
+
+.left-col, .right-col {
+    max-height: 100%;
+}
+
+.friend-list {
+    height: 80%;
+}
+
+.chat {
+    height: 80%;
+    overflow-y: scroll;
+    display: flex;
+    flex-direction: column-reverse;
+}
+
+
+#plist {
+    overflow-y: scroll;
+}
+
+.clearfix {
+    text-align: left;
+}
+
+
+.card {
+    background: #fff;
+    transition: .5s;
+    border: 0;
+    margin-bottom: 30px;
+    border-radius: .55rem;
+    position: relative;
+    width: 100%;
+    box-shadow: 0 1px 2px 0 rgb(0 0 0 / 10%);
+}
+.chat-app .people-list {
+    width: 280px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    padding: 20px;
+    z-index: 7
+}
+
+.chat-app .chat {
+    margin-left: 280px;
+    border-left: 1px solid #eaeaea
+}
+
+.people-list {
+    -moz-transition: .5s;
+    -o-transition: .5s;
+    -webkit-transition: .5s;
+    transition: .5s
+}
+
+.people-list .chat-list li {
+    padding: 10px 15px;
+    list-style: none;
+    border-radius: 3px
+}
+
+.people-list .chat-list li:hover {
+    background: #efefef;
+    cursor: pointer
+}
+
+.people-list .chat-list li.active {
+    background: #efefef
+}
+
+.people-list .chat-list li .name {
+   
+    font-size: 11px
+}
+
+.people-list .chat-list img {
+    width: 45px;
+    border-radius: 50%
+}
+
+.people-list img {
+    float: left;
+    border-radius: 50%
+}
+
+.people-list .about {
+    float: left;
+    padding-left: 8px
+}
+
+.people-list .status {
+    color: #999;
+    font-size: 13px
+}
+
+.chat .chat-header {
+    padding: 15px 20px;
+    border-bottom: 2px solid #f4f7f6;
+    background-color: #fff;
+    position: sticky;
+    top: 0px;
+    z-index: 2;
+}
+
+.chat .chat-header img {
+    float: left;
+    border-radius: 40px;
+    width: 40px
+}
+
+.chat .chat-header .chat-about {
+    float: left;
+    padding-left: 10px
+}
+
+.chat .chat-history {
+    padding: 20px;
+    border-bottom: 2px solid #fff
+}
+
+.chat .chat-history ul {
+    padding: 0
+}
+
+.chat .chat-history ul li {
+    list-style: none;
+    margin-bottom: 30px
+}
+
+.chat .chat-history ul li:last-child {
+    margin-bottom: 0px
+}
+
+.chat .chat-history .message-data {
+    margin-bottom: 15px
+}
+
+.chat .chat-history .message-data img {
+    border-radius: 40px;
+    width: 40px
+}
+
+.chat .chat-history .message-data-time {
+    color: #434651;
+    padding-left: 6px
+}
+
+.chat .chat-history .message {
+    color: #444;
+    padding: 0px 10px;
+    line-height: 26px;
+    font-size: 14px;
+    border-radius: 7px;
+    display: inline-block;
+    position: relative
+}
+
+.chat .chat-history .message:after {
+    bottom: 100%;
+    left: 7%;
+    border: solid transparent;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+    border-bottom-color: #fff;
+    border-width: 10px;
+    margin-left: -10px
+}
+
+.chat .chat-history .my-message {
+    background: #efefef
+}
+
+.chat .chat-history .my-message:after {
+    bottom: 100%;
+    left: 30px;
+    border: solid transparent;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+    border-bottom-color: #efefef;
+    border-width: 10px;
+    margin-left: -10px
+}
+
+.chat .chat-history .other-message {
+    background: #e8f1f3;
+    text-align: right
+}
+
+.chat .chat-history .other-message:after {
+    border-bottom-color: #e8f1f3;
+    left: 93%
+}
+
+/* .chat .chat-message {
+    padding: 20px;
+    position: sticky;
+    bottom: 0px;
+    z-index: 2;
+    background-color: #fff;
+} */
+
+.online,
+.offline,
+.me {
+    margin-right: 2px;
+    font-size: 8px;
+    vertical-align: middle
+}
+
+
+
+.float-right {
+    float: right
+}
+
+.clearfix:after {
+    visibility: hidden;
+    display: block;
+    font-size: 0;
+    content: " ";
+    clear: both;
+    height: 0
+}
+
+@media only screen and (max-width: 767px) {
+    .chat-app .people-list {
+        height: 465px;
+        width: 100%;
+        overflow-x: auto;
+        background: #fff;
+        left: -400px;
+        display: none
+    }
+    .chat-app .people-list.open {
+        left: 0
+    }
+    .chat-app .chat {
+        margin: 0
+    }
+    .chat-app .chat .chat-header {
+        border-radius: 0.55rem 0.55rem 0 0
+    }
+    .chat-app .chat-history {
+        height: 300px;
+        overflow-x: auto
+    }
+}
+
+@media only screen and (min-width: 768px) and (max-width: 992px) {
+    .chat-app .chat-list {
+        height: 650px;
+        overflow-x: auto
+    }
+    .chat-app .chat-history {
+        height: 600px;
+        overflow-x: auto
+    }
+}
+
+@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: landscape) and (-webkit-min-device-pixel-ratio: 1) {
+    .chat-app .chat-list {
+        height: 480px;
+        overflow-x: auto
+    }
+    .chat-app .chat-history {
+        height: calc(100vh - 350px);
+        overflow-x: auto
+    }
+}
     
     
     </style>

@@ -53,6 +53,10 @@
             </div>
 
             <div class="sidebar-menu">
+                <span @click="discu2" class="far fa-comment-alt"></span><p @click="discu2" style="font-size: 13px;">Discussion</p>
+            </div>
+
+            <div class="sidebar-menu">
                 <span class="fas fa-image"></span><p style="font-size: 13px;">Galerie</p>
             </div>
 
@@ -144,23 +148,95 @@
                             <li v-for="m in Message" :key="m.id" class="clearfix">
                             <div class="message-data text-right">
 
+                        </div>
+                                
+                        <div v-if="m.id_sendermecanicien == id_sendermecanicien" style="background-color: #C6F568;"  class="message other-message float-right">{{ m.Text }}</div>
+                        <div v-if="m.id_senderclient  == id_receivedclient" class="message my-message">{{ m.Text }}</div>
+
+                        </li>
+
+                        </ul>
+                    </div>
+
+
+
+                <br>
+                <!-- div le ery ambany le anoratana -->
+                </div>
+                <div class="noo" style="position: fixed;width: 700px;margin-top: -75px;margin-left: 30px;">
+                    <div class="input-group mb-0">
+                        <div class="input-group-prepend">
+                            <span @click="sendMessage" class="input-group-text" ><img  src="../assets/images/sendeo.png" style="width: 30px;height: 30px;cursor: pointer;" alt=""></span>
+                        </div>
+                        <input v-model="Text" type="text" class="form-control" placeholder="Votre message ici...">                                    
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+
+      
+    <!-- Discussion entre mecanicien et garage -->
+
+    <div id="conversation2"  style="display: none; box-shadow: 2px 2px 10px black;background-color: #0f530f;border-radius : 20px;position: fixed;top: 140px;margin-left: 40px;width: 800px;" class="container conversation">
+        <br>
+        
+            <div class="row">
+
+            <div>
+                <img @click="fermerdiscu2" style="width: 30px;margin-left: 720px;cursor: pointer;" src="../assets/images/close.png" alt="">
+            </div>
+          
+            <br><br>
+        
+
+
+            <!-- ito le soratra anarana eny ambony -->
+            <div style="height: 400px;width: 100%;" class="col-lg-9 right-col">
+                <div class="card chat" ref="chat">
+                    <div style="position: fixed;margin-top: 152px;width: 40%;" class="chat-header clearfix">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="chat-about">
+                                    <a href="javascript:void(0);" data-toggle="modal" data-target="#view_info">
+                                        <img style="width: 35px;height: 35px;" src="../assets/images/urg.ico"  alt="">
+                                    </a>
+                                </div>
+                                
+                                <h6  style="font-family: century;margin-top : 2px" class="m-b-0">&nbsp; &nbsp;</h6>
+                                
+                            </div>
+
+                        </div>
+                    </div>
+                    
+                    <br>
+
+                    <div class="chat-history">
+                        <ul class="m-b-0">
+                            <li v-for="m in Message2" :key="m.id"  class="clearfix">
+                            <div class="message-data text-right">
+
                             </div>
                                 
                             <div v-if="m.id_sendermecanicien == id_sendermecanicien" style="background-color: #C6F568;"  class="message other-message float-right">{{ m.Text }}</div>
-                            <div v-if="m.id_senderclient  == id_receivedclient" class="message my-message">{{ m.Text }}</div>
+                            <div  v-if="m.id_sendergarage  == id_receivedgarage" class="message my-message">{{ m.Text }}</div>
 
                             </li>
 
                         </ul>
                     </div>
 
-                   <br>
+                <br>
                    <!-- div le ery ambany le anoratana -->
                 </div>
                 <div class="noo" style="position: fixed;width: 700px;margin-top: -75px;margin-left: 30px;">
                     <div class="input-group mb-0">
                         <div class="input-group-prepend">
-                            <span @click="sendMessage" class="input-group-text" ><img  src="../assets/images/sendeo.png" style="width: 30px;height: 30px;cursor: pointer;" alt=""></span>
+                            <span @click="sendMessage2" class="input-group-text" ><img  src="../assets/images/sendeo.png" style="width: 30px;height: 30px;cursor: pointer;" alt=""></span>
                         </div>
                         <input v-model="Text" type="text" class="form-control" placeholder="Votre message ici...">                                    
                     </div>
@@ -190,11 +266,15 @@ export default {
     Urgence: {},
     nomrugence: '',
     Message: {},
+    Message2: {},
 
     
     id_receivedclient: '',
     id_sendermecanicien: '',
    
+
+    
+    id_receivedgarage: '',
 
     token: localStorage.getItem('token'),
     socket: io('http://localhost:8082')
@@ -205,9 +285,16 @@ export default {
     this.mecanicienconnecter();
     this.Prendrelesurgnece();
     this.selectpers();
+    this.selectpers2();
+
+
 
     this.socket.on('chat message',(data) => {
         this.selectpers();
+    });
+
+    this.socket.on('chat message',(data) => {
+        this.selectpers2();
     });
     },
     methods: {
@@ -240,6 +327,7 @@ export default {
     .then(response => {
     this.Mecanicien = response.data.mc;
     this.id_sendermecanicien = this.Mecanicien.id;
+    this.id_receivedgarage = this.Mecanicien.id_garage 
     // this.id_garage = this.Garage.id;
 
     }).catch(error => {
@@ -308,6 +396,37 @@ export default {
    
     this.nomrugence = nomrugenc;
     a.style.display = "block";
+    
+    },
+    
+    // Fonction pour envoyer vers le garage
+    sendMessage2() {
+    // Envoi du message au serveur
+    const data = { Text: this.Text, id_sendermecanicien: this.id_sendermecanicien,id_receivedgarage:this.id_receivedgarage };
+
+    // Envoi de l'événement 'chat message' au serveur
+    this.socket.emit('mandefa message2', data);
+
+    // Réinitialisation de l'input du message
+    this.Text = '';
+    },
+
+    discu2() {
+    let a = document.getElementById("conversation2")
+    
+    a.style.display = "block";
+    },
+
+    fermerdiscu2() {
+    let a = document.getElementById("conversation2")
+    let b = document.getElementById("ambadika")
+
+    localStorage.removeItem("ID_RECEIVED")
+   
+
+    a.style.display = "none";
+    b.style.opacity = "100%";
+
     },
 
     // fermer le discussion
@@ -321,6 +440,14 @@ export default {
     a.style.display = "none";
     b.style.opacity = "100%";
 
+    },
+
+    // Prendre le message de garage cliqué
+    selectpers2() {
+        axios.get('http://localhost:8082/api/messages/listermessage3')
+        .then(response => {
+        this.Message2 = response.data
+        })
     },
 
     // Fonctio pour envoyer une message

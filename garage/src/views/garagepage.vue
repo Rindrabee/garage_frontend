@@ -138,7 +138,7 @@
 
                     <div class="voiture">
      
-                        <table>
+                    <table>
                         <tr>
                             <th>Photo</th>
                             <th>Numéro</th>
@@ -160,18 +160,19 @@
                         <td v-if="v.Idgarage == id_garage">{{ v.Numero }}</td>
                         <td v-if="v.Idgarage == id_garage">{{ v.Nom }}</td>
                         <td v-if="v.Idgarage == id_garage">{{ v.Date1 }}</td>
-                        <td  v-if="v.Idgarage == id_garage"><span class="status onprogress"><i class="fas fa-circle"></i> En cour</span></td>
+
+                        <td  v-if="v.Idgarage == id_garage && v.Etat == null"><span class="status onprogress"><i class="fas fa-circle"></i> En cour</span></td>
+                        <td  v-if="v.Idgarage == id_garage && v.Etat == 1"><span class="status fulfilled"><i class="fas fa-circle"></i> Succes</span></td>
                        
-                       
-                        <td  v-if="v.Idgarage == id_garage"><button class="btn btn-outline-success">Terminer</button></td>
-                        <td  v-if="v.Idgarage == id_garage"><button class="btn btn-outline-danger">Supprimer</button></td>
+
+                        <td  v-if="v.Idgarage == id_garage && v.Etat == 1"><p style="color: red;">Vous pouvez supprimer</p></td>
+                        <td  v-if="v.Idgarage == id_garage && v.Etat == null"><button @click="Terminervoiture(v.id)" class="btn btn-outline-success">Terminer</button></td>
+                        <td  v-if="v.Idgarage == id_garage"><button @click="Supprimerfiara(v.id)" class="btn btn-outline-danger">Supprimer</button></td>
+                        
                         </tr>
     
                     </table>
                     </div>
-
-               
-
 
 
                 </div>
@@ -269,6 +270,39 @@ export default {
                 a.style.display = "block";
             }
         },
+        
+        // Terminer voiture
+        Terminervoiture(id) {
+        axios
+        .put('http://localhost:8082/api/garages/terminervoiture/' + id)
+        .then(response => {
+        alert('Traitement términer !!');
+        console.log(response.data);
+        })
+        .catch(error => {
+        console.log(error);
+        });
+        },
+
+        // Supprimer voiture
+         
+        Supprimerfiara(id) {
+        axios
+        .put('http://localhost:8082/api/garages/supprimervoiture/' + id)
+        .then(response => {
+        alert('Voiture retirer du garage !!');
+        console.log(response.data);
+        })
+        .catch(error => {
+        console.log(error);
+        });
+        },
+
+
+
+
+
+
         // Ouvrir ajouter voiture
         ajoutervoiture() {
             let a = document.getElementById("ajoutervoiture")

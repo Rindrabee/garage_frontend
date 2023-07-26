@@ -289,6 +289,12 @@ export default {
     },
     methods: {
     async register(id) {
+    
+    if (!this.Dates || !this.Heure) {
+    alert('Veuillez entrer la date et l`heure');
+    return;
+    }
+
     const dataToSend = {
     Nom: this.Client.Nom,
     Email: this.Client.Email,
@@ -304,7 +310,7 @@ export default {
     console.log(response.data);
 
 
-    alert("Demmande de rendez-vous envoyer !");
+    alert("Demmande de rendez-vous envoyer,on vous envoie une email de confirmation si on a acepter votre rendez-vous !");
 
     } catch (error) {
     console.error('Error registering the item:', error);

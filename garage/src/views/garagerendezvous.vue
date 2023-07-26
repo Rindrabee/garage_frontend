@@ -108,11 +108,16 @@
                             <td v-if="v.id_garage == id_garage">{{ v.Heure }}</td>
 
                           
-                            <td v-if="v.id_garage == id_garage"><button class="btn btn-outline-success">Accepter</button></td>
-                            <td v-if="v.id_garage == id_garage"><button class="btn btn-outline-danger">Reffuser</button></td>
-                            </tr>
+                            <td v-if="v.id_garage == id_garage && v.Etat == null"><button @click="accepterrendezvous(v.id)" class="btn btn-outline-success">Accepter</button></td>
+                            <td v-if="v.id_garage == id_garage && v.Etat == null"><button @click="reffuserrendezvous(v.id)" class="btn btn-outline-danger">Reffuser</button></td>
+                            
+                            <td v-if="v.id_garage == id_garage && v.Etat == 1"><p style="color: red;">Planifié</p></td>
+                           
+                            <td v-if="v.id_garage == id_garage && v.Etat == 1"><button @click="reffuserrendezvous(v.id)" class="btn btn-outline-danger">Terminer</button></td>
+                        </tr>
         
                         </table>
+
                         </div>
     
                    
@@ -274,6 +279,35 @@
             garagerendezvous() {
                 this.$router.push({ name: 'garagerendezvous' });
             },
+
+        // Accepter rendez-vous !!
+        accepterrendezvous(id) {
+        axios
+        .put('http://localhost:8082/api/rendes/accepterrendezvous/' +  id)
+        .then(response => {
+        alert('Rendez-vous accepter !!');
+        console.log(response.data);
+        })
+        .catch(error => {
+        console.log(error);
+        });
+        },
+
+        // Reffuser rendez-vous
+        reffuserrendezvous(id) {
+        axios
+        .put('http://localhost:8082/api/rendes/reffuser/' +  id)
+        .then(response => {
+        alert('Rendez-vous rejeter !!');
+        console.log(response.data);
+        })
+        .catch(error => {
+        console.log(error);
+        });
+        },
+
+
+
     
             //Fermer ajouter voiture
             fermerajoutervoiture() {
