@@ -103,7 +103,10 @@ const router = createRouter({
     {
       path: '/mecanicienpageapropos',
       name: 'mecanicienpageapropos',
-      component: mecanicienpageapropos
+      component: mecanicienpageapropos,
+      meta: {
+        middleware: auth
+      }
     },
     {
       path: '/mecanicienaccueil',
@@ -135,7 +138,10 @@ const router = createRouter({
     {
       path: '/modificationclient',
       name: 'modificationclient',
-      component: modificationclient
+      component: modificationclient,
+      meta: {
+        middleware: auth
+      }
     },
     {
       path: '/mdpoublier',
@@ -203,7 +209,10 @@ const router = createRouter({
     {
       path: '/modificationadmin',
       name: 'modificationadmin',
-      component: modificationadmin
+      component: modificationadmin,
+      meta: {
+        middleware: auth2
+      }
     },
     {
       path: '/adminMECANICIEN',
@@ -242,12 +251,18 @@ const router = createRouter({
     {
       path: '/modificationmecanicien',
       name: 'modificationmecanicien',
-      component: modificationmecanicien
+      component: modificationmecanicien,
+      meta: {
+        middleware: auth
+      }
     },
     {
       path: '/modificationgarage',
       name: 'modificationgarage',
-      component: modificationgarage
+      component: modificationgarage,
+      meta: {
+        middleware: auth
+      }
     },
     {
       path: '/conseilpage',
@@ -262,17 +277,26 @@ const router = createRouter({
     {
       path: '/showadmingarage',
       name: 'showadmingarage',
-      component: showadmingarage
+      component: showadmingarage,
+      meta: {
+        middleware: auth2
+      }
     },
     {
       path: '/showadminmecanicien',
       name: 'showadminmecanicien',
-      component: showadminmecanicien
+      component: showadminmecanicien,
+      meta: {
+        middleware: auth2
+      }
     },
     {
       path: '/showadminclient',
       name: 'showadminclient',
-      component: showadminclient
+      component: showadminclient,
+      meta: {
+        middleware: auth2
+      }
     },
     {
       path: '/Listegarage2',
@@ -292,7 +316,10 @@ const router = createRouter({
     {
       path: '/garageurgence',
       name: 'garageurgence',
-      component: garageurgence
+      component: garageurgence,
+      meta: {
+        middleware: auth
+      }
     },
     {
       path: '/showurgence2',

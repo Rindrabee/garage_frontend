@@ -59,7 +59,9 @@
             </div>
 
             <div class="sidebar-menu">
-                <span @click="urgencegarage" class="fas fa-exclamation-triangle"></span><p @click="urgencegarage" style="font-size: 13px;">Urgence</p>
+               <span @click="urgencegarage" class="fas fa-exclamation-triangle"></span>
+               <p @click="urgencegarage" style="font-size: 13px;">Urgence</p>
+               <div class="circle">{{ listeurgence12 }}</div>
             </div>
 
             <div class="sidebar-menu">
@@ -75,9 +77,9 @@
                 <div class="card total1">
                     <div class="info">
                         <div class="info-detail">
-                        <h3 style="font-size: 20px;">Garage Automobile</h3>
-                        <p>inscrit dans le site</p>
-                        <h2><strong>26</strong><span>&nbsp; GARAGE</span></h2>
+                        <h3 style="font-size: 20px;">Nombre rendez-vous</h3>
+                        <p>emploi du temps</p>
+                        <h2><strong>{{ listerendezvous }}</strong><span>&nbsp; rendez-vous</span></h2>
                         </div>
                         <div class="info-image">
                         <i class="fas fa-car"></i>
@@ -89,7 +91,7 @@
                         <div class="info-detail">
                         <h3 style="font-size: 20px;">Membre des mecaniciens</h3>
                         <p>en cour de travail</p>
-                        <h2><strong>56</strong><span>&nbsp; PERSONNE</span></h2>
+                        <h2><strong>{{ listemecanicien }}</strong><span>&nbsp; PERSONNE</span></h2>
                         </div>
                         <div class="info-image">
                         <i class="fas fa-boxes"></i>
@@ -101,7 +103,7 @@
                         <div class="info-detail">
                             <h3 style="font-size: 20px;">Client inscrit</h3>
                         <p>qui nous fait confiance jusqu'à maintenant</p>
-                        <h2><strong>340</strong> <span>PERSONNE</span></h2>
+                        <h2><strong>{{ listeclient }}</strong> <span>PERSONNE</span></h2>
                         </div>
                         <div class="info-image">
                         <i class="fas fa-user-friends"></i>
@@ -114,7 +116,7 @@
                         <div class="info-detail">
                         <h3 style="font-size: 20px;">Nombre des voitures</h3>
                         <p>en cour de réparation </p>
-                        <h2><strong>56</strong> <span>VOITURE</span></h2>
+                        <h2><strong>{{ listevoiture12 }}</strong> <span>VOITURE</span></h2>
                         </div>
                         <div class="info-image">
                         <i class="fas fa-shipping-fast"></i>
@@ -249,7 +251,11 @@ export default {
             Voiture: {},
             Garage: {},
             id_garage : '',
-            
+            listerendezvous: '',
+            listemecanicien: '',
+            listeclient: '',
+            listevoiture12: '',
+            listeurgence12: '',
 
             isFieldEmpty: false,
             isInvalidEmail: false,
@@ -260,6 +266,8 @@ export default {
         this.listevoiture();
         this.garageconnecter();
         this.listeurgence();
+        this.listerdesmecaniciens();
+
     },
     methods: {
         slide1() {
@@ -297,9 +305,46 @@ export default {
         console.log(error);
         });
         },
+ 
+        // Liste rendez-vous
+        listerendzefdsvous() {
+         axios.get('http://localhost:8082/api/garages/countRendezvousForConnectedGarage/' + this.id_garage)
+         .then(response => {
+            this.listerendezvous = response.data.rendezvouscompte
+         })
+        },
 
+        // Liste des mecaniciens
+        listerdesmecaniciens() {
+         axios.get('http://localhost:8082/api/garages/nombredesmecaniciens/' + this.id_garage)
+         .then(response => {
+            this.listemecanicien = response.data.mecaniciens
+        })
+        },
 
+        // Liste des clients
+        listerdesclients() {
+         axios.get('http://localhost:8082/api/garages/nombredesclients/' + this.id_garage)
+         .then(response => {
+            this.listeclient = response.data.client
+        })
+        },
 
+        // Liste des voitures
+        listerdesvoitures() {
+         axios.get('http://localhost:8082/api/garages/nombredesvoiture/' + this.id_garage)
+         .then(response => {
+            this.listevoiture12 = response.data.voiture
+        })
+        },
+
+        // Liste des urgences
+        listerdesurgences() {
+         axios.get('http://localhost:8082/api/garages/nombreurgence/' + this.id_garage)
+         .then(response => {
+            this.listeurgence12 = response.data.urgence
+        })
+        },
 
 
 
@@ -329,6 +374,11 @@ export default {
             .then(response => {
                 this.Garage = response.data.grg;
                 this.id_garage = this.Garage.id;
+                this.listerendzefdsvous();
+                this.listerdesmecaniciens();
+                this.listerdesclients();
+                this.listerdesvoitures();
+                this.listerdesurgences();
             }).catch(error => {
                 console.log(error);
             })
@@ -486,6 +536,27 @@ height: 1px;
 background: #9a9a9a;
 margin: 15px 0;
 }
+
+.sidebar-menu {
+    position: relative;
+}
+
+.circle {
+    position: absolute;
+    top: 10;
+    right: 20px;
+    width: 20px;
+    height: 20px;
+    background-color: red;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 13px;
+}
+
+
 .settings-links {
 display: flex;
 align-items: center;

@@ -202,11 +202,11 @@
                             <div class="col-lg-6">
                                 <div class="chat-about">
                                     <a href="javascript:void(0);" data-toggle="modal" data-target="#view_info">
-                                        <img style="width: 35px;height: 35px;" src="../assets/images/urg.ico"  alt="">
+                                        <img style="width: 35px;height: 35px;" src="../assets/images/car.ico"  alt="">
                                     </a>
                                 </div>
                                 
-                                <h6  style="font-family: century;margin-top : 2px" class="m-b-0">&nbsp; &nbsp;</h6>
+                                <h6  style="font-family: century gothic;margin-top : 2px" class="m-b-0">&nbsp; &nbsp; Garage</h6>
                                 
                             </div>
 
