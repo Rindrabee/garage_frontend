@@ -174,11 +174,12 @@
                     <div class="chat-history">
                         <ul class="m-b-0">
                             <li class="clearfix" v-for="m in Message" :key="m.id">
-                                <div class="message-data text-right">
+                            <div class="message-data text-right">
 
-                                </div>
-                                <div v-if="m.id_sendergarage == id_sendergarage" style="background-color: #C6F568;"  class="message other-message float-right">{{ m.Text }}</div>
-                                <div v-if="m.id_sendermecanicien  == id_receivedmecanicien" class="message my-message">{{ m.Text }}</div>
+                            </div>
+                              
+                            <div v-if="m.id_sendergarage == id_sendergarage && m.id_receivedmecanicien == id_receivedmecanicien" style="background-color: #C6F568;"  class="message other-message float-right">{{ m.Text }}</div>
+                            <div v-if="m.id_sendermecanicien  == id_receivedmecanicien"  class="message my-message">{{ m.Text }}</div>
                             </li>
                         </ul>
                     </div>

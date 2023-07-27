@@ -68,7 +68,7 @@
     </div>
 
     <div class="person-details">
-    <img src="../assets/images/ft3.jpg" alt="Photo de la personne">
+    <img src="../assets/images/jet.jpg" alt="">
 
     <p style="font-family: century gothic;">Nom : {{ Urgence.Nom }}</p>
     <p style="font-family: century gothic;">Email : {{ Urgence.Email }}</p>

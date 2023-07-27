@@ -217,15 +217,17 @@
 
                     <div class="chat-history">
                         <ul class="m-b-0">
-                            <li v-for="m in Message2" :key="m.id"  class="clearfix">
+                        <li v-for="m in Message2" :key="m.id"  class="clearfix">
                             <div class="message-data text-right">
 
-                            </div>
-                                
-                            <div v-if="m.id_sendermecanicien == id_sendermecanicien" style="background-color: #C6F568;"  class="message other-message float-right">{{ m.Text }}</div>
-                            <div  v-if="m.id_sendergarage  == id_receivedgarage" class="message my-message">{{ m.Text }}</div>
+                        </div>
+                           
+                            
+                        <div v-if="m.id_sendermecanicien == id_sendermecanicien" style="background-color: #C6F568;"  class="message other-message float-right">{{ m.Text }}</div>
+                       
+                        <div v-if="m.id_sendergarage == id_receivedgarage  && m.id_receivedmecanicien == id_sendermecanicien"  class="message my-message">{{ m.Text }}</div>
 
-                            </li>
+                        </li>
 
                         </ul>
                     </div>
@@ -355,6 +357,7 @@ export default {
 
 
 
+
     //detail urgence
     detailurgence(id) {
     this.$router.push({ name: 'showurgence3' });
@@ -364,6 +367,7 @@ export default {
     logout() {
     axios.post('http://localhost:8082/api/mecaniciens/logout')
     .then(response => {
+  
     localStorage.removeItem('token');
     localStorage.removeItem('Email');
     this.$router.push({ name: 'loginpage' });
@@ -372,6 +376,12 @@ export default {
     console.error(error);
     this.MessageError = "Une erreur s'est produite lors de la déconnexion.";
     });
+    },
+    supprimemessage3() {
+    axios.delete('http://localhost:8082/api/messages/deletemessage3')
+    .then(response => {
+    console.log(response.data)
+    })
     },
     
     // Prendre le message du urgence cliqué

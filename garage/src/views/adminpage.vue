@@ -50,9 +50,9 @@
             <span class="fas fa-home"></span><p style="font-size: 13px;">Accueil</p>
         </div>
 
-        <div class="sidebar-menu">
+        <!-- <div class="sidebar-menu">
             <span class="fas fa-exclamation-triangle"></span><p style="font-size: 13px;">Urgence</p>
-        </div>
+        </div> -->
 
         <div class="sidebar-menu">
             <span @click="verslisteclient" class="fas fa-user"></span><p @click="verslisteclient" style="font-size: 13px;">Client</p>
@@ -65,10 +65,10 @@
         <div class="sidebar-menu">
             <span @click="verslistegarage" class="fas fa-car"></span><p @click="verslistegarage" style="font-size: 13px;">Garage</p>
         </div>
-       
+<!--        
         <div class="sidebar-menu">
             <span  class="fas fa-file-invoice"></span><p  style="font-size: 13px;">Comptabilité</p>
-        </div>
+        </div> -->
     </div>
 
 

@@ -73,7 +73,7 @@
     </div>
 
     <div class="person-details">
-    <img src="../assets/images/ft3.jpg" alt="Photo de la personne">
+    <img :src="'http://localhost:8082/' +  Garage.Photo  + '.jpeg'" alt="Photo de la personne">
 
     <h2 style="font-family: century gothic;">Nom :&nbsp; {{ Garage.Nom }}</h2>
     <p style="font-family: century gothic;">Adresse :&nbsp; {{ Garage.Adresse }}</p>

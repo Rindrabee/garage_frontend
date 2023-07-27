@@ -148,6 +148,7 @@ export default {
     logout() {
     axios.post('http://localhost:8082/api/mecaniciens/logout')
     .then(response => {
+   
     localStorage.removeItem('token');
     localStorage.removeItem('Email');
     this.$router.push({ name: 'loginpage' });
@@ -158,6 +159,12 @@ export default {
     });
     },
 
+    supprimemessage3() {
+    axios.delete('http://localhost:8082/api/messages/deletemessage3')
+    .then(response => {
+    console.log(response.data)
+    })
+    },
 
     mecanicienaccueuil() {
         this.$router.push({ name: 'mecanicienaccueil' });

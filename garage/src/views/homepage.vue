@@ -95,6 +95,7 @@ import axios from 'axios';
         versurgencepage() {
             localStorage.removeItem("newItemId")
             this.supprimemessage();
+            this.supprimeridmecanicien();
             this.$router.push({name:'urgencepage'})
         },
         versconseilpage() {
@@ -112,6 +113,13 @@ import axios from 'axios';
          console.log(response.data)
         })
         },
+        // Supprime les id urgence pour rendre le mecanicien libre après chaque travail
+        supprimeridmecanicien() {
+        axios.put('http://localhost:8082/api/mecaniciens/supprimeidurgence')
+        .then(response => {
+         console.log(response.data)
+        })
+        }
       }
     }
 </script>

@@ -50,7 +50,7 @@
         <br><br><br><br>
         <div id="ambadika" class="dashboard-container">
             <!-- cards top -->
-            <div class="card total1">
+            <!-- <div class="card total1">
                 <div class="info">
                     <div class="info-detail">
                     <h3 style="font-size: 20px;">Depannage</h3>
@@ -64,7 +64,7 @@
                     </div>
                     
                 </div>
-            </div>
+            </div> -->
             <div class="card total2">
                 <div class="info">
                     <div class="info-detail">
@@ -216,14 +216,15 @@
                 <input v-model="Heure" class="appointment-input" type="time" name="" id="">
                 </div>
             
-                <button class="btn btn-success" v-for="g in Garage" :key="g.id" v-if="Client.id_garage != null" @click="register(Client.id_garage)" style="margin-top: 240px;margin-left: 590px;">Envoyer</button>
+                <button class="btn btn-success" v-for="g in Garage" :key="g.id" v-if="Client.id_garage != null && Client.Etat2 == 1" @click="register(Client.id_garage)" style="margin-top: 240px;margin-left: 590px;">Envoyer</button>
                 
                 </div>
 
             </div>
 
             <br>
-            <!-- div le ery ambany le anoratana -->
+        
+        <!-- div le ery ambany le anoratana -->
         </div>
         
     </div>
@@ -621,16 +622,19 @@ main {
     color: #000;
 }
 .total2 {
+    margin-left: -170px;
     grid-area: total2;
     background-color: #F5F5F5;
     color: #000;
 }
 .total3 {
     grid-area: total3;
+    margin-left: -120px;
     background-color: #F5F5F5;
     color: #000;
 }
 .total4 {
+    margin-left: -80px;
     grid-area: total4;
     background-color: #F5F5F5;
     color: #000;

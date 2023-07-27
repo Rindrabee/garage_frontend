@@ -20,8 +20,8 @@
         <ul style="margin-right: 50px;">
           <li>
           <a style="color: rgb(255, 255, 255);cursor: pointer;">
-          <i class="fas fa-bell"></i>&nbsp; Notification
-          <span @click="slide1" style="cursor: pointer;" v-if="nombreNotifications > 0" class="badge">{{ nombreNotifications }}</span>
+          <i  class="fas fa-bell"></i>&nbsp; Mecanicien
+          <span @click="slide1"  style="cursor: pointer;"><img style="width: 20px;"  src="../assets/images/sauver.ico" alt=""></span>
           </a>
           </li>
         </ul>
@@ -37,15 +37,15 @@
               <span></span>
             </div>
 
-            <div class="settings-menu-inner">
-            <p style="font-size: 10px;">Je suis le mécanicien envoyer pour vous sécourir</p>
-            
-            <div v-for="m in Mecanicien" class="settings-links">
-              <img v-if="m.id_urgence == newItemId" style="cursor: pointer;height: 38px;" :src="'http://localhost:8082/' +  m.Photo  + '.jpeg'" class="settings-icon">
-              <a v-if="m.id_urgence == newItemId" @click="discu(m.id)" style="color: #000;font-family: century gothic;cursor: pointer;" href="#"> &nbsp; {{ m.Nom }}</a>
-            </div>
+          <div class="settings-menu-inner">
+          <p style="font-size: 10px;">Je suis le mécanicien envoyer pour vous sécourir</p>
+          
+          <div v-for="m in Mecanicien" class="settings-links">
+            <img v-if="m.id_urgence == newItemId && m.id_urgence != null" style="cursor: pointer;height: 38px;" :src="'http://localhost:8082/' +  m.Photo  + '.jpeg'" class="settings-icon">
+            <a v-if="m.id_urgence == newItemId && m.id_urgence != null" @click="discu(m.id)" style="color: #000;font-family: century gothic;cursor: pointer;" href="#"> &nbsp; {{ m.Nom }}</a>
+          </div>
 
-            </div> 
+          </div> 
           </div>
     </nav>
 
@@ -270,6 +270,8 @@ import io from 'socket.io-client'
       nombreNotifications: 1,
 
 
+      mecid:'',
+
       nameError: '',
       emailError: '',
       phoneError: '',
@@ -293,7 +295,7 @@ import io from 'socket.io-client'
       this.selectpers();
 
       this.socket.on('chat message',(data) => {
-        this.selectpers();
+      this.selectpers();
     });
     },
 
@@ -340,6 +342,8 @@ import io from 'socket.io-client'
     .then(response => {
     this.Mecanicien = response.data
     this.id_receivedmecanicien = this.Mecanicien.id
+    this.mecid = this.Mecanicien.id_urgence
+
     console.log('Mecanicien', response.data);
     })
     },
@@ -351,7 +355,6 @@ import io from 'socket.io-client'
         this.Message = response.data
     })
     },
-
 
    
     // Afficher le notification du mecanicien
