@@ -52,7 +52,7 @@ import showurgence3 from '../views/showurgence3.vue'
 import garageclient from '../views/garageclient.vue'
 import showgaragecli from '../views/showgaragecli.vue'
 import garagerendezvous from '../views/garagerendezvous.vue'
-
+import mecaniciengalerie from '../views/mecaniciengalerie.vue'
 
 
 
@@ -355,6 +355,14 @@ const router = createRouter({
       path: '/garagerendezvous',
       name: 'garagerendezvous',
       component: garagerendezvous
+    },
+    {
+      path: '/mecaniciengalerie',
+      name: 'mecaniciengalerie',
+      component: mecaniciengalerie,
+      meta: {
+        middleware: auth
+      }
     },
     
   ]

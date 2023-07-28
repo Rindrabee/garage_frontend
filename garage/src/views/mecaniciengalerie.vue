@@ -54,33 +54,40 @@
             </div>
             
             <div class="sidebar-menu">
-                <span @click="mecaniciengalerie" class="fas fa-image"></span><p @click="mecaniciengalerie" style="font-size: 13px;">Galerie</p>
+                <span class="fas fa-image"></span><p style="font-size: 13px;">Galerie</p>
             </div>
             <div class="sidebar-menu">
-                <span class="fas fa-cog"></span><p style="font-size: 13px;">À propos</p>
+                <span @click="mecanicienapropos" class="fas fa-cog"></span><p @click="mecanicienapropos" style="font-size: 13px;">À propos</p>
             </div>
            
           
         </div>
+        
         <!-- main dashboard -->
     <main>
 
-    <section id="apropos" class="section-apropos">
-        <div class="container">
-        <h2 class="section-title">À propos de notre garage</h2>
-        <div class="section-content">
-        <img style="width: 40px;" src="../assets/images/car.ico" alt="Notre garage" class="garage-image">
-        <p class="description">
-        Bienvenue chez notre garage, votre spécialiste de confiance pour tous vos besoins en réparation et entretien automobile. Depuis notre fondation, nous nous engageons à fournir un service de qualité supérieure à nos clients.
-        </p>
-        <p class="description">
-        Notre équipe de mécaniciens qualifiés et expérimentés est passionnée par l'automobile et est dévouée à vous offrir des solutions fiables et efficaces. Nous utilisons les dernières technologies et outils de diagnostic pour assurer des réparations précises et un entretien optimal de votre véhicule.
-        </p>
-        <p class="description">
-        Chez notre garage, nous valorisons la satisfaction de nos clients. Nous nous efforçons de maintenir des tarifs compétitifs et transparents, et de fournir un service amical et professionnel à chaque visite. Votre sécurité et votre tranquillité d'esprit sont notre priorité absolue.
-        </p>
-        </div>
-        </div>
+    <h1 style="color: white;font-size: 47px;margin-left: 150px;" id="clignotant">Collection de belle image</h1>
+  
+
+
+    <section>
+
+       <div class="box">
+        <span style="--i:1;"><img style="width: 290px;height: 190px;" src="../assets/images/51.jpg" alt=""></span>
+        <span style="--i:2;"><img style="width: 290px;height: 190px;" src="../assets/images/52.jpg" alt=""></span>
+        <span style="--i:3;"><img style="width: 290px;height: 190px;" src="../assets/images/53.jpg" alt=""></span>
+        <span style="--i:4;"><img style="width: 290px;height: 190px;" src="../assets/images/54.jpg" alt=""></span>
+        <span style="--i:5;"><img style="width: 290px;height: 190px;" src="../assets/images/55.jpg" alt=""></span>
+        <span style="--i:6;"><img style="width: 290px;height: 190px;" src="../assets/images/56.jpg" alt=""></span>
+        <span style="--i:7;"><img style="width: 290px;height: 190px;" src="../assets/images/57.jpg" alt=""></span>
+        <span style="--i:8;"><img style="width: 290px;height: 190px;" src="../assets/images/58.jpg" alt=""></span>
+    </div>
+    <br><br>
+
+    <div id="apropos" class="section-apropos">
+        <p style="color: green;font-family: century gothic;font-size: 15px;">Bienvenue dans notre galerie ! Découvrez ci-dessous notre collection d'œuvres d'art et d'images captivantes. Notre galerie vous offre un voyage à travers l'histoire de l'art, des créations classiques aux œuvres contemporaines. Explorez les différentes pièces exposées, chacune ayant son propre récit à raconter. Profitez de cette expérience artistique immersive et inspirante.</p>
+    </div>
+   
     </section>
 
     </main>
@@ -162,9 +169,11 @@ export default {
         this.$router.push({ name: 'mecanicienaccueil' });
     },
 
-    mecaniciengalerie() {
-        this.$router.push({ name: 'mecaniciengalerie' });
+    mecanicienapropos() {
+        this.$router.push({ name: 'mecanicienpageapropos' });
     },
+
+
 
 
     }
@@ -302,6 +311,18 @@ export default {
         cursor: pointer;
         transition: all 0.2s ease-in-out;
     }
+
+
+    @keyframes clignoter {
+   0% { opacity: 1; }
+   50% { opacity: 0.7; }
+   100% { opacity: 1; }
+   }
+
+#clignotant {
+animation: clignoter 2s infinite;
+}
+
     .sidebar-menu > span {
         font-size: 25px;
         padding-right: 30px;
@@ -326,41 +347,6 @@ export default {
         color: #201f2b;
     }
     /* Styles pour la section "À propos" */
-.section-apropos {
-  padding: 40px 0;
-  background-color: #f8f8f8;
-  margin-top: 26px;
-}
-.section-apropos {
-  padding: 40px 0;
-  background-color: rgba(248, 248, 248, 0.9);
-}
-
-.section-title {
-  text-align: center;
-  font-size: 24px;
-  margin-bottom: 20px;
-}
-
-.section-content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-}
-
-.garage-image {
-  max-width: 300px;
-  margin-bottom: 20px;
-}
-
-.description {
-  margin-bottom: 10px;
-  color: #555;
-  font-size: 16px;
-  line-height: 1.6;
-}
-
  
     
     /* rotation de l'image */
@@ -423,6 +409,52 @@ export default {
             "customer";
         }
        
+    }
+  .section-apropos {
+  padding: 10px 0;
+  background-color: #f8f8f8;
+  margin-top: 36px;
+  border-top-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+}
+.section-apropos {
+  padding: 10px 0;
+  background-color: rgba(248, 248, 248, 0.9);
+}
+
+    .box {
+        position: relative;
+        width: 200px;
+        margin-top: 120px;
+        margin-left: 370px;
+        height: 200px;
+        transform-style: preserve-3d;
+        animation: animate 70s linear infinite;
+    }
+    @keyframes animate 
+    {
+        100% {
+            transform: perspective(1000px) rotateY(360deg);
+        }
+    }
+    .box span {
+        position: absolute;
+        top: 0;
+        left: 50;
+        width: 100%;
+        height: 100%;
+        transform-origin: center;
+        transform-style: preserve-3d;
+        transform: rotateY(calc(var(--i) * 45deg)) translateZ(400px);
+        -webkit-box-reflect: below 0px linear-gradient(transparent,transparent,#0004);
+    }
+    .box span img {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
     }
     
     

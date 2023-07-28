@@ -57,16 +57,14 @@
             </div>
 
             <div class="sidebar-menu">
-                <span class="fas fa-image"></span><p style="font-size: 13px;">Galerie</p>
+                <span @click="mecaniciengalerie" class="fas fa-image"></span><p @click="mecaniciengalerie" style="font-size: 13px;">Galerie</p>
             </div>
 
             <div class="sidebar-menu">
                 <span @click="mecanicienapropos"  class="fas fa-cog"></span><p @click="mecanicienapropos" style="font-size: 13px;">À propos</p>
             </div>
 
-            <div class="sidebar-menu">
-                <span class="fas fa-phone"></span><p style="font-size: 13px;">Contact </p>
-            </div>
+           
           
         </div>
         <!-- main dashboard -->
@@ -395,6 +393,11 @@ export default {
 
     mecanicienapropos() {
         this.$router.push({ name: 'mecanicienpageapropos' });
+    },
+
+    // Galérie du mecanicien
+    mecaniciengalerie() {
+        this.$router.push({ name: 'mecaniciengalerie' });
     },
     
     // mapiseo anle div message

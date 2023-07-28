@@ -260,6 +260,7 @@ import io from 'socket.io-client'
       newItemId: '',
       Text : '',
       Message: {},
+      nomrugence:'',
 
       Mecanicien : {},
       Urgence: {},
