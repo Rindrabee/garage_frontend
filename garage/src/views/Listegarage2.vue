@@ -126,6 +126,15 @@
             })
             },
 
+        // Supprimer tous les messages
+
+        supprimemessage() {
+        axios.delete('http://localhost:8082/api/messages/deletemessage3')
+        .then(response => {
+         console.log(response.data)
+        })
+        },
+
         // S'inscire sur une garage
        
        insciregarage(idgrg) {
@@ -139,6 +148,7 @@
         .then(response => {
           alert('Demande envoyer avec succes');
           console.log(response.data);
+          this.supprimemessage();
         })
         .catch(error => {
           console.log(error);

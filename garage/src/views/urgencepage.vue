@@ -21,7 +21,7 @@
           <li>
           <a style="color: rgb(255, 255, 255);cursor: pointer;">
           <i  class="fas fa-bell"></i>&nbsp; Mecanicien
-          <span @click="slide1"  style="cursor: pointer;" class="badge">1</span>
+          <span @click="slide1"  style="cursor: pointer;"><img style="width: 20px;" src="../assets/images/down.ico" alt=""></span>
           </a>
           </li>
         </ul>
@@ -38,16 +38,19 @@
             </div>
 
           <div class="settings-menu-inner">
-          <p style="font-size: 10px;">Je suis le mécanicien envoyer pour vous sécourir</p>
+          <p style="font-size: 10px;margin-left: 60px;">Liste des mécaniciens envoyer</p>
           
           <div v-for="m in Mecanicien" class="settings-links">
-            <img v-if="m.id_urgence == newItemId && m.id_urgence != null" style="cursor: pointer;height: 38px;" :src="'http://localhost:8082/' +  m.Photo  + '.jpeg'" class="settings-icon">
+            <img v-if="m.id_urgence == newItemId && m.id_urgence != null" @click="discu(m.id)" style="cursor: pointer;height: 38px;" :src="'http://localhost:8082/' +  m.Photo  + '.jpeg'" class="settings-icon">
             <a v-if="m.id_urgence == newItemId && m.id_urgence != null" @click="discu(m.id)" style="color: #000;font-family: century gothic;cursor: pointer;" href="#"> &nbsp; {{ m.Nom }}</a>
+            <img  v-show="showButtons && m.id_urgence == newItemId && m.id_urgence != null" @click="ajouterpoint(m.id)" class="dislike"  style="width: 17px;margin-left: 60px;cursor: pointer;" src="../assets/images/yvyv.ico" alt=""><img @click="diminuerpoint(m.id)" v-show="showButtons && m.id_urgence == newItemId && m.id_urgence != null" class="dislike" style="width: 17px;margin-right: 30px;cursor: pointer;" src="../assets/images/dander.ico" alt="">
+            
           </div>
 
           </div> 
           </div>
-    </nav>
+        
+        </nav>
 
 
     
@@ -264,6 +267,8 @@ import io from 'socket.io-client'
 
       Mecanicien : {},
       Urgence: {},
+      newItemId: null,
+    showButtons: true,
 
       id_senderclient : '',
       id_receivedmecanicien : '',
@@ -357,6 +362,35 @@ import io from 'socket.io-client'
     })
     },
 
+     //  Ajouter de point
+
+     ajouterpoint(id) {
+        axios
+        .put('http://localhost:8082/api/mecaniciens/ajouterpoint/' +  id)
+        .then(response => {
+        alert('Merci pour votre avis !!');
+        console.log(response.data);
+        })
+        .catch(error => {
+        console.log(error);
+        });
+        this.showButtons = false;
+      },
+
+      // Diminuer point
+      
+     diminuerpoint(id) {
+        axios
+        .put('http://localhost:8082/api/mecaniciens/diminuerpoint/' +  id)
+        .then(response => {
+        alert('Merci pour votre avis !!');
+        console.log(response.data);
+        })
+        .catch(error => {
+        console.log(error);
+        });
+        this.showButtons = false;
+        },
    
     // Afficher le notification du mecanicien
     slide1() {
@@ -761,10 +795,13 @@ import io from 'socket.io-client'
 }
 
 .chat {
-    height: 80%;
-    overflow-y: scroll;
-    display: flex;
-    flex-direction: column-reverse;
+  height: 80%;
+  overflow-y: scroll;
+  display: flex;
+  flex-direction: column-reverse;
+}
+.dislike:hover {
+  background-color: rgb(124, 219, 70);
 }
 
 

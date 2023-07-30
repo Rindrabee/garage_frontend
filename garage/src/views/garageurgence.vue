@@ -137,7 +137,7 @@
             </div>
           
             <br><br>
-            <div class="col-lg-3 left-col">
+            <!-- <div class="col-lg-3 left-col">
                 <div class="card friend-list">
                     <div @click="discu(c.id,c.Prenoms,c.Photo)" v-for="c in Mecanicien" :key="c.id" class="people-list">
                         <ul class="list-unstyled chat-list mt-2 mb-0">
@@ -149,10 +149,10 @@
                         </ul>
                     </div>
                 </div>
-            </div>
+            </div> -->
 
             <!-- ito le soratra anarana eny ambony -->
-            <div style="height: 420px" class="col-lg-9 right-col">
+            <div style="height: 420px;margin-left: 10px;" class="col-lg-9 right-col">
                 <div class="card chat" ref="chat">
                     <div style="position: fixed;margin-top: 182px;width: 40%;" class="chat-header clearfix">
                         <div class="row">
@@ -187,11 +187,12 @@
                 <!-- div le ery ambany le anoratana -->
                 
                 </div>
-                <div  class="noo" style="position: fixed;width: 500px;margin-top: -75px;margin-left: 30px;">
+                <div  class="noo" style="position: fixed;width: 500px;margin-top: -75px;margin-left: 30px;width: 700px;">
                     <div class="input-group mb-0">
                         <div class="input-group-prepend">
                             <span @click="sendMessage" class="input-group-text" ><img  src="../assets/images/sendeo.png" style="width: 30px;height: 30px;cursor: pointer;" alt=""></span>
                         </div>
+                        
                         <input v-model="Text" type="text" class="form-control" placeholder="Votre message ici...">                                    
                     </div>
                 </div>
@@ -202,22 +203,20 @@
 
 
 
-
-
-                                   
-        <div id="choisir" style="display: none; box-shadow: 2px 2px 10px black; background-color: #0f530f; border-radius: 20px; position: fixed; top: 160px; margin-left: 270px; width: 550px;" class="container conversation">
-        <br>
+    <div id="choisir" style="display: none; box-shadow: 2px 2px 10px black; background-color: #0f530f; border-radius: 20px; position: fixed; top: 160px; margin-left: 270px; width: 550px;" class="container conversation">
+    <br>
         <div style="width: 500px;text-align: center;margin-left: 10px;margin-bottom: 30px;" class="row">
         <div>
             <img @click="fermer" style="width: 30px; margin-left: 450px; cursor: pointer;" src="../assets/images/close.png" alt="">
         </div>
         <br><br>
         <table style="background-color: palegreen; width: 100%; border-collapse: collapse;border-radius: 10px;">
-            <br>
+        <br>
             <tr>
                 <th>Photo</th>
                 <th>Nom</th>
                 <th>Specialité</th>
+                <th>Grade</th>
                 <th>Action</th>
             </tr> 
 
@@ -226,6 +225,12 @@
                 <td v-if="u.id_garage == Garage.id && u.Etat2 == 1"><img style="width: 40px;height: 40px;border-radius: 50%;" :src="'http://localhost:8082/' +  u.Photo  + '.jpeg'" alt=""></td>
                 <td v-if="u.id_garage == Garage.id && u.Etat2 == 1">{{ u.Nom }}</td>
                 <td v-if="u.id_garage == Garage.id && u.Etat2 == 1">{{ u.Specialite }}</td>
+                <td v-if="u.id_garage == Garage.id && u.Etat2 == 1 && u.point <= 0"><img style="width: 25px;" src="../assets/images/bas.ico" alt=""></td>
+
+                <td v-if="u.id_garage == Garage.id && u.Etat2 == 1 && u.point < 5 && u.point > 0"><img style="width: 25px;" src="../assets/images/star.ico" alt=""></td>
+
+                <td v-if="u.id_garage == Garage.id && u.Etat2 == 1 && u.point >= 5"><img style="width: 25px;" src="../assets/images/good.ico" alt=""></td>
+
                 <td v-if="u.id_garage == Garage.id && u.Etat2 == 1"><button class="btn btn-outline-success" @click="redirectUrgenceTomecanicien(u.id)">Coller</button></td>
                 <br><br><br>
             </tr>
@@ -1090,6 +1095,7 @@
 
 .left-col, .right-col {
     max-height: 100%;
+    width: 100%;
 }
 
 .friend-list {
