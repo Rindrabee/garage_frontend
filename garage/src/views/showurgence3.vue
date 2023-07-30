@@ -17,8 +17,7 @@
         <nav class="navbar">
             <h4 style="margin-left: -30px;"><i @click="mecanicienaccueil" style="cursor: pointer;" class="fas fa-left-long"></i></h4>
             <div class="profile">
-                <input style="margin-left: -300px;width: 300px;color: gray;font-family: century gothic;" class="form-control" type="text" placeholder="Barre de recherche">
-                <span style="cursor: pointer;" class="fas fa-search"></span>
+               
                 <img @click="slide1" style="cursor: pointer;" class="profile-image" :src="'http://localhost:8082/' +  Mecanicien.Photo  + '.jpeg'" alt="">
                 <p class="profile-name" style="cursor: pointer;">{{ Mecanicien.Nom }}</p>
             </div>
@@ -79,7 +78,7 @@
    
     <br><br>
 
-    <input v-if="Urgence.Etat == null" type="button" style="width: 120px;margin-left: 40px;" class="btn btn-outline-danger" value="Supprimer">
+    <input @click="supprimer(Urgence.id)" type="button" style="width: 150px;margin-left: 40px;" class="btn btn-outline-danger" value="Pas disponible">
 
     </div>
     
@@ -164,6 +163,15 @@
     console.error(error);
     this.MessageError = "Une erreur s'est produite.";
     });
+    },
+    
+    // Rejeter l'urgence
+    supprimer(id) {
+    axios.delete('http://localhost:8082/api/admins/supprimerurgence/'+id)
+    .then(response => {
+    alert("Vous avez rejeter le demmande d'urgence")
+    console.log(response.data);
+    })
     },
 
 

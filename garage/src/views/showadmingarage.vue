@@ -16,8 +16,7 @@
         <nav class="navbar">
             <h4 style="margin-left: -30px;"><i @click="Admingarage" style="cursor: pointer;" class="fas fa-left-long"></i></h4>
             <div class="profile">
-                <input style="margin-left: -300px;width: 300px;color: gray;font-family: century gothic;" class="form-control" type="text" placeholder="Barre de recherche">
-                <span style="cursor: pointer;" class="fas fa-search"></span>
+              
                 <img @click="slide1" style="cursor: pointer;" class="profile-image" src="../assets/images/profil.ico" alt="">
                 <p class="profile-name" style="cursor: pointer;">  {{ Admin.Prenoms }}</p>
             </div>

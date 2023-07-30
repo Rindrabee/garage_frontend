@@ -16,11 +16,11 @@
     <nav class="navbar">
         <h4 style="margin-left: -30px;"><i @click="decouvrir" style="cursor: pointer;" class="fas fa-left-long"></i></h4>
         <div class="profile">
-          <input style="margin-left: -300px;width: 300px;color: gray;font-family: century gothic;" class="form-control" type="text" placeholder="Barre de recherche">
+          <input style="margin-left: -300px;width: 300px;color: gray;display: none;font-family: century gothic;" class="form-control" type="text" placeholder="Barre de recherche">
             
+          <span class="fas fa-car"></span>
         </div>
 
-        
     </nav>
      
     <!-- concernant la location -->

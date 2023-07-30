@@ -16,7 +16,17 @@
             <nav class="navbar">
                 <h4 style="margin-left: -30px;"><img class="rotate-image" style="width: 36px;" src="../assets/images/car.ico" alt=""> Menu</h4>
                 <div class="profile">
-                    <input style="margin-left: -300px;width: 300px;color: gray;font-family: century gothic;" class="form-control" type="text" placeholder="Barre de recherche">
+                   
+                <input
+                id="searchInput"
+                style="margin-left: -300px;width: 300px;color: gray;font-family: century gothic;"
+                class="form-control"
+                type="text"
+                placeholder="Barre de recherche"
+                @input="searchClientsByName"
+                >
+                   
+                   
                     <span class="fas fa-search"></span>
                     <img @click="slide1" style="cursor: pointer;" class="profile-image"  :src="'http://localhost:8082/' +  Garage.Photo  + '.jpeg'" alt="">
                     <p style="cursor: pointer;" class="profile-name">  {{ Garage.Nom }}</p>
@@ -94,7 +104,7 @@
                             <th>Action</th>
                         </tr>
                         
-                        <tr v-for="g in Client" :key="g.id">
+                        <tr v-if="searchResults.length === 0" v-for="g in Client" :key="g.id">
 
                        
                         <td v-if="g.id_garage == Garage.id">
@@ -118,6 +128,32 @@
                        
 
                         </tr>
+
+
+                    <tr v-for="g2 in searchResults" :key="g2.id">
+
+                       
+                    <td v-if="g2.id_garage == Garage.id">
+                    <img style="width: 80px; border-radius: 50%; height: 80px;" :src="'http://localhost:8082/' + g2.Photo + '.jpeg'" alt="">
+                    </td>
+
+                   <td v-if="g2.id_garage == Garage.id">{{ g2.Nom }}</td>
+                   <td v-if="g2.id_garage == Garage.id">{{ g2.Naissance }}</td>
+                   <td v-if="g2.id_garage == Garage.id">{{ g2.Adresse }}</td>
+
+                   <td v-if="g2.id_garage == Garage.id">{{ g2.Telephone }}</td>
+
+
+                   <td v-if="g2.Etat2 == null && g2.id_garage == Garage.id"><p style="color: red;">En attente</p></td>
+
+                   <td v-if="g2.Etat2 == 1 && g2.id_garage == Garage.id"><p style="color: green;">Membre</p></td>
+
+                   <td v-if="g2.Etat2 == null && g2.id_garage == Garage.id"><button @click="showgaragecli(g2.id)" class="btn btn-outline-danger">Consulter</button></td>
+
+                   <td v-if="g2.Etat2 == 1 && g2.id_garage == Garage.id"><button @click="showgaragecli(g2.id)" class="btn btn-outline-success">Voir profile</button></td>
+
+
+                  </tr>
     
 
                     </table>
@@ -139,7 +175,8 @@
     export default {
         data () {
         return {
-         Client: {},
+         Client: [],
+         searchResults: [],
          id_sender: '',
          Garage: {},
          mecid : '',
@@ -183,6 +220,30 @@
        })
 
     },
+
+        // Pour faire le recherche 
+        async searchClientsByName() {
+        const inputElement = document.getElementById('searchInput');
+        const nom = inputElement.value.trim();
+
+        if (nom === '') {
+        // Si la barre de recherche est vide, afficher tous les clients
+        this.searchResults = [];
+        } else {
+        try {
+          const response = await axios.get(`http://localhost:8082/api/clients/searchClientByName/${nom}`);
+          // Utilisez "axios.get" pour envoyer le nom comme paramètre d'URL
+
+          this.searchResults = response.data; // Mettez à jour les résultats de la recherche
+        } catch (error) {
+          console.error(error);
+        }
+      }
+    },
+
+
+
+
         //Modification garage
         modificationgarage() {
         this.$router.push({ name: 'modificationgarage' });

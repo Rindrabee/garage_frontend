@@ -16,11 +16,22 @@
             <nav class="navbar">
                 <h4 style="margin-left: -30px;"><img class="rotate-image" style="width: 36px;" src="../assets/images/car.ico" alt=""> Menu</h4>
                 <div class="profile">
-                    <input style="margin-left: -300px;width: 300px;color: gray;font-family: century gothic;" class="form-control" type="text" placeholder="Barre de recherche">
-                    <span class="fas fa-search"></span>
-                    <img @click="slide1" style="cursor: pointer;" class="profile-image" src="../assets/images/profil.ico" alt="">
-                    <p style="cursor: pointer;" class="profile-name">  {{ Admin.Prenoms }}</p>
+                
+                <input
+                id="searchInput"
+                style="margin-left: -300px;width: 300px;color: gray;font-family: century gothic;"
+                class="form-control"
+                type="text"
+                placeholder="Barre de recherche"
+                @input="searchClientsByName"
+                >
+
+
+                <span class="fas fa-search"></span>
+                <img @click="slide1" style="cursor: pointer;" class="profile-image" src="../assets/images/profil.ico" alt="">
+                <p style="cursor: pointer;" class="profile-name">  {{ Admin.Prenoms }}</p>
                 </div>
+                
                 <div id="rindra" class="settings-menu">
                     <div id="dark-btn">
                         <span></span>
@@ -65,10 +76,10 @@
                  <span @click="verslistegarage" class="fas fa-car"></span><p @click="verslistegarage" style="font-size: 13px;">Garage</p>
                </div>
 
-           <!-- <div class="sidebar-menu">
-             <span class="fas fa-file-invoice"></span><p style="font-size: 13px;">Comptabilité</p>
-           </div> -->
-    </div>
+               <!-- <div class="sidebar-menu">
+                 <span class="fas fa-file-invoice"></span><p style="font-size: 13px;">Comptabilité</p>
+              </div> -->
+            </div>
             <!-- main dashboard -->
             <main>
               
@@ -90,28 +101,53 @@
                             <th>Action</th>
                         </tr>
                         
-                        <tr v-for="g in Mecanicien" :key="g.id">
+                        <tr v-if="searchResults.length === 0" v-for="mec in Mecanicien" :key="mec.id">
 
                        
                         <td>
-                        <img style="width: 80px; border-radius: 50%; height: 80px;" :src="'http://localhost:8082/' + g.Photo + '.jpeg'" alt="">
+                        <img style="width: 80px; border-radius: 50%; height: 80px;" :src="'http://localhost:8082/' + mec.Photo + '.jpeg'" alt="">
                         </td>
                         
-                        <td>{{ g.Nom }}</td>
-                        <td>{{ g.Naissance }}</td>
-                        <td>{{ g.Adresse }}</td>
-                        <td style="color: rgb(25, 72, 224);">{{ g.Specialite }}</td>
-                        <td>{{ g.Telephone }}</td>
+                        <td>{{ mec.Nom }}</td>
+                        <td>{{ mec.Naissance }}</td>
+                        <td>{{ mec.Adresse }}</td>
+                        <td style="color: rgb(25, 72, 224);">{{ mec.Specialite }}</td>
+                        <td>{{ mec.Telephone }}</td>
 
 
-                        <td v-if="g.Etat == null"><p style="color: red;">En attente</p></td>
+                        <td v-if="mec.Etat == null"><p style="color: red;">En attente</p></td>
 
-                        <td v-if="g.Etat == 1"><p style="color: green;">Membre</p></td>
+                        <td v-if="mec.Etat == 1"><p style="color: green;">Membre</p></td>
                         
-                        <td v-if="g.Etat == null"><button @click="showadminmecanicien(g.id)" class="btn btn-outline-danger">Consulter</button></td>
+                        <td v-if="mec.Etat == null"><button @click="showadminmecanicien(mec.id)" class="btn btn-outline-danger">Consulter</button></td>
                        
-                        <td v-if="g.Etat == 1"><button @click="showadminmecanicien(g.id)" class="btn btn-outline-success">Voir profile</button></td>
+                        <td v-if="mec.Etat == 1"><button @click="showadminmecanicien(mec.id)" class="btn btn-outline-success">Voir profile</button></td>
                        
+                    </tr>
+
+
+                    <tr v-else v-for="clt2 in searchResults" :key="clt2.id">
+
+                       
+                    <td>
+                    <img style="width: 80px; border-radius: 50%; height: 80px;" :src="'http://localhost:8082/' + clt2.Photo + '.jpeg'" alt="">
+                    </td>
+
+                    <td>{{ clt2.Nom }}</td>
+                    <td>{{ clt2.Naissance }}</td>
+                    <td>{{ clt2.Adresse }}</td>
+                    <td style="color: rgb(25, 72, 224);">{{ clt2.Specialite }}</td>
+                    <td>{{ clt2.Telephone }}</td>
+
+
+                    <td v-if="clt2.Etat == null"><p style="color: red;">En attente</p></td>
+
+                    <td v-if="clt2.Etat == 1"><p style="color: green;">Membre</p></td>
+
+                    <td v-if="clt2.Etat == null"><button @click="showadminmecanicien(g.id)" class="btn btn-outline-danger">Consulter</button></td>
+
+                    <td v-if="clt2.Etat == 1"><button @click="showadminmecanicien(g.id)" class="btn btn-outline-success">Voir profile</button></td>
+
                     </tr>
     
 
@@ -134,7 +170,8 @@
     export default {
         data () {
         return {
-         Mecanicien : {},
+         Mecanicien : [],
+         searchResults: [],
          id_sender: '',
          Admin: {}
          
@@ -146,7 +183,7 @@
         },
         
         methods: {
-        slide1(){
+        slide1() {
             let a = document.getElementById("rindra");
             if (a.style.display === "block") {
             a.style.display = "none";
@@ -154,6 +191,7 @@
             a.style.display = "block";
             }
         },
+
         listemecanicien() {
         axios.get('http://localhost:8082/api/mecaniciens/listermecanicien')
         .then(response => {
@@ -173,8 +211,30 @@
        }).catch(error => {
         console.log(error);
        })
+       },
 
+       // Recherche le mecanicien
+       async searchClientsByName() {
+       const inputElement = document.getElementById('searchInput');
+       const nom = inputElement.value.trim();
+
+        if (nom === '') {
+        // Si la barre de recherche est vide, afficher tous les clients
+        this.searchResults = [];
+        } else {
+        try {
+        const response = await axios.get(`http://localhost:8082/api/mecaniciens/searchMecanicienByName/${nom}`);
+        // Utilisez "axios.get" pour envoyer le nom comme paramètre d'URL
+
+          this.searchResults = response.data; // Mettez à jour les résultats de la recherche
+        } catch (error) {
+          console.error(error);
+        }
+      }
     },
+
+
+
         //Modification Admin 
         modificationadmin() {
         this.$router.push({ name: 'modificationadmin' });

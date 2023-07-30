@@ -21,7 +21,7 @@
           <li>
           <a style="color: rgb(255, 255, 255);cursor: pointer;">
           <i  class="fas fa-bell"></i>&nbsp; Mecanicien
-          <span @click="slide1"  style="cursor: pointer;"><img style="width: 20px;"  src="../assets/images/sauver.ico" alt=""></span>
+          <span @click="slide1"  style="cursor: pointer;" class="badge">1</span>
           </a>
           </li>
         </ul>

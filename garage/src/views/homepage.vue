@@ -10,7 +10,7 @@
 <body>
     <div class="cont">
     <nav>
-    <img src="../assets/images/car.ico" class="logo" alt="">
+    <img style="margin-top: 20px;" src="../assets/images/CAR1.png" class="logo" alt="">
     <ul>
         <li><a href="/">Accueil</a></li>
         <li><a href="loginpage">Se connecter</a></li>

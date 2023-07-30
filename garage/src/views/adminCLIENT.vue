@@ -16,15 +16,24 @@
             <nav class="navbar">
                 <h4 style="margin-left: -30px;"><img class="rotate-image" style="width: 36px;" src="../assets/images/car.ico" alt=""> Menu</h4>
                 <div class="profile">
-                    <input style="margin-left: -300px;width: 300px;color: gray;font-family: century gothic;" class="form-control" type="text" placeholder="Barre de recherche">
-                    <span class="fas fa-search"></span>
-                    <img @click="slide1" style="cursor: pointer;" class="profile-image" src="../assets/images/profil.ico" alt="">
-                    <p style="cursor: pointer;" class="profile-name">  {{ Admin.Prenoms }}</p>
+ 
+                <input
+                id="searchInput"
+                style="margin-left: -300px;width: 300px;color: gray;font-family: century gothic;"
+                class="form-control"
+                type="text"
+                placeholder="Barre de recherche"
+                @input="searchClientsByName"
+                >
+
+                <span @click="searchClientsByName" class="fas fa-search"></span>
+                <img @click="slide1" style="cursor: pointer;" class="profile-image" src="../assets/images/profil.ico" alt="">
+                <p style="cursor: pointer;" class="profile-name">  {{ Admin.Prenoms }}</p>
                 </div>
                 <div id="rindra" class="settings-menu">
-                    <div id="dark-btn">
-                        <span></span>
-                    </div>
+                <div id="dark-btn">
+                <span></span>
+                </div>
 
                     <div class="settings-menu-inner">
                         <div class="settings-links">
@@ -87,7 +96,7 @@
                             <th>Action</th>
                         </tr>
                         
-                        <tr v-for="clt in Client" :key="clt.id">
+                        <tr v-if="searchResults.length === 0" v-for="clt in Client" :key="clt.id">
 
                         <td>
                         <img style="width: 80px; border-radius: 50%; height: 80px;" :src="'http://localhost:8082/' + clt.Photo + '.jpeg'" alt="">
@@ -103,6 +112,23 @@
                         <td><button @click="detailclient(clt.id)" class="btn btn-outline-success">Profile</button></td>
                         
                     </tr>
+
+                    <tr v-else v-for="clt2 in searchResults" :key="clt2.id">
+
+                    <td>
+                    <img style="width: 80px; border-radius: 50%; height: 80px;" :src="'http://localhost:8082/' + clt2.Photo + '.jpeg'" alt="">
+                    </td>
+
+                   <td>{{ clt2.Nom }}</td>
+                   <td>{{ clt2.Prenoms }}</td>
+                   <td>{{ clt2.Adresse }}</td>
+
+                   <td style="color: rgb(25, 72, 224);">{{ clt2.Sexe }}</td>
+                   <td>{{ clt2.Telephone }}</td>
+
+                   <td><button @click="detailclient(clt2.id)" class="btn btn-outline-success">Profile</button></td>
+
+                   </tr>
     
                    
                     </table>
@@ -124,7 +150,8 @@
     export default {
         data () {
         return {
-         Client  : {},
+         Client: [], 
+         searchResults: [],
          Garage: {},
          id_sender: '',
          Admin: {}
@@ -163,6 +190,31 @@
            this.Client = response.data
        })
        },
+       
+       // Pour faire le recherche 
+       async searchClientsByName() {
+      const inputElement = document.getElementById('searchInput');
+      const nom = inputElement.value.trim();
+
+      if (nom === '') {
+        // Si la barre de recherche est vide, afficher tous les clients
+        this.searchResults = [];
+      } else {
+        try {
+          const response = await axios.get(`http://localhost:8082/api/clients/searchClientByName/${nom}`);
+          // Utilisez "axios.get" pour envoyer le nom comme paramètre d'URL
+
+          this.searchResults = response.data; // Mettez à jour les résultats de la recherche
+        } catch (error) {
+          console.error(error);
+        }
+      }
+    },
+
+
+
+
+
        modificationadmin() {
         this.$router.push({ name: 'modificationadmin' });
        },

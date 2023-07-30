@@ -16,7 +16,18 @@
             <nav class="navbar">
                 <h4 style="margin-left: -30px;"><img class="rotate-image" style="width: 36px;" src="../assets/images/car.ico" alt=""> Menu</h4>
                 <div class="profile">
-                    <input style="margin-left: -300px;width: 300px;color: gray;font-family: century gothic;" class="form-control" type="text" placeholder="Barre de recherche">
+                       
+                <input
+                id="searchInput"
+                style="margin-left: -300px;width: 300px;color: gray;font-family: century gothic;"
+                class="form-control"
+                type="text"
+                placeholder="Barre de recherche"
+                @input="searchClientsByName"
+                >
+
+
+
                     <span class="fas fa-search"></span>
                     <img @click="slide1" style="cursor: pointer;" class="profile-image"  :src="'http://localhost:8082/' +  Garage.Photo  + '.jpeg'" alt="">
                     <p style="cursor: pointer;" class="profile-name">  {{ Garage.Nom }}</p>
@@ -88,7 +99,7 @@
                             <th>Action</th>
                         </tr>
                         
-                        <tr v-for="g in Mecanicien" :key="g.id">
+                        <tr v-if="searchResults.length === 0" v-for="g in Mecanicien" :key="g.id">
 
                        
                         <td v-if="g.id_garage == Garage.id">
@@ -111,12 +122,35 @@
                         <td v-if="g.Etat2 == 1 && g.id_garage == Garage.id"><button @click="showgaragemecanicien(g.id)" class="btn btn-outline-success">Voir profile</button></td>
                        
                         </tr>
+
+
+                        <tr v-for="clt2 in searchResults" :key="clt2.id">
+                       
+                        <td v-if="clt2.id_garage == Garage.id">
+
+                        <img style="width: 80px; border-radius: 50%; height: 80px;" :src="'http://localhost:8082/' + clt2.Photo + '.jpeg'" alt="">
+                        </td>
+
+                        <td v-if="clt2.id_garage == Garage.id">{{ clt2.Nom }}</td>
+                        <td v-if="clt2.id_garage == Garage.id">{{ clt2.Naissance }}</td>
+                        <td v-if="clt2.id_garage == Garage.id">{{ clt2.Adresse }}</td>
+                        <td v-if="clt2.id_garage == Garage.id" style="color: rgb(25, 72, 224);">{{ clt2.Specialite }}</td>
+                        <td v-if="clt2.id_garage == Garage.id">{{ clt2.Telephone }}</td>
+
+
+                        <td v-if="clt2.Etat2 == null && clt2.id_garage == Garage.id"><p style="color: red;">En attente</p></td>
+
+                        <td v-if="clt2.Etat2 == 1 && clt2.id_garage == Garage.id"><p style="color: green;">Membre</p></td>
+
+                        <td v-if="clt2.Etat2 == null && clt2.id_garage == Garage.id"><button @click="showgaragemecanicien(clt2.id)" class="btn btn-outline-danger">Consulter</button></td>
+
+                        <td v-if="clt2.Etat2 == 1 && clt2.id_garage == Garage.id"><button @click="showgaragemecanicien(clt2.id)" class="btn btn-outline-success">Voir profile</button></td>
+
+                        </tr>
     
 
                     </table>
                 </div>
-    
-                   
         </main>
     </div>
     </body>
@@ -132,7 +166,8 @@
     export default {
         data () {
         return {
-         Mecanicien : {},
+         Mecanicien : [],
+         searchResults: [],
          id_sender: '',
          Garage: {},
          mecid : '',
@@ -176,6 +211,28 @@
        })
 
     },
+       
+       // Recherche le mecanicien
+       async searchClientsByName() {
+       const inputElement = document.getElementById('searchInput');
+       const nom = inputElement.value.trim();
+
+        if (nom === '') {
+        // Si la barre de recherche est vide, afficher tous les clients
+        this.searchResults = [];
+        } else {
+        try {
+        const response = await axios.get(`http://localhost:8082/api/mecaniciens/searchMecanicienByName/${nom}`);
+        // Utilisez "axios.get" pour envoyer le nom comme paramètre d'URL
+
+          this.searchResults = response.data; // Mettez à jour les résultats de la recherche
+        } catch (error) {
+          console.error(error);
+        }
+      }
+    },
+
+
         //Modification garage
         modificationgarage() {
         this.$router.push({ name: 'modificationgarage' });

@@ -16,11 +16,11 @@
         <nav class="navbar">
             <h4 style="margin-left: -30px;"><img class="rotate-image" style="width: 36px;" src="../assets/images/car.ico" alt=""> Menu</h4>
             <div class="profile">
-                <input style="margin-left: -300px;width: 300px;color: gray;font-family: century gothic;" class="form-control" type="text" placeholder="Barre de recherche">
-                <span class="fas fa-search"></span>
+               
                 <img @click="slide1" style="cursor: pointer;" class="profile-image" :src="'http://localhost:8082/' +  Garage.Photo  + '.jpeg'" alt="">
                 <p style="cursor: pointer;" class="profile-name">  {{ Garage.Nom }}</p>
             </div>
+            
             <div id="rindra" class="settings-menu">
                 <div id="dark-btn">
                     <span></span>
