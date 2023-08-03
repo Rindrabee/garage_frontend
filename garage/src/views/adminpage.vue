@@ -247,7 +247,7 @@
     </div>
 
 
-    <div id="choisir" style="display: none; box-shadow: 2px 2px 10px black; background-color: #0f530f; border-radius: 20px; position: fixed; top: 250px; margin-left: 270px; width: 550px;" class="container conversation">
+    <div id="choisir" style="display: none; box-shadow: 2px 2px 10px black; background-color: #0f530f; border-radius: 20px; position: fixed; top: 150px; margin-left: 270px; width: 550px;" class="container conversation">
     <br>
     <div style="width: 500px;text-align: center;margin-left: 10px;margin-bottom: 30px;" class="row">
         <div>
@@ -574,6 +574,7 @@ export default {
     font-family: "Poppins",sans-serif;
 }
 .cont {
+    position: absolute;
     background : url(../assets/images/ft3.jpg);
     background-position: center;
     background-size: cover;

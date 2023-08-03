@@ -289,7 +289,7 @@
         font-family: "Poppins",sans-serif;
     }
     .cont {
-    position: fixed;
+    position: absolute;
     min-height: 100vh;
     width: 100%;
     background: url('../assets/images/ft3.jpg');

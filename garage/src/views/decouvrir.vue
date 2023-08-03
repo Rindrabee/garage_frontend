@@ -58,20 +58,21 @@
 </h2>
     <br><br>
     <div class="main">
-    <div v-for="(g, index) in Garage" class="cards" v-if="index < 4 || Garage.length <= 4">
-        <div class="image">
-            <img :src="'http://localhost:8082/' +  g.Photo  + '.jpeg'" alt="" class="image-container">
-        </div>
-        <div class="title">
-           <h1>{{ g.Nom }} </h1>
-        </div>
-        <div class="des">
-            <p>Adresse : {{ g.Adresse }} </p>
-            <p>Specialité : {{ g.Specialite }} </p>
-
-            <button @click="versdetailgarage(g.id)">Consulter</button>
-        </div>
+    
+    <div v-if="Array.isArray(Garage) && Garage.length > 0" class="cards" v-for="(g, index) in Garage.slice(0, 4)">
+    <div class="image">
+        <img :src="'http://localhost:8082/' +  g.Photo  + '.jpeg'" alt="" class="image-container">
     </div>
+    <div class="title">
+        <h1>{{ g.Nom }} </h1>
+    </div>
+    <div class="des">
+        <p>Adresse : {{ g.Adresse }} </p>
+        <p>Specialité : {{ g.Specialite }} </p>
+
+        <button @click="versdetailgarage(g.id)">Consulter</button>
+    </div>
+</div>
 
    
     </div>

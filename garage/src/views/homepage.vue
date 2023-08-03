@@ -37,13 +37,13 @@
     </div>
 
     <div class="nousapp">
-        <h3>Nous appeller</h3>
-        <a style="color: #fff;text-decoration: none;" type="tel" href="#">+261 34 17 905 51</a>
+    <h3>Nous appeler</h3>
+    <a style="color: #fff; text-decoration: none;" href="tel:+261341790551">+261 34 17 905 51</a> 
     </div>
 
     <div class="nousapp2">
-        <h3>Nous contacter</h3>
-        <a  style="color: #fff;text-decoration: none;" type="email" href="#">garagetahinalisoa@gmail.com</a>
+     <h3>Nous contacter</h3>
+     <a style="color: #fff; text-decoration: none;" href="https://mail.google.com/mail/?view=cm&fs=1&to=garagetahinalisoa@gmail.com" target="_blank">garagetahinalisoa@gmail.com</a>
     </div>
    
     <div class="soc">
