@@ -256,20 +256,24 @@ export default {
   },
   methods: {
     validateDate() {
-      const today = new Date();
-      const inputDate = new Date(this.Naissance);
-      
-      // Réinitialiser les heures, minutes, secondes et millisecondes pour une comparaison précise
-      today.setHours(0, 0, 0, 0);
-      inputDate.setHours(0, 0, 0, 0);
-      
-      if (inputDate > today) {
-        alert("Il est illogique d'indiquer une date de naissance postérieure à la date d'aujourd'hui.");
-        return false;
-      }
-      
-      return true;
-  },
+  const today = new Date();
+  const inputDate = new Date(this.Naissance);
+
+  // Calculer la date d'il y a 16 ans par rapport à aujourd'hui
+  const dateLimite = new Date(today);
+  dateLimite.setFullYear(dateLimite.getFullYear() - 16);
+
+  // Réinitialiser les heures, minutes, secondes et millisecondes pour une comparaison précise
+  today.setHours(0, 0, 0, 0);
+  inputDate.setHours(0, 0, 0, 0);
+
+  if (inputDate > dateLimite) {
+    alert("Il est illogique d'indiquer une date de naissance postérieure à 16 ans par rapport à la date d'aujourd'hui.");
+    return false;
+  }
+
+  return true;
+},
   async register() {
   if (!this.acceptConditions) {
     alert("Veuillez accepter les conditions pour vous inscrire.");

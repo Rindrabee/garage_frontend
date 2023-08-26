@@ -167,7 +167,7 @@
     
     // Rejeter l'urgence
     supprimer(id) {
-    axios.delete('http://localhost:8082/api/admins/supprimerurgence/'+id)
+    axios.put('http://localhost:8082/api/admins/mecapasdispo/'+id)
     .then(response => {
     alert("Vous avez rejeter le demmande d'urgence")
     console.log(response.data);

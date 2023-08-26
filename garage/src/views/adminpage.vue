@@ -149,10 +149,10 @@
                         <td v-if="u.Etat == null">{{ u.Nom }}</td>
                         <td v-if="u.Etat == null">{{ u.Telephone }}</td>
                         <td v-if="u.Etat == null">{{ u.Probleme }}</td>
-                      
+
                         <td v-if="u.Etat == null"><button @click="detailurgence(u.id)" class="btn btn-outline-danger">Voir</button></td>
                         <td v-if="u.Etat == null"><button @click="discu2(u.id)" class="btn btn-outline-success">Rediriger</button></td>
-                   
+
                     </tr>
 
                     <!-- apina -->

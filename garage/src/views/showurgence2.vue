@@ -78,7 +78,7 @@
    
     <br><br>
 
-    <input @click="supprimer(Urgence.id)" type="button" style="width: 150px;margin-left: 40px;" class="btn btn-outline-danger" value="Pas disponible">
+    <input @click="garagepas(Urgence.id)" type="button" style="width: 150px;margin-left: 40px;" class="btn btn-outline-danger" value="Pas disponible">
 
     </div>
     
@@ -168,6 +168,15 @@
     // Rejeter l'urgence
     supprimer(id) {
     axios.delete('http://localhost:8082/api/admins/supprimerurgence/'+id)
+    .then(response => {
+    alert("Vous avez rejeter le demmande d'urgence")
+    console.log(response.data);
+    })
+    },
+
+    // Garage pas disponible
+    garagepas(id) {
+    axios.put('http://localhost:8082/api/admins/garagepasdispo/'+id)
     .then(response => {
     alert("Vous avez rejeter le demmande d'urgence")
     console.log(response.data);

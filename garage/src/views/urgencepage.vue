@@ -166,6 +166,25 @@
       
     </div>
 
+    <h1 id="soratra" style="font-family: century gothic;font-size: 15px;margin-left: 190px;margin-right: 190px;">Voici la liste complète de tous les garages disponibles sur notre site avec leurs localisation précises. N'hésitez pas à les contacter directement si vous préférez ne pas passer par notre plateforme. Notre équipe se tient à votre disposition pour vous aider et faciliter votre recherche.</h1>
+
+  <br><br>
+
+  <div id="loca" class="localisation">
+    <GoogleMap :api-key="apiKey" style="width: 100%; height: 500px" :center="{ lat: lati, lng: longi }" :zoom="15">
+    <Marker v-for="g in Garage" :key="g.Id" v-if="isValidLocation" :options="{
+      position: { lat: g.Latitude, lng: g.Longitude },
+      label: {
+        text: g.Nom +'..' + 'Tel :' + g.Telephone,
+        fontFamily: 'century',
+        fontWeight: 'bold',
+        fontSize: '14px',
+        borderColor: 'green'
+      }
+    }" />
+    </GoogleMap>
+    </div>
+
     <!-- mipotra ito refa cliquena le discussion -->
   
         
@@ -233,8 +252,8 @@
     </div>
 
 
-    </div>
-    <footer>
+  </div>
+  <footer>
     <p>&copy; 2023 GarageFinder. Tous droits réservés.</p>
   </footer>
 </body>
@@ -246,8 +265,13 @@
 import AuthenticationService5 from '../services/AuthentificationService5.js'
 import axios from 'axios';
 import io from 'socket.io-client'
+import { GoogleMap, Marker } from 'vue3-google-map'
 
   export default {
+    components: {
+    GoogleMap,
+    Marker
+    },
     data() {
       return {
       step: 1,
@@ -268,7 +292,7 @@ import io from 'socket.io-client'
       Mecanicien : {},
       Urgence: {},
       newItemId: null,
-    showButtons: true,
+      showButtons: true,
 
       id_senderclient : '',
       id_receivedmecanicien : '',
@@ -286,6 +310,10 @@ import io from 'socket.io-client'
       longitudeError: '',
       latitudeError: '',
 
+      Garage : {},
+      lati : -18.885025,
+      longi : 47.203871,
+
 
       token: localStorage.getItem('token'),
       socket: io('http://localhost:8082')
@@ -295,6 +323,7 @@ import io from 'socket.io-client'
 
     mounted() {
       this.listemecanicien();
+      this.listegarage();
       this.Prendrelesmecaniciens();
       this.newItemId = localStorage.getItem('newItemId');
       this.id_senderclient = localStorage.getItem('newItemId');
@@ -332,12 +361,17 @@ import io from 'socket.io-client'
 
         let a = document.getElementById("patiente");
         let b = document.getElementById("renseignemet");
+        let c = document.getElementById("loca");
+        let d = document.getElementById("soratra");
 
         a.style.display = "inline-block";
         b.style.display = "none";
+        c.style.display = "none";
+        d.style.display = "none";
+
     } catch (error) {
-        console.error('Error registering the item:', error);
-        // Handle the error here if necessary
+      console.error('Error registering the item:', error);
+      // Handle the error here if necessary
     }
     
   },
@@ -380,17 +414,17 @@ import io from 'socket.io-client'
       // Diminuer point
       
      diminuerpoint(id) {
-        axios
-        .put('http://localhost:8082/api/mecaniciens/diminuerpoint/' +  id)
-        .then(response => {
-        alert('Merci pour votre avis !!');
-        console.log(response.data);
-        })
-        .catch(error => {
-        console.log(error);
-        });
-        this.showButtons = false;
-        },
+      axios
+      .put('http://localhost:8082/api/mecaniciens/diminuerpoint/' +  id)
+      .then(response => {
+      alert('Merci pour votre avis !!');
+      console.log(response.data);
+      })
+      .catch(error => {
+      console.log(error);
+      });
+      this.showButtons = false;
+      },
    
     // Afficher le notification du mecanicien
     slide1() {
@@ -407,6 +441,15 @@ import io from 'socket.io-client'
     axios.get('http://localhost:8082/api/mecaniciens/listermecanicien')
     .then(response => {
       this.Mecanicien = response.data
+    })
+    },
+
+    // Liste de tous les garages
+    
+    listegarage() {
+    axios.get('http://localhost:8082/api/garages/listergarage')
+    .then(response => {
+      this.Garage = response.data
     })
     },
     
@@ -539,9 +582,28 @@ import io from 'socket.io-client'
       //autre fonctionlité 
       versaccueil(){
             this.$router.push({name:'/'})
-      }
+      },
+      isWithinBounds(lat, lng) {
+    // Limites géographiques de Madagascar
+    const minLat = -25.6086;
+    const maxLat = -11.9455;
+    const minLng = 43.2283;
+    const maxLng = 50.4839;
+
+    // Vérifier si les coordonnées se trouvent dans les limites de Madagascar
+    if (lat >= minLat && lat <= maxLat && lng >= minLng && lng <= maxLng) {
+    return true;
     }
-  };
+    return false;
+    },
+    },
+    computed: {
+    isValidLocation() {
+      return this.isWithinBounds(this.lati, this.longi);
+    },
+    },
+  }
+    
   </script>
   
   
@@ -568,6 +630,13 @@ import io from 'socket.io-client'
     font-family: "Century Gothic", sans-serif;
     margin-left: 90px;
     animation: fadeInUp 2s ease;
+}
+
+/* A propos de la localisation */
+.localisation {
+  margin-bottom: 50px;
+  margin-left: 20px;
+  margin-right: 20px;
 }
 
 /* Animation fadeInUp */
